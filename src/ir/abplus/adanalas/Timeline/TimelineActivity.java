@@ -365,6 +365,7 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
             Cursor c=LocalDBServices.getTotalExpense(this);
             c.moveToFirst();
             final double totalExp = c.getDouble(c.getColumnIndexOrThrow(colName));
+            c.close();
             Log.e("test","total is here you are! :"+totalExp);
 //            totalExpense.setText("  "+Utils.toPersianNumbers(Currency.getStandardAmount(totalExp)));
 
@@ -376,6 +377,7 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
             c=LocalDBServices.getTotalIncome(this);
             c.moveToFirst();
             final double totalInc = c.getDouble(c.getColumnIndexOrThrow(colName));
+            c.close();
 //            totalIncome.setText("  "+Utils.toPersianNumbers(Currency.getStandardAmount(totalInc)));
 
 //            ReceiverThread rt=new ReceiverThread();

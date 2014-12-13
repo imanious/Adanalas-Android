@@ -112,11 +112,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="SettingActivity.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="SettingActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/Setting/SettingActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4559387" vertical-offset="1530" max-vertical-offset="3995">
-              <caret line="150" column="13" selection-start-line="150" selection-start-column="13" selection-end-line="150" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="3732" max-vertical-offset="4012">
+              <caret line="277" column="19" selection-start-line="277" selection-start-column="19" selection-end-line="277" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -145,11 +145,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EditTransactionPage.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="EditTransactionPage.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/AddEditTransactions/EditTransactionPage.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1054" max-vertical-offset="11577">
-              <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.59366757" vertical-offset="4824" max-vertical-offset="11220">
+              <caret line="313" column="31" selection-start-line="313" selection-start-column="31" selection-end-line="313" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -158,8 +158,8 @@
       <file leaf-file-name="LocalDBServices.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/databaseConnections/LocalDBServices.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="816" max-vertical-offset="7174">
-              <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="5122" max-vertical-offset="7021">
+              <caret line="314" column="0" selection-start-line="314" selection-start-column="0" selection-end-line="314" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -168,8 +168,8 @@
       <file leaf-file-name="TimelineActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/Timeline/TimelineActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="6953" max-vertical-offset="20978">
-              <caret line="409" column="0" selection-start-line="409" selection-start-column="0" selection-end-line="409" selection-end-column="0" />
+            <state vertical-scroll-proportion="-9.24" vertical-offset="5447" max-vertical-offset="19754">
+              <caret line="381" column="0" selection-start-line="381" selection-start-column="0" selection-end-line="381" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -255,12 +255,12 @@
         <option value="$PROJECT_DIR$/src/ir/abplus/adanalas/AddEditTransactions/AddPage1.java" />
         <option value="$PROJECT_DIR$/src/ir/abplus/adanalas/AddEditTransactions/AddPage2.java" />
         <option value="$PROJECT_DIR$/src/ir/abplus/adanalas/Charts/BarChartFragment.java" />
-        <option value="$PROJECT_DIR$/src/ir/abplus/adanalas/AddEditTransactions/EditTransactionPage.java" />
         <option value="$PROJECT_DIR$/src/ir/abplus/adanalas/Charts/PieChartFragment.java" />
-        <option value="$PROJECT_DIR$/src/ir/abplus/adanalas/Timeline/TimelineActivity.java" />
         <option value="$PROJECT_DIR$/src/ir/abplus/adanalas/Libraries/TransactoinDatabaseHelper.java" />
         <option value="$PROJECT_DIR$/src/ir/abplus/adanalas/databaseConnections/LocalDBServices.java" />
+        <option value="$PROJECT_DIR$/src/ir/abplus/adanalas/Timeline/TimelineActivity.java" />
         <option value="$PROJECT_DIR$/src/ir/abplus/adanalas/Setting/SettingActivity.java" />
+        <option value="$PROJECT_DIR$/src/ir/abplus/adanalas/AddEditTransactions/EditTransactionPage.java" />
       </list>
     </option>
   </component>
@@ -931,7 +931,7 @@
       <workItem from="1418120755008" duration="4719000" />
       <workItem from="1418194967324" duration="342000" />
       <workItem from="1418206031457" duration="130000" />
-      <workItem from="1418498994930" duration="542000" />
+      <workItem from="1418498994930" duration="1306000" />
     </task>
     <task id="LOCAL-00001" summary="test2">
       <created>1408262192108</created>
@@ -1137,7 +1137,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="797402000" />
+    <option name="totallyTimeSpent" value="798166000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -1158,7 +1158,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41129032" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31854838" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.5685484" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.37634408" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1605,14 +1605,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/AddEditTransactions/EditTransactionPage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="647" max-vertical-offset="11220">
-          <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/Timeline/OnClickedDialog.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2537" max-vertical-offset="3349">
@@ -1639,24 +1631,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/Timeline/TimelineActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="6953" max-vertical-offset="20978">
-          <caret line="409" column="0" selection-start-line="409" selection-start-column="0" selection-end-line="409" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/databaseConnections/LocalDBServices.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="816" max-vertical-offset="7174">
-          <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
+        <state vertical-scroll-proportion="-9.24" vertical-offset="5447" max-vertical-offset="19754">
+          <caret line="381" column="0" selection-start-line="381" selection-start-column="0" selection-end-line="381" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/Setting/SettingActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4559387" vertical-offset="1530" max-vertical-offset="3995">
-          <caret line="150" column="13" selection-start-line="150" selection-start-column="13" selection-end-line="150" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="3732" max-vertical-offset="4012">
+          <caret line="277" column="19" selection-start-line="277" selection-start-column="19" selection-end-line="277" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/databaseConnections/LocalDBServices.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="5122" max-vertical-offset="7021">
+          <caret line="314" column="0" selection-start-line="314" selection-start-column="0" selection-end-line="314" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/AddEditTransactions/EditTransactionPage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.59366757" vertical-offset="4824" max-vertical-offset="11220">
+          <caret line="313" column="31" selection-start-line="313" selection-start-column="31" selection-end-line="313" selection-end-column="31" />
           <folding />
         </state>
       </provider>

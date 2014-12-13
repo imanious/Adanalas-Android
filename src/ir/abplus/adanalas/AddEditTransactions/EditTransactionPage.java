@@ -235,7 +235,7 @@ public class EditTransactionPage extends Activity implements View.OnClickListene
 //                            " FROM "+TransactionEntry.TABLE_NAME +
 //                            " WHERE "+TransactionEntry._ID + "=" + id;
 //                    c = db.rawQuery(query, null);
-                    c=LocalDBServices.getTagsFromID(id);
+                    c=LocalDBServices.getTransactionFromID(id);
                     c.moveToFirst();
 
                     double amount = c.getDouble(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_AMOUNT));
@@ -243,7 +243,7 @@ public class EditTransactionPage extends Activity implements View.OnClickListene
                     isExpense = c.getInt(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_IS_EXPENSE))==0? false: true;
                     String accountName=c.getString(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_ACCOUNT_NAME));
                     String dateTime=c.getString(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_DATE_TIME));
-
+                    c.close();
 
 
                     amountTextview.setText("مبلغ: "+Currency.getStdAmount(amount)+" "+Currency.getCurrencyString());
@@ -301,19 +301,19 @@ public class EditTransactionPage extends Activity implements View.OnClickListene
 //                            " FROM " + TransactionsContract.TagsEntry.TABLE_NAME +
 //                            " WHERE "+ TransactionsContract.TagsEntry.COLUMN_NAME_TRANSACTION_ID + "=" + id;
 //                    c = db.rawQuery(query, null);
-                    LocalDBServices.getTagsFromID(id);
-                    c.moveToFirst();
+                    Cursor c2=LocalDBServices.getTagsFromID(id);
+                    c2.moveToFirst();
 
-                    if(c.getCount() != 0)
+                    if(c2.getCount() != 0)
                     {
                         do
                         {
-                            selectedTags.add(c.getString(c.getColumnIndexOrThrow(TransactionsContract.TagsEntry.COLUMN_NAME_TAG)));
-                        }while(c.moveToNext());
+                            selectedTags.add(c2.getString(c2.getColumnIndexOrThrow(TransactionsContract.TagsEntry.COLUMN_NAME_TAG)));
+                        }while(c2.moveToNext());
                     }
-
-
+                    c2.close();
                 }
+
             }
 
 

@@ -275,6 +275,7 @@ public class SettingActivity extends Activity {
                 }
             }while(c2.moveToNext());
         }
+        c2.close();
         if(accountType.equals("-1"))
             Log.e("error","an error happend on finding account type:setting activity.getaccountType");
         return accountType;
