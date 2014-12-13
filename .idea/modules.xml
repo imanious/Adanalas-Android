@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/libaries/AutoFitTextViewLibrary/AutoFitTextViewLibrary.iml" filepath="$PROJECT_DIR$/libaries/AutoFitTextViewLibrary/AutoFitTextViewLibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libaries/HoloGraphLibrary/HoloGraphLibrary.iml" filepath="$PROJECT_DIR$/libaries/HoloGraphLibrary/HoloGraphLibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libaries/PinnedHeaderListView/PinnedHeaderListView.iml" filepath="$PROJECT_DIR$/libaries/PinnedHeaderListView/PinnedHeaderListView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libaries/PullToRefresh-Library/PullToRefresh-Library.iml" filepath="$PROJECT_DIR$/libaries/PullToRefresh-Library/PullToRefresh-Library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libaries/SlidingMenuLibrary/SlidingMenuLibrary.iml" filepath="$PROJECT_DIR$/libaries/SlidingMenuLibrary/SlidingMenuLibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/adanalas1.iml" filepath="$PROJECT_DIR$/adanalas1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libaries/datetimepicker-library/datetimepicker-library.iml" filepath="$PROJECT_DIR$/libaries/datetimepicker-library/datetimepicker-library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libaries/nineoldlibrary/nineoldlibrary.iml" filepath="$PROJECT_DIR$/libaries/nineoldlibrary/nineoldlibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libaries/viewpagerlibrary/viewpagerlibrary1.iml" filepath="$PROJECT_DIR$/libaries/viewpagerlibrary/viewpagerlibrary1.iml" />
+    </modules>
+  </component>
+</project>
+

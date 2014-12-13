@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:id="@+id/parent_layout"
+              android:weightSum="41"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="8">
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="2"
+                    android:gravity="center_vertical">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="date is here"
+                        android:layout_gravity="center_vertical|right"
+                        android:id="@+id/date_text"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="account is here"
+                        android:layout_gravity="center_vertical|right"
+                        android:id="@+id/account_text"/>
+            </LinearLayout>
+            <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="1000 toman"
+                    android:layout_gravity="center_vertical|right"
+                    android:id="@+id/amount_text" android:layout_weight="3" android:gravity="right"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey"
+            android:layout_alignParentBottom="true" />
+
+    <LinearLayout
+            android:id="@+id/category_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="18">
+        </LinearLayout>
+
+    <!--<AutoCompleteTextView-->
+            <!--android:id="@+id/autoCompleteTextView1"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_marginLeft="20dp"-->
+            <!--android:layout_marginRight="20dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:gravity="right"-->
+            <!--android:hint="برچسب"-->
+            <!--android:imeOptions="actionDone"-->
+            <!--android:singleLine="true"/>-->
+
+    <!--<include-->
+            <!--android:id="@+id/page2_tag_viewpager"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="fill_parent"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--layout="@layout/page2_tag_viewpager"-->
+            <!--android:background="@null" android:layout_weight="20"/>-->
+
+    <!--<ir.abplus.adanalas.AddEditTransactions.TagAdapterLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:background="@null"-->
+            <!--android:layout_weight="20"-->
+            <!--></ir.abplus.adanalas.AddEditTransactions.TagAdapterLayout>-->
+
+    <LinearLayout
+            android:id="@+id/tags_layout"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="0px"
+            android:layout_weight="15">
+    </LinearLayout>
+
+
+    <EditText
+            android:id="@+id/descriptionText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="right"
+            android:hint="توضیحات"
+            android:singleLine="true"/>
+
+</LinearLayout>

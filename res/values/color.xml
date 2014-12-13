@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="list_item_title">#fff</color>
+    <color name="list_background">#303030</color>
+    <color name="list_background_pressed">#FFFFFF</color>
+    <color name="list_divider">#272727</color>
+    <color name="counter_text_bg">#626262</color>
+    <color name="light_grey">#D8D8D8</color>
+    <color name="grey">#737373</color>
+    <color name="selected_grey">#8E8E8E</color>
+    <color name="selected_background">#8E8E8E</color>
+    <color name="header_light_grey">#FFC9C9C9</color>
+    <color name="transparent_grey">#BA737373</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="transparent">#00000000</color>
+    <color name="next_button_grey">#FF777777</color>
+    <color name="red">#FFB50000</color>
+    <color name="green">#FF00A502</color>
+	<color name="expense_background">#00000000</color>
+	<color name="expense_stroke">#e21919</color>
+	<color name="income_background">#00000000</color>
+	<color name="income_stroke">#FF00C617</color>
+	<color name="done_button">#FF00960C</color>
+	<color name="next_button">#FF0026FF</color>
+    <color name="bar_chart">#ffa477d6</color>
+
+    <color name="category_expense_RAFTO_AMAD">#179fee</color>
+    <color name="category_expense_DARMAN">#e21919</color>
+    <color name="category_expense_KHORAK">#2861fc</color>
+    <color name="category_expense_GHABZ">#b61cd5</color>
+    <color name="category_expense_SAKHTEMAN">#1e319d</color>
+    <color name="category_expense_AGHSAAT">#0a6715</color>
+    <color name="category_expense_AMOOZESH">#7f0d3e</color>
+    <color name="category_expense_ARAYESH">#ee7b17</color>
+    <color name="category_expense_GHARZ">#64490e</color>
+    <color name="category_expense_HADIYE_KHEYRIE">#8c4b0e</color>
+    <color name="category_expense_VARZESH">#f27ac8</color>
+    <color name="category_expense_POOSHAK">#ffcd19</color>
+    <color name="category_expense_SARMAYE">#51b317</color>
+    <color name="category_expense_SHAKHSHI">#c08613</color>
+    <color name="category_expense_UNCATEGORIZED">#8bd693</color>
+
+    <color name="category_income_PADASH">#1e319d</color>
+    <color name="category_income_DASTMOZD">#179fee</color>
+    <color name="category_income_YARANEH">#7f0d3e</color>
+    <color name="category_income_HADIYE">#b61cd5</color>
+    <color name="category_income_EJAREH">#f27ac8</color>
+    <color name="category_income_SOOD">#e21919</color>
+    <color name="category_income_KHESARAT">#ee7b17</color>
+    <color name="category_income_FOROOSH_DARAYI">#ffcd19</color>
+    <color name="category_income_VADIE_DARYAFTI">#c08613</color>
+    <color name="category_income_TALAB">#64490e</color>
+    <color name="category_income_VAAM">#0a6715</color>
+    <color name="category_income_UNCATEGORIZED">#8bd693</color>
+
+
+</resources>

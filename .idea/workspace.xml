@@ -1,0 +1,1754 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidConfiguredLogFilters">
+    <filters>
+      <filter>
+        <option name="name" value="app: com.example.adanalas1" />
+        <option name="packageNamePattern" value="com.example.adanalas1" />
+      </filter>
+      <filter>
+        <option name="name" value="app: ir.abplus.adanalas" />
+        <option name="packageNamePattern" value="ir.abplus.adanalas" />
+      </filter>
+    </filters>
+  </component>
+  <component name="AndroidDataSourceStorage">
+    <data-sources>
+      <data-source>
+        <classpath-elements>
+          <url>file://$USER_HOME$/.IntelliJIdea13/config/jdbc-drivers/xerial-sqlite-license.txt</url>
+        </classpath-elements>
+        <classpath-elements>
+          <url>file://$USER_HOME$/.IntelliJIdea13/config/jdbc-drivers/sqlite-jdbc-3.7.6.3-20110609.081603-3.jar</url>
+        </classpath-elements>
+        <option name="deviceId" value="SERIAL_NUMBER_192_168_178_102_5555" />
+        <option name="name" value="Android SQLite" />
+        <option name="packageName" value="adanalas_transactions.db" />
+      </data-source>
+    </data-sources>
+  </component>
+  <component name="AndroidLayoutPreviewToolWindow">
+    <option name="state">
+      <GlobalState />
+    </option>
+  </component>
+  <component name="AndroidLayouts">
+    <shared>
+      <config>
+        <devices>
+          <device id="Nexus 4" />
+          <device id="4in WVGA (Nexus S)" />
+          <device id="10.1in WXGA (Tablet)" />
+          <device id="3.4in WQVGA" />
+          <device id="3.2in HVGA slider (ADP1)" />
+          <device id="7in WSVGA (Tablet)" />
+          <device id="5.1in WVGA" />
+          <device id="2.7in QVGA slider" />
+          <device id="3.3in WQVGA" />
+          <device id="Nexus 10" />
+        </devices>
+      </config>
+    </shared>
+    <layouts>
+      <layout url="file://$PROJECT_DIR$/res/layout/add_page1.xml">
+        <config>
+          <theme>@style/AppTheme</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/res/layout/add_page2.xml">
+        <config>
+          <theme>@style/AppTheme</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/res/layout/chart_activity.xml">
+        <config>
+          <theme>@style/AppTheme</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/res/layout/chart_list_item.xml">
+        <config>
+          <theme>@style/AppTheme</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/res/layout/edit_transaction_page.xml">
+        <config>
+          <theme>@style/AppTheme</theme>
+        </config>
+      </layout>
+    </layouts>
+  </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: ir.abplus.adanalas" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" readonly="true" id="7e909832-87e4-4a7e-bc29-4ca058b2d355" name="Default" comment="Failed commit: Default (4)" />
+    <list id="c9898883-0d16-42ef-87d9-040ebf6ed284" name="Failed commit: Default" comment="" />
+    <list id="0b586b96-4d8e-44a6-9915-45909626fdbc" name="Failed commit: Default (2)" comment="" />
+    <list id="71890de4-555d-4f37-b154-5a23023af1b7" name="Failed commit: Default (3)" comment="bar chart and pie chart correction and filter added" />
+    <list id="84b4f651-8c74-4177-8427-8aa115ebe8b0" name="Failed commit: Default (4)" comment="adanalas - 25 aban&#10;" />
+    <ignored path="adanalas1.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="Commander">
+    <leftPanel />
+    <rightPanel />
+    <splitter proportion="0.5" />
+  </component>
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="DaemonCodeAnalyzer">
+    <disable_hints />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="adanalas1" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="SettingActivity.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/Setting/SettingActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.4559387" vertical-offset="1530" max-vertical-offset="3995">
+              <caret line="150" column="13" selection-start-line="150" selection-start-column="13" selection-end-line="150" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="OnClickedDialog.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/Timeline/OnClickedDialog.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="3043" max-vertical-offset="3723">
+              <caret line="179" column="0" selection-start-line="179" selection-start-column="0" selection-end-line="179" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="setting_activity.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/layout/setting_activity.xml">
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="319" max-vertical-offset="1156">
+              <caret line="29" column="36" selection-start-line="29" selection-start-column="36" selection-end-line="29" selection-end-column="36" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EditTransactionPage.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/AddEditTransactions/EditTransactionPage.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1054" max-vertical-offset="11577">
+              <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LocalDBServices.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/databaseConnections/LocalDBServices.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="816" max-vertical-offset="7174">
+              <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TimelineActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/Timeline/TimelineActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="6953" max-vertical-offset="20978">
+              <caret line="409" column="0" selection-start-line="409" selection-start-column="0" selection-end-line="409" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TransactoinDatabaseHelper.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/Libraries/TransactoinDatabaseHelper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="1139">
+              <caret line="9" column="28" selection-start-line="9" selection-start-column="28" selection-end-line="9" selection-end-column="28" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PieChartFragment.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/Charts/PieChartFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1700" max-vertical-offset="5814">
+              <caret line="100" column="0" selection-start-line="100" selection-start-column="0" selection-end-line="100" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindManager">
+    <FindUsagesManager>
+      <setting name="OPEN_NEW_TAB" value="false" />
+    </FindUsagesManager>
+  </component>
+  <component name="GenerateSignedApkSettings">
+    <option name="KEY_STORE_PATH" value="C:\Users\Keyvan Sasani\IdeaProjects\adanalas-android\adanalas-key.jks" />
+    <option name="KEY_ALIAS" value="adanalas" />
+    <option name="REMEMBER_PASSWORDS" value="true" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="changedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/src/ir/abplus/adanalas/keyvan/EditTransactionPage.java" />
+        <option value="$PROJECT_DIR$/src/ir/abplus/adanalas/keyvan/ViewPagerAdapterLayout.java" />
+        <option value="$PROJECT_DIR$/src/ir/abplus/adanalas/keyvan/myViewPager.java" />
+        <option value="$PROJECT_DIR$/src/ir/abplus/adanalas/keyvan/TagAdapterLayout.java" />
+        <option value="$PROJECT_DIR$/src/ir/abplus/adanalas/armin/Currency.java" />
+        <option value="$PROJECT_DIR$/src/ir/abplus/adanalas/keyvan/AddPage2.java" />
+        <option value="$PROJECT_DIR$/src/ir/abplus/adanalas/armin/OnClickedDialog.java" />
+        <option value="$PROJECT_DIR$/src/ir/abplus/adanalas/keyvan/AddPage1.java" />
+        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/src/ir/abplus/adanalas/armin/TimelineActivity.java" />
+        <option value="$PROJECT_DIR$/libaries/SlidingMenuLibrary/BuildConfig.java" />
+        <option value="$PROJECT_DIR$/libaries/SlidingMenuLibrary/CustomViewAbove.java" />
+        <option value="$PROJECT_DIR$/libaries/SlidingMenuLibrary/CustomViewBehind.java" />
+        <option value="$PROJECT_DIR$/libaries/SlidingMenuLibrary/MenuInterface.java" />
+        <option value="$PROJECT_DIR$/libaries/SlidingMenuLibrary/R.java" />
+        <option value="$PROJECT_DIR$/libaries/SlidingMenuLibrary/CanvasTransformerBuilder.java" />
+        <option value="$PROJECT_DIR$/gen/ir/abplus/adanalas/BuildConfig.java" />
+        <option value="$PROJECT_DIR$/src/com/jeremyfeinstein/slidingmenu/BuildConfig.java" />
+        <option value="$PROJECT_DIR$/src/com/jeremyfeinstein/slidingmenu/SlidingMenu.java" />
+        <option value="$PROJECT_DIR$/libaries/SlidingMenuLibrary/SlidingMenu.java" />
+        <option value="$PROJECT_DIR$/libaries/SlidingMenuLibrary/src/com/jeremyfeinstein/slidingmenu/lib/SlidingMenu.java" />
+        <option value="$PROJECT_DIR$/libaries/SlidingMenuLibrary/src/com/jeremyfeinstein/slidingmenu/lib/app/SlidingPreferenceActivity.java" />
+        <option value="$PROJECT_DIR$/libaries/SlidingMenuLibrary/src/com/jeremyfeinstein/slidingmenu/lib/CanvasTransformerBuilder.java" />
+        <option value="$PROJECT_DIR$/libaries/SlidingMenuLibrary/src/com/jeremyfeinstein/slidingmenu/lib/CustomViewAbove.java" />
+        <option value="$PROJECT_DIR$/libaries/SlidingMenuLibrary/src/com/jeremyfeinstein/slidingmenu/lib/CustomViewBehind.java" />
+        <option value="$PROJECT_DIR$/libaries/SlidingMenuLibrary/src/com/jeremyfeinstein/slidingmenu/lib/app/SlidingActivity.java" />
+        <option value="$PROJECT_DIR$/libaries/SlidingMenuLibrary/src/com/jeremyfeinstein/slidingmenu/lib/app/SlidingActivityHelper.java" />
+        <option value="$PROJECT_DIR$/src/ir/abplus/adanalas/Timeline/test.java" />
+        <option value="$PROJECT_DIR$/res/layout/pie_chart_fragment.xml" />
+        <option value="$PROJECT_DIR$/res/layout/chart_list_item.xml" />
+        <option value="$PROJECT_DIR$/res/layout/setting_activity.xml" />
+        <option value="$PROJECT_DIR$/res/layout/selected_dialog.xml" />
+        <option value="$PROJECT_DIR$/res/layout/add_page1.xml" />
+        <option value="$PROJECT_DIR$/res/layout/timeline_expense_row.xml" />
+        <option value="$PROJECT_DIR$/res/layout/timeline_income_row.xml" />
+        <option value="$PROJECT_DIR$/src/ir/abplus/adanalas/Timeline/OnClickedDialog.java" />
+        <option value="$PROJECT_DIR$/res/layout/timeline_layout.xml" />
+        <option value="$PROJECT_DIR$/src/ir/abplus/adanalas/Timeline/TimelinePinnedHeaderAdapter2.java" />
+        <option value="$PROJECT_DIR$/src/ir/abplus/adanalas/Charts/ChartListCustomAdapter.java" />
+        <option value="$PROJECT_DIR$/src/ir/abplus/adanalas/Libraries/Currency.java" />
+        <option value="$PROJECT_DIR$/src/ir/abplus/adanalas/Charts/ChartActivity.java" />
+        <option value="$PROJECT_DIR$/src/ir/abplus/adanalas/Libraries/DataBaseTransactionHelperEncrypted.java" />
+        <option value="$PROJECT_DIR$/src/ir/abplus/adanalas/AddEditTransactions/AddPage1.java" />
+        <option value="$PROJECT_DIR$/src/ir/abplus/adanalas/AddEditTransactions/AddPage2.java" />
+        <option value="$PROJECT_DIR$/src/ir/abplus/adanalas/Charts/BarChartFragment.java" />
+        <option value="$PROJECT_DIR$/src/ir/abplus/adanalas/AddEditTransactions/EditTransactionPage.java" />
+        <option value="$PROJECT_DIR$/src/ir/abplus/adanalas/Charts/PieChartFragment.java" />
+        <option value="$PROJECT_DIR$/src/ir/abplus/adanalas/Timeline/TimelineActivity.java" />
+        <option value="$PROJECT_DIR$/src/ir/abplus/adanalas/Libraries/TransactoinDatabaseHelper.java" />
+        <option value="$PROJECT_DIR$/src/ir/abplus/adanalas/databaseConnections/LocalDBServices.java" />
+        <option value="$PROJECT_DIR$/src/ir/abplus/adanalas/Setting/SettingActivity.java" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1616" />
+    <option name="height" value="876" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+          <State>
+            <id>Code maturity issues</id>
+          </State>
+          <State>
+            <id>DOM issuesJavaScript</id>
+          </State>
+          <State>
+            <id>Internationalization issues</id>
+          </State>
+          <State>
+            <id>JavaScript</id>
+          </State>
+          <State>
+            <id>Probable bugs</id>
+          </State>
+          <State>
+            <id>Visibility issues</id>
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>Abstraction issues</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="false" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <OptionsSetting value="true" id="Undo Check Out" />
+    <OptionsSetting value="true" id="Get Latest Version" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectReloadState">
+    <option name="STATE" value="0" />
+  </component>
+  <component name="ProjectStructureProblems">
+    <ignored-problems>
+      <problem id="library-invalid-classes-path(library:project:achartengine-1.1.0)" />
+    </ignored-problems>
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="adanalas1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="adanalas1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="adanalas1" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="adanalas1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="adanalas1" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="adanalas" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="adanalas1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="adanalas1" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="adanalas" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Libraries" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="adanalas1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="adanalas1" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="adanalas" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="databaseConnections" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="GoToClass.includeLibraries" value="false" />
+    <property name="GoToClass.toSaveIncludeLibraries" value="false" />
+    <property name="GoToFile.includeJavaFiles" value="false" />
+    <property name="MemberChooser.sorted" value="false" />
+    <property name="MemberChooser.showClasses" value="true" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/libs/sqlcipher.jar!/" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="recentsLimit" value="5" />
+    <property name="options.lastSelected" value="vcs.Subversion" />
+    <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="restartRequiresConfirmation" value="true" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="052549b0dbc78b02" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="high_speed_2.7inch_3.2" />
+    <property name="FullScreen" value="false" />
+    <property name="OverrideImplement.combined" value="true" />
+    <property name="OverrideImplement.overriding.sorted" value="false" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth0" value="162" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder0" value="0" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth1" value="162" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder1" value="1" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth2" value="163" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder2" value="2" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth3" value="75" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder3" value="3" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth4" value="116" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder4" value="4" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth5" value="837" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder5" value="5" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth0" value="253" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder0" value="0" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth1" value="252" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder1" value="1" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth2" value="253" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder2" value="2" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth3" value="252" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder3" value="3" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth4" value="253" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder4" value="4" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth5" value="252" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder5" value="5" />
+    <property name="dynamic.classpath" value="false" />
+    <property name="SearchEverywhereHistoryKey" value="system.out&#9;null&#9;null&#10;ddms&#9;ACTION&#9;Android.RunDdms" />
+    <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager2.WIDTH" value="317" />
+    <property name="ExportedModule" value="adanalas1" />
+    <property name="ExportedApkPath" value="C:\Users\Keyvan Sasani\IdeaProjects\adanalas-android\adanalas1\adanalas-android.apk" />
+    <property name="AndroidRunProguardForReleaseBuild" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="ir.abplus.adanalas.keyvan" />
+      <recent name="ir.abplus.adanalas.armin" />
+      <recent name="com.echo.holographlibrary" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Keyvan Sasani\IdeaProjects\adanalas1\src\com\jeremyfeinstein\slidingmenu" />
+      <recent name="C:\Users\Keyvan Sasani\IdeaProjects\adanalas-android\adanalas1\res\menu" />
+      <recent name="C:\Users\Keyvan Sasani\IdeaProjects\adanalas-android\adanalas1\res\layout" />
+      <recent name="C:\Users\Keyvan Sasani\IdeaProjects\adanalas-android\adanalas1\src\ir\abplus\adanalas\keyvan" />
+      <recent name="C:\Users\Keyvan Sasani\IdeaProjects\adanalas-android\adanalas1\res\anim" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Keyvan Sasani\IdeaProjects\adanalas1\src\com\jeremyfeinstein\slidingmenu" />
+      <recent name="C:\Users\Keyvan Sasani\IdeaProjects\adanalas1\libaries" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Android Application.adanalas1">
+    <configuration default="false" name="TimelineActivity" type="AndroidRunConfigurationType" factoryName="Android Application" temporary="true">
+      <module name="adanalas1" />
+      <option name="ACTIVITY_CLASS" value="com.example.adanalas1.TimelineActivity" />
+      <option name="MODE" value="specific_activity" />
+      <option name="DEPLOY" value="true" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
+      <RunnerSettings RunnerId="AndroidDebugRunner" />
+      <ConfigurationWrapper RunnerId="AndroidDebugRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="TimelineActivity (1)" type="AndroidRunConfigurationType" factoryName="Android Application" temporary="true">
+      <module name="adanalas1" />
+      <option name="ACTIVITY_CLASS" value="ir.abplus.adanalas.Timeline.TimelineActivity" />
+      <option name="MODE" value="specific_activity" />
+      <option name="DEPLOY" value="true" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="true" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
+      <RunnerSettings RunnerId="AndroidDebugRunner" />
+      <ConfigurationWrapper RunnerId="AndroidDebugRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="ChartActivity" type="AndroidRunConfigurationType" factoryName="Android Application" temporary="true">
+      <module name="adanalas1" />
+      <option name="ACTIVITY_CLASS" value="ir.abplus.adanalas.Charts.ChartActivity" />
+      <option name="MODE" value="specific_activity" />
+      <option name="DEPLOY" value="true" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
+      <RunnerSettings RunnerId="AndroidDebugRunner" />
+      <ConfigurationWrapper RunnerId="AndroidDebugRunner" />
+      <method />
+    </configuration>
+    <configuration default="true" type="GrailsRunConfigurationType" factoryName="Grails">
+      <module name="" />
+      <setting name="vmparams" value="" />
+      <setting name="cmdLine" value="run-app" />
+      <setting name="depsClasspath" value="false" />
+      <setting name="passParentEnv" value="true" />
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <setting name="launchBrowser" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
+      <module name="" />
+      <option name="TESTING_TYPE" value="0" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="FlexUnitRunConfigurationType" factoryName="FlexUnit" appDescriptorForEmulator="Android" class_name="" emulatorAdlOptions="" method_name="" package_name="" scope="Class">
+      <option name="BCName" value="" />
+      <option name="launcherParameters">
+        <LauncherParameters>
+          <option name="browser" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
+          <option name="launcherType" value="OSDefault" />
+          <option name="newPlayerInstance" value="false" />
+          <option name="playerPath" value="FlashPlayerDebugger.exe" />
+        </LauncherParameters>
+      </option>
+      <option name="moduleName" value="" />
+      <option name="trusted" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="myFilePath" />
+      <option name="GLUE" />
+      <option name="myNameFilter" />
+      <option name="myGeneratedName" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="true" type="FlashRunConfigurationType" factoryName="Flash App">
+      <option name="BCName" value="" />
+      <option name="IOSSimulatorSdkPath" value="" />
+      <option name="adlOptions" value="" />
+      <option name="airProgramParameters" value="" />
+      <option name="appDescriptorForEmulator" value="Android" />
+      <option name="debugTransport" value="USB" />
+      <option name="debuggerSdkRaw" value="BC SDK" />
+      <option name="emulator" value="NexusOne" />
+      <option name="emulatorAdlOptions" value="" />
+      <option name="fastPackaging" value="true" />
+      <option name="fullScreenHeight" value="0" />
+      <option name="fullScreenWidth" value="0" />
+      <option name="launchUrl" value="false" />
+      <option name="launcherParameters">
+        <LauncherParameters>
+          <option name="browser" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
+          <option name="launcherType" value="OSDefault" />
+          <option name="newPlayerInstance" value="false" />
+          <option name="playerPath" value="FlashPlayerDebugger.exe" />
+        </LauncherParameters>
+      </option>
+      <option name="mobileRunTarget" value="Emulator" />
+      <option name="moduleName" value="" />
+      <option name="overriddenMainClass" value="" />
+      <option name="overriddenOutputFileName" value="" />
+      <option name="overrideMainClass" value="false" />
+      <option name="runTrusted" value="true" />
+      <option name="screenDpi" value="0" />
+      <option name="screenHeight" value="0" />
+      <option name="screenWidth" value="0" />
+      <option name="url" value="http://" />
+      <option name="usbDebugPort" value="7936" />
+      <method />
+    </configuration>
+    <configuration default="true" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console">
+      <option name="VM_PARAMETERS" value="" />
+      <option name="USER_CFG_CLASS" />
+      <option name="CONTEXT_PROVIDER" />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
+      <module name="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="DEPLOY" value="true" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
+      <method />
+    </configuration>
+    <configuration default="false" name="adanalas1" type="AndroidRunConfigurationType" factoryName="Android Application">
+      <module name="adanalas1" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="DEPLOY" value="true" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
+      <RunnerSettings RunnerId="AndroidDebugRunner" />
+      <ConfigurationWrapper RunnerId="AndroidDebugRunner" />
+      <method />
+    </configuration>
+    <list size="4">
+      <item index="0" class="java.lang.String" itemvalue="Android Application.adanalas1" />
+      <item index="1" class="java.lang.String" itemvalue="Android Application.TimelineActivity" />
+      <item index="2" class="java.lang.String" itemvalue="Android Application.TimelineActivity (1)" />
+      <item index="3" class="java.lang.String" itemvalue="Android Application.ChartActivity" />
+    </list>
+    <recent_temporary>
+      <list size="3">
+        <item index="0" class="java.lang.String" itemvalue="Android Application.TimelineActivity (1)" />
+        <item index="1" class="java.lang.String" itemvalue="Android Application.ChartActivity" />
+        <item index="2" class="java.lang.String" itemvalue="Android Application.TimelineActivity" />
+      </list>
+    </recent_temporary>
+    <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
+      <Host>localhost</Host>
+      <Port>5050</Port>
+    </configuration>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SliceManager">
+    <option name="analysisUIOptions">
+      <AnalysisUIOptions />
+    </option>
+  </component>
+  <component name="SvnConfiguration" myUseAcceleration="nothing" cleanupOnStartRun="true">
+    <configuration useDefault="false">https://subversion.assembla.com/svn/adanalas-android/</configuration>
+    <myIsUseDefaultProxy>true</myIsUseDefaultProxy>
+    <supportedVersion>125</supportedVersion>
+    <option name="MERGE_DRY_RUN" value="true" />
+    <option name="CHECK_NESTED_FOR_QUICK_MERGE" value="true" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7e909832-87e4-4a7e-bc29-4ca058b2d355" name="Default" comment="" />
+      <created>1408262020616</created>
+      <updated>1408262020616</updated>
+      <workItem from="1408262022025" duration="5138000" />
+      <workItem from="1408275677561" duration="331000" />
+      <workItem from="1408288161628" duration="1967000" />
+      <workItem from="1408427520734" duration="29022000" />
+      <workItem from="1408514718159" duration="19084000" />
+      <workItem from="1408558262361" duration="4124000" />
+      <workItem from="1408703630814" duration="5581000" />
+      <workItem from="1408771842446" duration="16158000" />
+      <workItem from="1408789489584" duration="946000" />
+      <workItem from="1408790476189" duration="971000" />
+      <workItem from="1408791616922" duration="1804000" />
+      <workItem from="1408797579570" duration="57000" />
+      <workItem from="1408797822251" duration="578000" />
+      <workItem from="1408875592307" duration="1719000" />
+      <workItem from="1408877359956" duration="4546000" />
+      <workItem from="1409029830834" duration="19093000" />
+      <workItem from="1409118726103" duration="17852000" />
+      <workItem from="1409297763636" duration="828000" />
+      <workItem from="1409304845372" duration="3497000" />
+      <workItem from="1409377796983" duration="2544000" />
+      <workItem from="1409380408310" duration="21085000" />
+      <workItem from="1409464081807" duration="4449000" />
+      <workItem from="1409468592187" duration="20640000" />
+      <workItem from="1409637846675" duration="18523000" />
+      <workItem from="1409722998765" duration="24049000" />
+      <workItem from="1409835497735" duration="1276000" />
+      <workItem from="1409837034561" duration="3589000" />
+      <workItem from="1409904880999" duration="2206000" />
+      <workItem from="1411320388080" duration="162000" />
+      <workItem from="1411390741544" duration="368000" />
+      <workItem from="1411392143521" duration="182000" />
+      <workItem from="1411392382300" duration="881000" />
+      <workItem from="1411394435883" duration="659000" />
+      <workItem from="1411476231553" duration="1980000" />
+      <workItem from="1411485329632" duration="810000" />
+      <workItem from="1411486664031" duration="545000" />
+      <workItem from="1411540892337" duration="22355000" />
+      <workItem from="1411567252018" duration="462000" />
+      <workItem from="1411630630132" duration="4905000" />
+      <workItem from="1411648974307" duration="3220000" />
+      <workItem from="1411885163323" duration="1115000" />
+      <workItem from="1411905166476" duration="11541000" />
+      <workItem from="1411967112954" duration="1081000" />
+      <workItem from="1412057127049" duration="1042000" />
+      <workItem from="1412070583616" duration="15112000" />
+      <workItem from="1412089574023" duration="1367000" />
+      <workItem from="1412146863591" duration="27094000" />
+      <workItem from="1412441052430" duration="7175000" />
+      <workItem from="1412533128127" duration="505000" />
+      <workItem from="1412680264433" duration="14989000" />
+      <workItem from="1412751070517" duration="21771000" />
+      <workItem from="1412784231072" duration="734000" />
+      <workItem from="1412932817085" duration="3445000" />
+      <workItem from="1413283747263" duration="10854000" />
+      <workItem from="1413356862420" duration="6426000" />
+      <workItem from="1413363723317" duration="22496000" />
+      <workItem from="1413889102592" duration="19719000" />
+      <workItem from="1413964514933" duration="14979000" />
+      <workItem from="1414144832195" duration="2215000" />
+      <workItem from="1414320268978" duration="13206000" />
+      <workItem from="1414492282132" duration="15585000" />
+      <workItem from="1414567006695" duration="15060000" />
+      <workItem from="1414861570928" duration="59000" />
+      <workItem from="1414872451302" duration="897000" />
+      <workItem from="1414920927570" duration="22186000" />
+      <workItem from="1415128205764" duration="2337000" />
+      <workItem from="1415168775978" duration="32632000" />
+      <workItem from="1415277823467" duration="142000" />
+      <workItem from="1415279945477" duration="6817000" />
+      <workItem from="1415526820686" duration="16915000" />
+      <workItem from="1415703130362" duration="11719000" />
+      <workItem from="1415889481992" duration="947000" />
+      <workItem from="1416136381319" duration="10077000" />
+      <workItem from="1416150528785" duration="3259000" />
+      <workItem from="1416216322710" duration="773000" />
+      <workItem from="1416306602089" duration="215000" />
+      <workItem from="1416306844370" duration="5602000" />
+      <workItem from="1416313107674" duration="12862000" />
+      <workItem from="1416382371540" duration="15553000" />
+      <workItem from="1416473581842" duration="4758000" />
+      <workItem from="1416479329756" duration="5605000" />
+      <workItem from="1416502892924" duration="40000" />
+      <workItem from="1416503845061" duration="336000" />
+      <workItem from="1416504210126" duration="84000" />
+      <workItem from="1416504416224" duration="1022000" />
+      <workItem from="1416505469433" duration="88000" />
+      <workItem from="1416505588278" duration="1830000" />
+      <workItem from="1416507492820" duration="19000" />
+      <workItem from="1416507905491" duration="5355000" />
+      <workItem from="1416567097780" duration="4303000" />
+      <workItem from="1416571616941" duration="4339000" />
+      <workItem from="1416739687435" duration="13874000" />
+      <workItem from="1416916865499" duration="14345000" />
+      <workItem from="1416984973052" duration="14117000" />
+      <workItem from="1417001051708" duration="11335000" />
+      <workItem from="1417352321445" duration="7153000" />
+      <workItem from="1417360431641" duration="2817000" />
+      <workItem from="1417522066846" duration="14169000" />
+      <workItem from="1417550101725" duration="1996000" />
+      <workItem from="1417589515227" duration="12787000" />
+      <workItem from="1417603615937" duration="164000" />
+      <workItem from="1417604101356" duration="13450000" />
+      <workItem from="1417698325597" duration="1293000" />
+      <workItem from="1417801244604" duration="3159000" />
+      <workItem from="1417939126225" duration="2234000" />
+      <workItem from="1418106025065" duration="12045000" />
+      <workItem from="1418120443316" duration="263000" />
+      <workItem from="1418120755008" duration="4719000" />
+      <workItem from="1418194967324" duration="342000" />
+      <workItem from="1418206031457" duration="130000" />
+      <workItem from="1418498994930" duration="542000" />
+    </task>
+    <task id="LOCAL-00001" summary="test2">
+      <created>1408262192108</created>
+      <updated>1408262192108</updated>
+    </task>
+    <task id="LOCAL-00002" summary="timeline and addpage , income and expense icons added">
+      <created>1408429664104</created>
+      <updated>1408429664104</updated>
+    </task>
+    <task id="LOCAL-00003" summary="timeline and addpage , income and expense icons added -- 2">
+      <created>1408431114103</created>
+      <updated>1408431114103</updated>
+    </task>
+    <task id="LOCAL-00004" summary="timeline and addpage , income and expense icons added -- 2">
+      <created>1408431306104</created>
+      <updated>1408431306104</updated>
+    </task>
+    <task id="LOCAL-00005" summary="uncategorized icons added&#10;">
+      <created>1408434783103</created>
+      <updated>1408434783103</updated>
+    </task>
+    <task id="LOCAL-00006" summary="imagebutton01 deleted">
+      <created>1408440948103</created>
+      <updated>1408440948103</updated>
+    </task>
+    <task id="LOCAL-00007" summary="is expense key added">
+      <created>1408444375105</created>
+      <updated>1408444375105</updated>
+    </task>
+    <task id="LOCAL-00008" summary="is expense key added">
+      <created>1408450813104</created>
+      <updated>1408450813104</updated>
+    </task>
+    <task id="LOCAL-00009" summary="tab2 is income tab">
+      <created>1408450845103</created>
+      <updated>1408450845103</updated>
+    </task>
+    <task id="LOCAL-00010" summary="tabhost weight expand">
+      <created>1408452115104</created>
+      <updated>1408452115104</updated>
+    </task>
+    <task id="LOCAL-00011" summary="icons are dynamiclly added&#10;">
+      <created>1408452286103</created>
+      <updated>1408452286103</updated>
+    </task>
+    <task id="LOCAL-00012" summary="icons and frames added&#10;">
+      <created>1408452363103</created>
+      <updated>1408452363103</updated>
+    </task>
+    <task id="LOCAL-00013" summary="icons and frames added&#10;">
+      <created>1408453520103</created>
+      <updated>1408453520103</updated>
+    </task>
+    <task id="LOCAL-00014" summary="icons and frames added&#10;">
+      <created>1408453568104</created>
+      <updated>1408453568104</updated>
+    </task>
+    <task id="LOCAL-00015" summary="currency changed to linear layout">
+      <created>1408454589104</created>
+      <updated>1408454589104</updated>
+    </task>
+    <task id="LOCAL-00016" summary="currency changed to linear layout">
+      <created>1408454950104</created>
+      <updated>1408454950104</updated>
+    </task>
+    <task id="LOCAL-00017" summary="systemout deleted">
+      <created>1408455139103</created>
+      <updated>1408455139103</updated>
+    </task>
+    <task id="LOCAL-00018" summary="systemout deleted">
+      <created>1408455271103</created>
+      <updated>1408455271103</updated>
+    </task>
+    <task id="LOCAL-00019">
+      <created>1408457696102</created>
+      <updated>1408457696102</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Half transparent set to 50&#10;">
+      <created>1408458050103</created>
+      <updated>1408458050103</updated>
+    </task>
+    <task id="LOCAL-00021" summary="some comments removed&#10;">
+      <created>1408881716113</created>
+      <updated>1408881716113</updated>
+    </task>
+    <task id="LOCAL-00022" summary="set icons center and long click added">
+      <created>1409038257149</created>
+      <updated>1409038257149</updated>
+    </task>
+    <task id="LOCAL-00023" summary="set selected icon and change tabs">
+      <created>1409050732103</created>
+      <updated>1409050732103</updated>
+    </task>
+    <task id="LOCAL-00024" summary="a method that tells category colors added">
+      <created>1409143855105</created>
+      <updated>1409143855105</updated>
+    </task>
+    <task id="LOCAL-00025" summary="category colors added">
+      <created>1409143887103</created>
+      <updated>1409143887103</updated>
+    </task>
+    <task id="LOCAL-00026">
+      <created>1409381862108</created>
+      <updated>1409381862108</updated>
+    </task>
+    <task id="LOCAL-00027" summary="set butto">
+      <created>1409401212103</created>
+      <updated>1409401212103</updated>
+    </task>
+    <task id="LOCAL-00028" summary="animation added&#10;comment remove">
+      <created>1409468700109</created>
+      <updated>1409468700109</updated>
+    </task>
+    <task id="LOCAL-00029" summary="seek bar removed">
+      <created>1409468754114</created>
+      <updated>1409468754114</updated>
+    </task>
+    <task id="LOCAL-00030" summary="padding set to 1 &#10;log removed">
+      <created>1409468862103</created>
+      <updated>1409468862103</updated>
+    </task>
+    <task id="LOCAL-00031" summary="onoptionselected of all activity corrected&#10;uncategorized and setting activity added&#10;">
+      <created>1409733903105</created>
+      <updated>1409733903105</updated>
+    </task>
+    <task id="LOCAL-00032" summary="anim folder added">
+      <created>1409734083103</created>
+      <updated>1409734083103</updated>
+    </task>
+    <task id="LOCAL-00033">
+      <created>1409734205104</created>
+      <updated>1409734205104</updated>
+    </task>
+    <task id="LOCAL-00034" summary="two layout added">
+      <created>1409734235104</created>
+      <updated>1409734235104</updated>
+    </task>
+    <task id="LOCAL-00035" summary="some menu added">
+      <created>1409734272103</created>
+      <updated>1409734272103</updated>
+    </task>
+    <task id="LOCAL-00036" summary="activity added">
+      <created>1409734294104</created>
+      <updated>1409734294104</updated>
+    </task>
+    <task id="LOCAL-00037">
+      <created>1409741399104</created>
+      <updated>1409741399104</updated>
+    </task>
+    <task id="LOCAL-00038">
+      <created>1411390875114</created>
+      <updated>1411390875114</updated>
+    </task>
+    <task id="LOCAL-00039" summary="text view added">
+      <created>1411547255104</created>
+      <updated>1411547255104</updated>
+    </task>
+    <task id="LOCAL-00040" summary="bar chart and pie chart correction and filter added">
+      <created>1411566347103</created>
+      <updated>1411566347103</updated>
+    </task>
+    <task id="LOCAL-00041" summary="linechart button removed&#10;test button removed">
+      <created>1411567446113</created>
+      <updated>1411567446113</updated>
+    </task>
+    <task id="LOCAL-00042" summary="adanalas bade 2 hafte :D">
+      <created>1413287123112</created>
+      <updated>1413287123112</updated>
+    </task>
+    <task id="LOCAL-00043" summary="adanalas bade 2 hafte&#10;">
+      <created>1413287302104</created>
+      <updated>1413287302104</updated>
+    </task>
+    <task id="LOCAL-00044" summary="adanalas bade 2 hafte :D&#10;">
+      <created>1413287464104</created>
+      <updated>1413287464104</updated>
+    </task>
+    <task id="LOCAL-00045" summary="adanalas bade 2 hafte :D&#10;">
+      <created>1413287558104</created>
+      <updated>1413287558104</updated>
+    </task>
+    <task id="LOCAL-00046" summary="Failed commit: Default (4)">
+      <created>1413889956104</created>
+      <updated>1413889956104</updated>
+    </task>
+    <task id="LOCAL-00047" summary="adanalas - 25 aban&#10;">
+      <created>1416151142105</created>
+      <updated>1416151142105</updated>
+    </task>
+    <task id="LOCAL-00048" summary="adanalas - 25 aban&#10;">
+      <created>1416152880103</created>
+      <updated>1416152880103</updated>
+    </task>
+    <task id="LOCAL-00049" summary="adanalas - 25 aban&#10;">
+      <created>1416152994103</created>
+      <updated>1416152994103</updated>
+    </task>
+    <task id="LOCAL-00050" summary="animation duration changed&#10;">
+      <created>1416153787104</created>
+      <updated>1416153787104</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="797402000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
+    <editor active="false" />
+    <layout>
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32258064" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32991013" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24967907" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.43548387" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35080644" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.10012837" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41129032" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31854838" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.5685484" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20025674" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26881722" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="16" side_tool="true" content_ui="tabs" />
+      <window_info id="SVN Repositories" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3252688" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24967907" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Memory Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="16" side_tool="true" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24133505" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3293011" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3293011" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
+      <window_info id="Duplicates" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6814516" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39919356" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="myTodoPanelSettings">
+      <TodoPanelSettings />
+    </option>
+    <MESSAGE value="category colors added" />
+    <MESSAGE value="a chart activity added" />
+    <MESSAGE value="chart activity added&#10;" />
+    <MESSAGE value="set butto" />
+    <MESSAGE value="comments removed" />
+    <MESSAGE value="comments removed&#10;animation added" />
+    <MESSAGE value="animation added&#10;comment remove" />
+    <MESSAGE value="seek bar removed" />
+    <MESSAGE value="padding set to 1 &#10;log removed" />
+    <MESSAGE value="onoptionselected of all activity corrected&#10;uncategorized and setting activity added&#10;" />
+    <MESSAGE value="anim and setting&amp;uncategorizedlayout added" />
+    <MESSAGE value="anim folder added" />
+    <MESSAGE value="two layout added" />
+    <MESSAGE value="some menu added" />
+    <MESSAGE value="activity added" />
+    <MESSAGE value="color added" />
+    <MESSAGE value="text view added" />
+    <MESSAGE value="bar chart and pie chart correction and filter added" />
+    <MESSAGE value="linechart button removed&#10;test button removed" />
+    <MESSAGE value="adanalas bade 2 hafte :D" />
+    <MESSAGE value="adanalas bade 2 hafte&#10;" />
+    <MESSAGE value="adanalas bade 2 hafte :D&#10;" />
+    <MESSAGE value="Failed commit: Default (4)" />
+    <MESSAGE value="adanalas - 25 aban&#10;" />
+    <MESSAGE value="animation duration changed&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="animation duration changed&#10;" />
+  </component>
+  <component name="VssConfiguration">
+    <option name="CLIENT_PATH" value="" />
+    <option name="SRCSAFEINI_PATH" value="" />
+    <option name="USER_NAME" value="" />
+    <option name="PWD" value="" />
+    <CheckoutOptions>
+      <option name="COMMENT" value="" />
+      <option name="DO_NOT_GET_LATEST_VERSION" value="false" />
+      <option name="REPLACE_WRITABLE" value="false" />
+      <option name="RECURSIVE" value="false" />
+    </CheckoutOptions>
+    <CheckinOptions>
+      <option name="COMMENT" value="" />
+      <option name="KEEP_CHECKED_OUT" value="false" />
+      <option name="RECURSIVE" value="false" />
+    </CheckinOptions>
+    <AddOptions>
+      <option name="STORE_ONLY_LATEST_VERSION" value="false" />
+      <option name="CHECK_OUT_IMMEDIATELY" value="false" />
+    </AddOptions>
+    <UndocheckoutOptions>
+      <option name="MAKE_WRITABLE" value="false" />
+      <option name="REPLACE_LOCAL_COPY" value="2" />
+      <option name="RECURSIVE" value="false" />
+    </UndocheckoutOptions>
+    <GetOptions>
+      <option name="REPLACE_WRITABLE" value="0" />
+      <option name="MAKE_WRITABLE" value="false" />
+      <option name="ANSWER_NEGATIVELY" value="false" />
+      <option name="ANSWER_POSITIVELY" value="false" />
+      <option name="RECURSIVE" value="false" />
+      <option name="VERSION" />
+    </GetOptions>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="16" />
+    </breakpoint-manager>
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/libaries/PullToRefresh-Library/src/com/handmark/pulltorefresh/library/ILoadingLayout.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1768">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gen/ir/abplus/adanalas/BuildConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.72" vertical-offset="0" max-vertical-offset="221">
+          <caret line="4" column="52" selection-start-line="4" selection-start-column="52" selection-end-line="4" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files (x86)/Android/adt-bundle-windows-x86_64-20130514/sdk/platforms/android-17/android.jar!/android/widget/RelativeLayout.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1717">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libaries/PullToRefresh-Library/src/com/handmark/pulltorefresh/library/PullToRefreshExpandableListView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1207">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libaries/datetimepicker-library/src/com/fourmob/datetimepicker/date/AccessibleDateAnimator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="646">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libaries/datetimepicker-library/src/com/fourmob/datetimepicker/date/DatePickerController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="408">
+          <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libaries/datetimepicker-library/src/com/fourmob/datetimepicker/date/PersianDatePickerDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="11441">
+          <caret line="23" column="27" selection-start-line="23" selection-start-column="27" selection-end-line="23" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libaries/SlidingMenuLibrary/src/com/jeremyfeinstein/slidingmenu/lib/SlidingMenu.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="459" max-vertical-offset="15385">
+          <caret line="40" column="36" selection-start-line="40" selection-start-column="36" selection-end-line="40" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libaries/SlidingMenuLibrary/src/com/jeremyfeinstein/slidingmenu/lib/MenuInterface.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="663">
+          <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libaries/SlidingMenuLibrary/src/com/jeremyfeinstein/slidingmenu/lib/CustomViewBehind.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6766">
+          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libaries/SlidingMenuLibrary/src/com/jeremyfeinstein/slidingmenu/lib/CustomViewAbove.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="15980">
+          <caret line="33" column="13" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libaries/SlidingMenuLibrary/src/com/jeremyfeinstein/slidingmenu/lib/CanvasTransformerBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1360">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libaries/SlidingMenuLibrary/src/com/jeremyfeinstein/slidingmenu/lib/app/SlidingActivityBase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.09470752" vertical-offset="0" max-vertical-offset="1309">
+          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libaries/SlidingMenuLibrary/src/com/jeremyfeinstein/slidingmenu/lib/app/SlidingActivityHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.09470752" vertical-offset="0" max-vertical-offset="3434">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libaries/SlidingMenuLibrary/src/com/jeremyfeinstein/slidingmenu/lib/app/SlidingActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.09470752" vertical-offset="0" max-vertical-offset="2278">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libaries/SlidingMenuLibrary/src/com/jeremyfeinstein/slidingmenu/lib/app/SlidingListActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.09470752" vertical-offset="0" max-vertical-offset="2346">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libaries/SlidingMenuLibrary/src/com/jeremyfeinstein/slidingmenu/lib/app/SlidingPreferenceActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2261">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libaries/SlidingMenuLibrary/src/com/jeremyfeinstein/slidingmenu/lib/app/SlidingFragmentActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="714" max-vertical-offset="2278">
+          <caret line="49" column="44" selection-start-line="49" selection-start-column="44" selection-end-line="49" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files (x86)/Android/adt-bundle-windows-x86_64-20130514/sdk/platforms/android-17/android.jar!/android/os/AsyncTask.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="109" max-vertical-offset="952">
+          <caret line="18" column="19" selection-start-line="18" selection-start-column="19" selection-end-line="18" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libaries/PinnedHeaderListView/src/za/co/immedia/pinnedheaderlistview/SectionedBaseAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="647" max-vertical-offset="3400">
+          <caret line="52" column="5" selection-start-line="52" selection-start-column="5" selection-end-line="52" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/Charts/LineChartFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.76" vertical-offset="25" max-vertical-offset="1207">
+          <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/pie_chart_fragment.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.44" vertical-offset="459" max-vertical-offset="867">
+          <caret line="35" column="35" selection-start-line="35" selection-start-column="35" selection-end-line="35" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/timeline_actionbar_layout.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="544">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/timeline_expense_row.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.34" vertical-offset="1447" max-vertical-offset="1989">
+          <caret line="92" column="12" selection-start-line="92" selection-start-column="12" selection-end-line="92" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/chart_list_item.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="8" max-vertical-offset="884">
+          <caret line="17" column="28" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/selected_dialog.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7207977" vertical-offset="291" max-vertical-offset="1972">
+          <caret line="32" column="45" selection-start-line="32" selection-start-column="45" selection-end-line="32" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/edit_transaction_page.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2057">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/timeline_income_row.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6344086" vertical-offset="1124" max-vertical-offset="2125">
+          <caret line="80" column="23" selection-start-line="80" selection-start-column="23" selection-end-line="80" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/Timeline/TimelineItem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="646">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/timeline_layout.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.8" vertical-offset="1065" max-vertical-offset="1887">
+          <caret line="80" column="45" selection-start-line="80" selection-start-column="45" selection-end-line="80" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/Charts/ChartListModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.44" vertical-offset="50" max-vertical-offset="1360">
+          <caret line="9" column="38" selection-start-line="9" selection-start-column="38" selection-end-line="9" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/Timeline/TimelinePinnedHeaderAdapter2.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.84" vertical-offset="3041" max-vertical-offset="5321">
+          <caret line="214" column="0" selection-start-line="214" selection-start-column="0" selection-end-line="214" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/Charts/ChartListCustomAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.1943128" vertical-offset="683" max-vertical-offset="2584">
+          <caret line="66" column="30" selection-start-line="66" selection-start-column="30" selection-end-line="66" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/add_page1.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.0" vertical-offset="1125" max-vertical-offset="3791">
+          <caret line="75" column="58" selection-start-line="75" selection-start-column="58" selection-end-line="75" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/Libraries/Currency.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2345" max-vertical-offset="3604">
+          <caret line="188" column="11" selection-start-line="188" selection-start-column="11" selection-end-line="188" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/Charts/ChartActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="12798" max-vertical-offset="13549">
+          <caret line="842" column="11" selection-start-line="842" selection-start-column="11" selection-end-line="842" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/libs/sqlcipher.jar!/net/sqlcipher/database/SQLiteOpenHelper.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.35693216" vertical-offset="202" max-vertical-offset="680">
+          <caret line="20" column="62" selection-start-line="20" selection-start-column="62" selection-end-line="20" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/Libraries/DataBaseTransactionHelperEncrypted.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="884">
+          <caret line="14" column="47" selection-start-line="14" selection-start-column="47" selection-end-line="14" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/libs/sqlcipher.jar!/net/sqlcipher/database/SQLiteClosable.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.84" vertical-offset="78" max-vertical-offset="476">
+          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/setting_activity.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="319" max-vertical-offset="1156">
+          <caret line="29" column="36" selection-start-line="29" selection-start-column="36" selection-end-line="29" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/libs/sqlcipher.jar!/net/sqlcipher/database/SQLiteDatabase.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.35526314" vertical-offset="1072" max-vertical-offset="5389">
+          <caret line="72" column="23" selection-start-line="72" selection-start-column="23" selection-end-line="72" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/AddEditTransactions/AddPage1.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="830" max-vertical-offset="17034">
+          <caret line="77" column="0" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/AddEditTransactions/AddPage2.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3929471" vertical-offset="1204" max-vertical-offset="13090">
+          <caret line="109" column="0" selection-start-line="109" selection-start-column="0" selection-end-line="109" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/Charts/BarChartFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3160494" vertical-offset="280" max-vertical-offset="9622">
+          <caret line="69" column="0" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/AddEditTransactions/EditTransactionPage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="647" max-vertical-offset="11220">
+          <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/Timeline/OnClickedDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2537" max-vertical-offset="3349">
+          <caret line="179" column="0" selection-start-line="179" selection-start-column="0" selection-end-line="179" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/Libraries/TransactoinDatabaseHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1088">
+          <caret line="9" column="28" selection-start-line="9" selection-start-column="28" selection-end-line="9" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/Charts/PieChartFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1207" max-vertical-offset="5151">
+          <caret line="100" column="0" selection-start-line="100" selection-start-column="0" selection-end-line="100" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/Timeline/TimelineActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="6953" max-vertical-offset="20978">
+          <caret line="409" column="0" selection-start-line="409" selection-start-column="0" selection-end-line="409" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/databaseConnections/LocalDBServices.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="816" max-vertical-offset="7174">
+          <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/Setting/SettingActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4559387" vertical-offset="1530" max-vertical-offset="3995">
+          <caret line="150" column="13" selection-start-line="150" selection-start-column="13" selection-end-line="150" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>Android</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>android-support-v4</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>Android API 17 Platform</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>adanalas1</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.6</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>android-support-v41</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
+

@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="persiandatetimepicker-library">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libaries/datetimepicker-library/bin/persiandatetimepicker-library.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

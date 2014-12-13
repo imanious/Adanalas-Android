@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">آدانالس</string>
+    <string name="new_transaction">تراکنش جدید</string>
+    <string name="edit_transaction">اصلاح تراکنش</string>
+    <string name="new_transaction_more_details">ادامه</string>
+    <string name="new_transaction_done">ثبت تراکنش</string>
+    <string name="action_settings">تنظیمات</string>
+    <string name="action_timeline">تراکنش‌ها</string>
+    <string name="action_charts">گزارش</string>
+    <string name="action_uncategorized">دسته‌بندی‌نشده‌ها</string>
+    
+    <string name="time_interval">بازه‌ی زمانی</string>
+    <string name="daily">روزانه</string>
+    <string name="weekly">هفتگی</string>
+    <string name="monthly">ماهانه</string>
+    <string name="yearly">سالانه</string>
+    
+    <string name="expenses">هزینه‌ها</string>
+    <string name="incomes">درآمدها</string>
+    
+    <string name="from">از</string>
+    <string name="to">تا</string>
+    
+    <string name="sync_string">همگام‌سازی</string>
+    
+	<string name="drawer_open">Slider Menu Opened</string>
+    <string name="drawer_close">Slider Menu Closed</string>
+    
+    <!-- Nav Drawer Menu Items -->
+    <string-array name="nav_drawer_items">
+        <item >Home</item>
+        <item >Find People</item>
+        <item >Photos</item>
+        <item >Communities</item>
+        <item >Pages</item>
+        <item >What\'s Hot</item>
+    </string-array>
+	
+    <!-- Nav Drawer List Item Icons -->
+    <!-- Keep them in order as the titles are in -->
+    <array name="nav_drawer_icons">
+        <item>@drawable/add_button</item>
+        <item>@drawable/add_button</item>
+        <item>@drawable/add_button</item>
+        <item>@drawable/add_button</item>
+        <item>@drawable/add_button</item>
+        <item>@drawable/add_button</item>
+    </array>
+
+    
+    <!-- Content Description -->
+    <string name="desc_list_item_icon">Item Icon</string>
+
+</resources>

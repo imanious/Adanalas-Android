@@ -1,0 +1,25 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/action_timeline"
+        android:icon="@drawable/timeline_icon"
+        android:showAsAction="always"
+        android:title="@string/action_timeline"/>
+    <item
+        android:id="@+id/action_charts"
+        android:icon="@drawable/chart"
+        android:showAsAction="always"
+        android:title="@string/action_charts"/>
+    <item
+        android:id="@+id/action_uncategorized"
+        android:icon="@drawable/uncategorized_menu"
+        android:showAsAction="always"
+        android:title="@string/action_uncategorized"/>
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/setting_selected"
+        android:showAsAction="always"
+        android:title="@string/action_settings"/>
+
+    
+</menu>

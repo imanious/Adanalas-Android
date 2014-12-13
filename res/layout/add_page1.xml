@@ -1,0 +1,218 @@
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    tools:context=".MainActivity" >
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical" >
+
+        <!--android:layout_above="@+id/ImageButton01"-->
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="4.3" >
+
+            <!--<ImageView-->
+                <!--android:id="@+id/imageView1"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:src="@drawable/rialcalc" />-->
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:id="@+id/currency_layout"
+                    android:layout_weight="1.5"/>
+
+            <TextView
+                android:id="@+id/cost_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical|right"
+                android:text=""
+                android:textSize="30sp" />
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1.3"
+                    android:layout_height="match_parent">
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TabHost
+            android:id="@+id/tabhost_add"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="2.5" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
+
+                <TabWidget
+                    android:id="@android:id/tabs"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+                </TabWidget>
+
+                <FrameLayout
+                    android:id="@android:id/tabcontent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                    <LinearLayout
+                        android:id="@+id/expense_tab"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" >
+                        
+                      <!--<include layout="@layout/tab1" />-->
+
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/income_tab"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" >
+
+
+                        <!--<include layout="@layout/tab2" />-->
+                    </LinearLayout>
+                </FrameLayout>
+            </LinearLayout>
+        </TabHost>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="3" >
+
+            <TableRow
+                android:id="@+id/tableRow1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5" >
+
+                <Button
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:text="1"
+                        android:background="@drawable/focused_button_background"
+                        android:id="@+id/button1" android:layout_weight="1"/>
+                <Button
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:text="2"
+                        android:background="@drawable/focused_button_background"
+                        android:id="@+id/button2" android:layout_weight="1"/>
+                <Button
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:background="@drawable/focused_button_background"
+                        android:text="3"
+                        android:id="@+id/button3" android:layout_weight="1"/>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/focused_button_background"
+                android:layout_weight="1.5" >
+
+                <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:background="@drawable/focused_button_background"
+                        android:text="4"
+                        android:id="@+id/button4" android:layout_weight="1"/>
+                <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:background="@drawable/focused_button_background"
+                        android:text="5"
+                        android:id="@+id/button5" android:layout_weight="1"/>
+                <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:background="@drawable/focused_button_background"
+                        android:text="6"
+                        android:id="@+id/button6" android:layout_weight="1"/>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5" >
+
+                <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:background="@drawable/focused_button_background"
+
+                        android:text="7"
+                        android:id="@+id/button7" android:layout_weight="1"/>
+                <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:background="@drawable/focused_button_background"
+                        android:text="8"
+                        android:id="@+id/button8" android:layout_weight="1"/>
+                <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:background="@drawable/focused_button_background"
+                        android:text="9"
+                        android:id="@+id/button9" android:layout_weight="1"/>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/focused_button_background"
+                android:layout_weight="1" >
+
+                <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:background="@drawable/focused_button_background"
+                        android:text=","
+                        android:id="@+id/button_dot" android:layout_weight="1"/>
+                <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:text="0"
+                        android:background="@drawable/focused_button_background"
+                        android:id="@+id/button_zero" android:layout_weight="1"/>
+                <ImageButton
+                        android:id="@+id/button_backspace"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:src="@drawable/backspace"
+                        android:background="@drawable/focused_button_background"
+                        />
+            </TableRow>
+        </TableLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

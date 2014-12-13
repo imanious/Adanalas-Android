@@ -1,0 +1,47 @@
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="fill_parent"
+             android:layout_height="fill_parent"
+
+             android:layout_gravity="top"
+        >
+    <TableRow android:gravity="right">
+
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Text"
+                android:id="@+id/amount_text_view"
+                android:layout_gravity="center_vertical|left"
+                android:gravity="left"
+                android:layout_weight="2"
+                android:layout_marginLeft="10dp"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Text"
+                android:id="@+id/trans_counter"
+                android:layout_gravity="center_vertical|left"
+                android:layout_weight="2"
+                android:layout_marginLeft="10dp"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:id="@+id/item_category_text"
+                android:text="رفت و آمد"
+                android:textSize="16dp"
+                android:background="@null"
+
+                android:layout_gravity="center" android:paddingEnd="4dp" android:paddingStart="4dp"/>
+        <ImageView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+
+                android:id="@+id/item_icon"
+                android:layout_below="@+id/item_category_text"
+
+
+                android:layout_weight=".7"/>
+
+    </TableRow>
+</TableLayout>

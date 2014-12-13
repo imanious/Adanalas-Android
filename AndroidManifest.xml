@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:uiOtions="http://schemas.android.com/apk/res/android"
+    package="ir.abplus.adanalas"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="17" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/icon_96"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="ir.abplus.adanalas.Timeline.TimelineActivity"
+            android:uiOptions="splitActionBarWhenNarrow"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.support.UI_OPTIONS"
+                android:value="splitActionBarWhenNarrow" />
+        </activity>
+        <activity
+            android:name=".AddEditTransactions.AddPage1"
+            android:label="@string/new_transaction" >
+        </activity>
+
+        <activity
+                android:name=".AddEditTransactions.EditTransactionPage"
+                android:label="@string/edit_transaction" >
+        </activity>
+        <activity
+            android:name=".AddEditTransactions.AddPage2"
+            android:label="@string/new_transaction_more_details" >
+        </activity>
+                <activity
+            android:name=".Charts.ChartActivity"
+            android:uiOptions="splitActionBarWhenNarrow" >
+        </activity>
+
+
+        <activity
+                android:name=".Setting.SettingActivity"
+                android:uiOptions="splitActionBarWhenNarrow">
+            <meta-data
+                    android:name="android.support.UI_OPTIONS"
+                    android:value="splitActionBarWhenNarrow" />
+
+
+        </activity>
+        <activity
+                android:name=".Uncategoried.UncategoriedActivity"
+                android:uiOptions="splitActionBarWhenNarrow">
+            <meta-data
+                    android:name="android.support.UI_OPTIONS"
+                    android:value="splitActionBarWhenNarrow" />
+
+
+        </activity>
+
+    </application>
+
+</manifest>

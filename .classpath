@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
+	<classpathentry exported="true" kind="lib" path="/persiandatetimepicker-library/bin/persiandatetimepicker-library.jar"/>
+	<classpathentry exported="true" kind="lib" path="/viewpagerlibrary/bin/viewpagerlibrary.jar"/>
+	<classpathentry kind="lib" path="/NineOldAndroids/bin/nineoldandroids.jar"/>
+	<classpathentry exported="true" kind="lib" path="D:/Setup/Android SDK/adt-bundle-windows-x86_64-20130514/sdk/extras/android/support/v4/android-support-v4.jar"/>
+	<classpathentry kind="lib" path="D:/Setup/Android SDK/adt-bundle-windows-x86_64-20130514/sdk/platforms/android-17/android.jar"/>
+	<classpathentry exported="true" kind="lib" path="/PinnedHeaderListView/bin/pinnedheaderlistview.jar"/>
+	<classpathentry exported="true" kind="lib" path="/AutoFitTextViewLibrary/bin/autofittextviewlibrary.jar"/>
+	<classpathentry kind="output" path="bin/classes"/>
+</classpath>

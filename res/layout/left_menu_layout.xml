@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_grey"
+    android:orientation="vertical" >
+
+    <za.co.immedia.pinnedheaderlistview.PinnedHeaderListView
+        android:id="@+id/account_time_filter_listview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </za.co.immedia.pinnedheaderlistview.PinnedHeaderListView>
+
+    <View 
+        android:id="@+id/separator"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/black"/>
+    
+    <LinearLayout
+        android:id="@+id/date_from_to"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </LinearLayout>
+    
+</LinearLayout>

@@ -1,0 +1,15 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="sliding_menu_behid_offset">100dp</dimen>
+    <dimen name="shadow_width">10dp</dimen>
+    <dimen name="sliding_menu_right_padding">5dp</dimen>
+    <dimen name="timeline_item_radius">100dp</dimen>
+    <dimen name="timeline_item_amount_padding">25dp</dimen>
+    <dimen name="timeline_item_stroke_width">2dp</dimen>
+    <dimen name="timeline_item_stroke_width_negative">-2dp</dimen>
+	<dimen name="timeline_item_top_bottom_padding">4dp</dimen>
+    
+</resources>

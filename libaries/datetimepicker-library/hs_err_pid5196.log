@@ -1,0 +1,87 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  Internal Error (classFileParser.cpp:3468), pid=5196, tid=8388
+#  Error: ShouldNotReachHere()
+#
+# JRE version: 7.0-b139
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (21.0-b09 mixed mode windows-amd64 compressed oops)
+# Failed to write core dump. Minidumps are not enabled by default on client versions of Windows
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.sun.com/bugreport/crash.jsp
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00000000000eb800):  JavaThread "Unknown thread" [_thread_in_vm, id=8388, stack(0x0000000002420000,0x0000000002520000)]
+
+Stack: [0x0000000002420000,0x0000000002520000]
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+
+Other Threads:
+
+=>0x00000000000eb800 (exited) JavaThread "Unknown thread" [_thread_in_vm, id=8388, stack(0x0000000002420000,0x0000000002520000)]
+
+VM state:not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Dynamic libraries:
+0x000000013f820000 - 0x000000013f853000 	C:\Program Files\Java\jre7\bin\javaw.exe
+0x00000000778e0000 - 0x0000000077a89000 	C:\Windows\SYSTEM32\ntdll.dll
+0x00000000776c0000 - 0x00000000777df000 	C:\Windows\system32\kernel32.dll
+0x000007fefd760000 - 0x000007fefd7cc000 	C:\Windows\system32\KERNELBASE.dll
+0x000007fefeaf0000 - 0x000007fefebcb000 	C:\Windows\system32\ADVAPI32.dll
+0x000007feff220000 - 0x000007feff2bf000 	C:\Windows\system32\msvcrt.dll
+0x000007feff050000 - 0x000007feff06f000 	C:\Windows\SYSTEM32\sechost.dll
+0x000007feffac0000 - 0x000007feffbed000 	C:\Windows\system32\RPCRT4.dll
+0x00000000777e0000 - 0x00000000778da000 	C:\Windows\system32\USER32.dll
+0x000007feff5f0000 - 0x000007feff657000 	C:\Windows\system32\GDI32.dll
+0x000007feff2f0000 - 0x000007feff2fe000 	C:\Windows\system32\LPK.dll
+0x000007feff150000 - 0x000007feff219000 	C:\Windows\system32\USP10.dll
+0x000007fefba10000 - 0x000007fefbc04000 	C:\Windows\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.7601.17514_none_fa396087175ac9ac\COMCTL32.dll
+0x000007fefe8b0000 - 0x000007fefe921000 	C:\Windows\system32\SHLWAPI.dll
+0x000007fefee10000 - 0x000007fefee3e000 	C:\Windows\system32\IMM32.DLL
+0x000007feff300000 - 0x000007feff409000 	C:\Windows\system32\MSCTF.dll
+0x0000000067370000 - 0x0000000067441000 	C:\Program Files\Java\jre7\bin\msvcr100.dll
+0x00000000564e0000 - 0x0000000056b9e000 	C:\Program Files\Java\jre7\bin\server\jvm.dll
+0x000007fefa2e0000 - 0x000007fefa2e9000 	C:\Windows\system32\WSOCK32.dll
+0x000007feff660000 - 0x000007feff6ad000 	C:\Windows\system32\WS2_32.dll
+0x000007feff2c0000 - 0x000007feff2c8000 	C:\Windows\system32\NSI.dll
+0x000007fefb9d0000 - 0x000007fefba0b000 	C:\Windows\system32\WINMM.dll
+0x0000000074070000 - 0x000000007407f000 	C:\Program Files\Java\jre7\bin\verify.dll
+0x0000000071100000 - 0x0000000071128000 	C:\Program Files\Java\jre7\bin\java.dll
+0x0000000077aa0000 - 0x0000000077aa7000 	C:\Windows\system32\PSAPI.DLL
+0x0000000071080000 - 0x0000000071095000 	C:\Program Files\Java\jre7\bin\zip.dll
+
+VM Arguments:
+jvm_args: -Xmx2800m -Dfile.encoding=UTF-8 -Xbootclasspath:D:\Setup\Android SDK\adt-bundle-windows-x86_64-20130514\sdk\platforms\android-17\android.jar 
+java_command: com.fourmob.datetimepicker.date.PersianCalendar
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+CLASSPATH=.;C:\Program Files (x86)\Java\jre6\lib\ext\QTJava.zip
+PATH=C:\Program Files (x86)\PC Connectivity Solution\;C:\Program Files\Common Files\Microsoft Shared\Windows Live;C:\Program Files (x86)\Common Files\Microsoft Shared\Windows Live;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\WIDCOMM\Bluetooth Software\;C:\Program Files\WIDCOMM\Bluetooth Software\syswow64;C:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files (x86)\Sony\VAIO Startup Setting Tool;C:\Program Files (x86)\Windows Live\Shared;c:\Program Files (x86)\Microsoft SQL Server\90\Tools\binn\;C:\Program Files (x86)\Common Files\HP\Digital Imaging\bin;C:\Program Files (x86)\HP\Digital Imaging\bin\;C:\Program Files (x86)\HP\Digital Imaging\bin\Qt\Qt 4.3.3;C:\cygnus\cygwin-b20\H-i586-cygwin32\bin;C:\Program Files (x86)\QuickTime\QTSystem\;C:\Program Files (x86)\MySQL\MySQL Utilities 1.3.4\;C:\Program Files\MySQL\MySQL Server 5.6\bin;C:\Users\maxi\Documents
+USERNAME=maxi
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 42 Stepping 7, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 7 Build 7601 Service Pack 1
+
+CPU:total 4 (2 cores per cpu, 2 threads per core) family 6 model 42 stepping 7, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, ht
+
+Memory: 4k page, physical 4103376k(205404k free), swap 8467032k(728368k free)
+
+vm_info: Java HotSpot(TM) 64-Bit Server VM (21.0-b09) for windows-amd64 JRE (1.7.0-ea-b139), built on Apr 21 2011 01:40:10 by "java_re" with unknown MS VC++:1600
+
+time: Mon Aug 11 00:49:36 2014
+elapsed time: 0 seconds
+

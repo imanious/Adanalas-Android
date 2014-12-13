@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="pinnedheaderlistview">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libaries/PinnedHeaderListView/bin/pinnedheaderlistview.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
