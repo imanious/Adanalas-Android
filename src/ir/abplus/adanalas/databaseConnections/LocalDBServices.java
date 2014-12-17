@@ -392,7 +392,7 @@ public class LocalDBServices {
     }
 
 
-    public static void editUnhandyTransaction(Context context,int category_index,int id,ArrayList<String> selectedTags,String description) {
+    public static void editUnhandyTransaction(Context context,int category_index,int id,ArrayList<String> selectedTags) {
 //        trHelper= new TransactoinDatabaseHelper(context);
         trHelper= TransactoinDatabaseHelper.getInstance(context);
         db = trHelper.getWritableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
@@ -401,7 +401,6 @@ public class LocalDBServices {
         String[] selectionArgs = { String.valueOf(id) };
         ContentValues values = new ContentValues();
         values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_CATEGORY, category_index);
-        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_DESCRIPTION, description);
         db.update(TransactionsContract.TransactionEntry.TABLE_NAME,values,selection,selectionArgs);
 
 

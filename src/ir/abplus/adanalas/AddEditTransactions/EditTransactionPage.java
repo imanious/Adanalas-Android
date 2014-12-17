@@ -42,8 +42,8 @@ public class EditTransactionPage extends Activity implements View.OnClickListene
     private int[] category_income_background;
     private int[] category_expense_backgroud;
     private boolean isExpense=true;
-    private EditText description;
-    private TextView accountNameTextView;
+    private TextView descriptionTextView;
+
     int tagLayoutHeight=0;
 
     @Override
@@ -73,11 +73,9 @@ public class EditTransactionPage extends Activity implements View.OnClickListene
 
         amountTextview=(TextView)findViewById(R.id.amount_text);
         amountTextview.setTypeface(TimelineActivity.persianTypeface);
-        description=(EditText)findViewById(R.id.descriptionText);
-        accountNameTextView=(TextView)findViewById(R.id.account_text);
+        descriptionTextView=(TextView)findViewById(R.id.description_text);
         dateTextView=(TextView)findViewById(R.id.date_text);
-        description.setTypeface(TimelineActivity.persianTypeface);
-        accountNameTextView.setTypeface(TimelineActivity.persianTypeface);
+        descriptionTextView.setTypeface(TimelineActivity.persianTypeface);
         dateTextView.setTypeface(TimelineActivity.persianTypeface);
         final LinearLayout tagLayout=(LinearLayout)findViewById(R.id.tags_layout);
 
@@ -242,14 +240,17 @@ public class EditTransactionPage extends Activity implements View.OnClickListene
                     double amount = c.getDouble(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_AMOUNT));
                     int category = c.getInt(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_CATEGORY));
                     isExpense = c.getInt(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_IS_EXPENSE))==0? false: true;
-                    String accountName=c.getString(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_ACCOUNT_NAME));
+                    String description=c.getString(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_DESCRIPTION));
                     String dateTime=c.getString(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_DATE_TIME));
                     c.close();
 
 
+                    descriptionTextView.setText("توضیحات: "+description);
+                    descriptionTextView.setTextSize(14);
+
                     amountTextview.setText("مبلغ: "+Currency.getStdAmount(amount)+" "+Currency.getCurrencyString());
                     amountTextview.setTextSize(16);
-                    accountNameTextView.setText(accountName);
+//                    accountNameTextView.setText(accountName);
 
                     int year = Integer.parseInt(dateTime.substring(0, 4));
                     int month = Integer.parseInt(dateTime.substring(4, 6));
@@ -548,6 +549,7 @@ public class EditTransactionPage extends Activity implements View.OnClickListene
 
 //        LinearLayout ll=(LinearLayout)findViewById(R.id.expense_tab);
 
+
         parentLayout.addView(pager);
         parentLayout.addView(title);
 
@@ -633,7 +635,7 @@ public class EditTransactionPage extends Activity implements View.OnClickListene
         }
         else
         {
-            LocalDBServices.editUnhandyTransaction(getBaseContext(),category_index,id,selectedTags,description.getText().toString());
+            LocalDBServices.editUnhandyTransaction(getBaseContext(),category_index,id,selectedTags);
 //            String selection = TransactionEntry._ID + " LIKE ?";
 //            String[] selectionArgs = { String.valueOf(id) };
 //

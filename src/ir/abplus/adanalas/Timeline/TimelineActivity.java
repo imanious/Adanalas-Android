@@ -266,15 +266,15 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 		addButton = (ImageButton) findViewById(R.id.add_button);
 		addButton.setOnClickListener(this);
 
-		try {
-			immediateRefreshTimeline();
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			immediateRefreshTimeline();
+//		} catch (NumberFormatException e) {
+//			e.printStackTrace();
+//		} catch (IllegalArgumentException e) {
+//			e.printStackTrace();
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		}
 		setPullToRefreshLabels();
 
         runOnUiThread(new Runnable() {
@@ -359,6 +359,7 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 //            SQLiteDatabase db = trHelper.getReadableDatabase();
 
 //			setCursor();
+            System.out.println("refreshTimeline called");
             makeItemFromCursor(LocalDBServices.getTransactionsFromDB(this,expenseSelection,incomeSelection,accountMenuAdapter.getRadioSelected(),accountMenuAdapter,filterDate));
 //            pHAdapter.notifyDataSetChanged();
 //            new ReceiverThread().run();
@@ -408,6 +409,7 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 //			SQLiteDatabase db = trHelper.getReadableDatabase();
 			
 //			setCursor();
+            System.out.println("immediateRefreshTimeline called");
             makeItemFromCursor(LocalDBServices.getTransactionsFromDB(this,expenseSelection,incomeSelection,accountMenuAdapter.getRadioSelected(),accountMenuAdapter,filterDate));
 
             pHAdapter.notifyDataSetChanged();
@@ -1023,6 +1025,8 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
     }
    private void makeItemFromCursor(Cursor c){
 
+
+
        c.moveToFirst();
        listItems.clear();
        if(c.getCount() == 0)
@@ -1113,6 +1117,7 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
            }
        }while(c.moveToNext());
        c.close();
+       System.out.println("cursor is closed");
        pHAdapter.setItems(listItems);
    }
 

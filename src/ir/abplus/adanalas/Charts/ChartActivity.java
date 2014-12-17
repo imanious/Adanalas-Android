@@ -859,5 +859,6 @@ public class ChartActivity extends FragmentActivity implements OnDateSetListener
              i++;
             }while(c2.moveToNext());
         }
+        c2.close();
     }
 }
