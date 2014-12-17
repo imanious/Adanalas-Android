@@ -135,17 +135,16 @@ public class FilterMenuAdapter extends SectionedBaseAdapter
 			holder.radioButton.setTypeface(TimelineActivity.persianTypeface);
 			holder.radioButton.setChecked(samePosition(section, position, radioButtonSelectedPosition));
 			holder.radioButton.setTag(new SectionPosition(section, position));
-			holder.radioButton.setOnClickListener(new View.OnClickListener()
-			{
-				@Override
-				public void onClick(View v)
-				{
-					radioButtonSelectedPosition = (SectionPosition) v.getTag();
-					notifyDataSetInvalidated();
-					if(parentActivity != null)
-						parentActivity.setFromDateTextview();
-				}
-			});
+			holder.radioButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    System.out.println();
+                    radioButtonSelectedPosition = (SectionPosition) v.getTag();
+                    notifyDataSetInvalidated();
+                    if (parentActivity != null)
+                        parentActivity.setFromDateTextview();
+                }
+            });
 			holder.radioButton.setText(items[section][position].text);
 			break;
 		case CHECK_BOX:
@@ -205,6 +204,15 @@ public class FilterMenuAdapter extends SectionedBaseAdapter
 	{
 		return radioButtonSelectedPosition.position;
 	}
+    public void setRadioSelected(){
+       for(int i=0;i<items.length;i++)
+           for(int j=0;j<items[i].length;j++)
+               if(this.items[i][j].isRadioButton && this.items[i][j].isChecked)
+               {
+                   radioButtonSelectedPosition.section = i;
+                   radioButtonSelectedPosition.position = j;
+               }
+    }
 	
 	public boolean[] getAccountsSelection()
 	{

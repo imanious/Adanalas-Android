@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.*;
 import android.widget.*;
@@ -58,8 +57,9 @@ public class AddPage1 extends Activity implements View.OnClickListener, View.OnL
     private ImageButton[] category_expense_buttons;
     private ImageButton[] category_income_buttons;
     //	private int[] category_background;
-    private int heightsize;
     private int widthsize;
+    private int heightsize;
+    private int layoutHeight;
     private CirclePageIndicator title;
     private CirclePageIndicator title2;
     private int[] category_income_background;
@@ -145,7 +145,9 @@ public class AddPage1 extends Activity implements View.OnClickListener, View.OnL
         Point size = new Point();
         display.getSize(size);
         widthsize = size.x;
-        heightsize = size.y;
+        layoutHeight = size.y;
+//        layoutHeight= ((int) (heightsize * (((LinearLayout.LayoutParams) .getLayoutParams()).weight / getWeightSum())));
+
 
 
         category_expense_buttons=new ImageButton[14];
@@ -202,7 +204,11 @@ public class AddPage1 extends Activity implements View.OnClickListener, View.OnL
             category_income_buttons[i].setOnLongClickListener(this);
         }
 
-        put2(widthsize);
+//        put2(widthsize);
+        LinearLayout ll=(LinearLayout)findViewById(R.id.expense_tab);
+        putCategories(widthsize,300,ll,category_expense_buttons);
+        ll=(LinearLayout)findViewById(R.id.income_tab);
+        putCategories(widthsize,300,ll,category_income_buttons);
 
         category_income_background=new int[11];
         category_income_background[0]=R.drawable.frame1;
@@ -287,6 +293,7 @@ public class AddPage1 extends Activity implements View.OnClickListener, View.OnL
             Bundle extras = intent.getExtras();
             if(extras != null)
             {
+                setTitle(R.string.edit_transaction);
                 id = extras.getInt(TRANSACTION_ID_KEY, Integer.MIN_VALUE);
                 if(id != Integer.MIN_VALUE)
                 {
@@ -297,7 +304,7 @@ public class AddPage1 extends Activity implements View.OnClickListener, View.OnL
                     double amount = c.getDouble(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_AMOUNT));
                     int category = c.getInt(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_CATEGORY));
                     isExpense = c.getInt(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_IS_EXPENSE))==0? false: true;
-
+                    c.close();
                     //TODO set is expense
 
                     cost_text.setText(Currency.getStdAmount(amount));
@@ -561,7 +568,7 @@ public class AddPage1 extends Activity implements View.OnClickListener, View.OnL
         if(item.getItemId()==R.id.next_button) {
             if(amountvalue==0)
                 Toast.makeText(this,"لطفا مبلغ تراکنش را وارد کنید", Toast.LENGTH_SHORT).show();
-            else if (category_index == Category.EXPENSE_UNCATEGORIZED || category_index == Category.INCOME_UNCATEGORIZED)
+            else if ((isExpense==true&&category_index == Category.EXPENSE_UNCATEGORIZED )|| (isExpense==false&&category_index == Category.INCOME_UNCATEGORIZED))
                 Toast.makeText(this, "لطفا دسته بندی تراکنش را معلوم کنید", Toast.LENGTH_SHORT).show();
             else {
                 Intent myIntent = new Intent(AddPage1.this, AddPage2.class);
@@ -712,55 +719,55 @@ public class AddPage1 extends Activity implements View.OnClickListener, View.OnL
         }
     }
 
-    public void put2(int widthsize){
-
-        int buttonWidth=0;
-        if(category_income_buttons.length>0)
-        {
-            category_expense_buttons[0].measure(0, 0);
-            buttonWidth=category_expense_buttons[0].getMeasuredWidth();
-        }
-
-
-        int nums=getNumberOfCulomns(widthsize,buttonWidth);
-        Log.e("number of buttons: ",nums+"");
-        Log.e("number of buttons2: ",widthsize+"  "+buttonWidth);
-
-        GridLayout gridLayout=new GridLayout(this);
-        gridLayout.setColumnCount(nums);
-
-        for(int i = 0; i < category_expense_buttons.length; i++)
-        {
-            GridLayout.Spec row = GridLayout.spec(i/nums);
-            GridLayout.Spec col = GridLayout.spec(nums-(i%nums)-1);
-//            ImageButton imageButton = new ImageButton(this);
-//            final int tmpIndex = i;
-            category_expense_buttons[i].setLayoutParams(new GridLayout.LayoutParams(row, col));
-//            imageButton.setBackgroundResource(Category.getExpenseIconID(i));
-            gridLayout.addView(category_expense_buttons[i]);
-        }
-
-        LinearLayout ll=(LinearLayout)findViewById(R.id.expense_tab);
-        ll.addView(gridLayout);
-
-        gridLayout=new GridLayout(this);
-        gridLayout.setColumnCount(nums);
-
-        for(int i = 0; i < category_income_buttons.length; i++)
-        {
-            GridLayout.Spec row = GridLayout.spec(i/nums);
-            GridLayout.Spec col = GridLayout.spec(nums-(i%nums)-1);
-//            ImageButton imageButton = new ImageButton(this);
-//            final int tmpIndex = i;
-            category_income_buttons[i].setLayoutParams(new GridLayout.LayoutParams(row, col));
-//            imageButton.setBackgroundResource(Category.getExpenseIconID(i));
-            gridLayout.addView(category_income_buttons[i]);
-        }
-
-        LinearLayout ll2=(LinearLayout)findViewById(R.id.income_tab);
-        ll2.addView(gridLayout);
-
-    }
+//    public void put2(int widthsize){
+//
+//        int buttonWidth=0;
+//        if(category_income_buttons.length>0)
+//        {
+//            category_expense_buttons[0].measure(0, 0);
+//            buttonWidth=category_expense_buttons[0].getMeasuredWidth();
+//        }
+//
+//
+//        int nums=getNumberOfCulomns(widthsize,buttonWidth);
+//        Log.e("number of buttons: ",nums+"");
+//        Log.e("number of buttons2: ",widthsize+"  "+buttonWidth);
+//
+//        GridLayout gridLayout=new GridLayout(this);
+//        gridLayout.setColumnCount(nums);
+//
+//        for(int i = 0; i < category_expense_buttons.length; i++)
+//        {
+//            GridLayout.Spec row = GridLayout.spec(i/nums);
+//            GridLayout.Spec col = GridLayout.spec(nums-(i%nums)-1);
+////            ImageButton imageButton = new ImageButton(this);
+////            final int tmpIndex = i;
+//            category_expense_buttons[i].setLayoutParams(new GridLayout.LayoutParams(row, col));
+////            imageButton.setBackgroundResource(Category.getExpenseIconID(i));
+//            gridLayout.addView(category_expense_buttons[i]);
+//        }
+//
+//        LinearLayout ll=(LinearLayout)findViewById(R.id.expense_tab);
+//        ll.addView(gridLayout);
+//
+//        gridLayout=new GridLayout(this);
+//        gridLayout.setColumnCount(nums);
+//
+//        for(int i = 0; i < category_income_buttons.length; i++)
+//        {
+//            GridLayout.Spec row = GridLayout.spec(i/nums);
+//            GridLayout.Spec col = GridLayout.spec(nums-(i%nums)-1);
+////            ImageButton imageButton = new ImageButton(this);
+////            final int tmpIndex = i;
+//            category_income_buttons[i].setLayoutParams(new GridLayout.LayoutParams(row, col));
+////            imageButton.setBackgroundResource(Category.getExpenseIconID(i));
+//            gridLayout.addView(category_income_buttons[i]);
+//        }
+//
+//        LinearLayout ll2=(LinearLayout)findViewById(R.id.income_tab);
+//        ll2.addView(gridLayout);
+//
+//    }
 
     @SuppressWarnings("deprecation")
     public void putChild_2(int widthSize, int hightSize) {
@@ -880,6 +887,82 @@ public class AddPage1 extends Activity implements View.OnClickListener, View.OnL
 //        pagerAdapter2.notifyDataSetChanged();
         //        title.forceLayout();
     }
+
+
+    public void putCategories(int screenWidth, int layoutHight,LinearLayout parentLayout,ImageButton[] inputButtons) {
+
+        int currentWidth=screenWidth;
+        int currentHight=layoutHight;
+//        currentHight-=300;
+//        currentHight=pager.measuredHeightSize;
+        ViewPagerAdapterLayout pagerAdapter = new ViewPagerAdapterLayout();
+        myViewPager pager=new myViewPager(this);
+        CirclePageIndicator title = new CirclePageIndicator(this);
+        pagerAdapter = new ViewPagerAdapterLayout();
+
+        title.setFillColor(0xff484848);
+        title.setStrokeColor(0xff303030);
+        pager.setAdapter(pagerAdapter);
+        title.setViewPager(pager);
+        title.setPadding(0,3,0,0);
+//        title.setLayoutParams(new ViewGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+
+        pager.setLayoutParams(new ViewGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+
+
+//        LinearLayout ll=(LinearLayout)findViewById(R.id.expense_tab);
+
+        parentLayout.addView(pager);
+        parentLayout.addView(title);
+
+        while (pagerAdapter.getCount()>0){
+            pagerAdapter.removeView(pager,0);
+        }
+
+        LinearLayout linearLayout=new LinearLayout(this);
+        linearLayout.setGravity(LinearLayout.VERTICAL);
+        LinearLayout linearLayoutVertical=new LinearLayout(this);
+        linearLayoutVertical.setGravity(Gravity.CENTER_HORIZONTAL);
+        linearLayoutVertical.setOrientation(LinearLayout.VERTICAL);
+        linearLayoutVertical.addView(linearLayout);
+        pagerAdapter.addView(linearLayoutVertical);
+        for (int i = 0; i < inputButtons.length; i++) {
+            inputButtons[i].measure(0, 0);
+            inputButtons[i].setTag(i);
+            if(currentWidth>inputButtons[i].getMeasuredWidth())
+            {
+                linearLayout.addView(inputButtons[i]);
+                currentWidth-=inputButtons[i].getMeasuredWidth();
+            }
+            else{
+
+                if(currentHight>inputButtons[i].getMeasuredHeight()){
+                    linearLayout=new LinearLayout(this);
+                    linearLayout.setGravity(LinearLayout.VERTICAL);
+                    linearLayoutVertical.addView(linearLayout);
+                    linearLayout.addView(inputButtons[i]);
+                    currentWidth=screenWidth-inputButtons[i].getMeasuredWidth();
+                    currentHight-=inputButtons[i].getMeasuredHeight();
+                }
+                else {
+                    currentHight=layoutHight;
+                    linearLayout=new LinearLayout(this);
+                    linearLayout.setGravity(LinearLayout.VERTICAL);
+                    linearLayoutVertical=new LinearLayout(this);
+                    linearLayoutVertical.setOrientation(LinearLayout.VERTICAL);
+                    linearLayoutVertical.setGravity(Gravity.CENTER_HORIZONTAL);
+                    linearLayoutVertical.addView(linearLayout);
+                    linearLayout.addView(inputButtons[i]);
+                    pagerAdapter.addView(linearLayoutVertical);
+                    currentWidth=screenWidth-inputButtons[i].getMeasuredWidth();
+                }
+            }
+        }
+        title.notifyDataSetChanged();
+        pagerAdapter.notifyDataSetChanged();
+    }
+
+
     public void addTransationToDatabase()
     {
         double amountValue=Double.parseDouble(cost_string);
@@ -913,7 +996,7 @@ public class AddPage1 extends Activity implements View.OnClickListener, View.OnL
         if(id == Integer.MIN_VALUE)
         {
 //            db.insert(TransactionEntry.TABLE_NAME, null, values);
-            LocalDBServices.addNewTransaction(this,dateTime,amountValue,isExpense, SettingActivity.defaultAccount,category_index,null);
+            LocalDBServices.addNewTransaction(this,dateTime,amountValue,isExpense, SettingActivity.defaultAccount,category_index,null,null);
         }
         else
         {
@@ -925,7 +1008,7 @@ public class AddPage1 extends Activity implements View.OnClickListener, View.OnL
 //            String[] selectionArgsTags = { String.valueOf(id) };
 //            db.delete(TransactionsContract.TagsEntry.TABLE_NAME, selectionTags, selectionArgsTags);
 
-            LocalDBServices.editHandyTransaction(this,dateTime,amountValue,isExpense,SettingActivity.defaultAccount,category_index,id,null);
+            LocalDBServices.editHandyTransaction(this,null,amountValue,isExpense,null,category_index,id,null,null);
         }
     }
 

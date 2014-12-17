@@ -10,6 +10,7 @@ import android.util.TypedValue;
 import android.view.*;
 import android.widget.*;
 import com.fourmob.datetimepicker.date.PersianCalendar;
+import com.viewpagerindicator.CirclePageIndicator;
 import ir.abplus.adanalas.Libraries.*;
 import ir.abplus.adanalas.Libraries.TransactionsContract.TransactionEntry;
 import ir.abplus.adanalas.R;
@@ -261,7 +262,7 @@ public class EditTransactionPage extends Activity implements View.OnClickListene
                     Time time = new Time((short)hour, (short)minute);
 
 
-                    dateTextView.setText("تاریخ: "+date.toString()+"     ساعت: "+time);
+                    dateTextView.setText(date.toString()+"     ساعت: "+time);
 //					System.out.println("before:  "+cost_string);
 //                    if(cost_string.charAt(cost_string.length()-1) == '0')
 //                    {
@@ -322,7 +323,12 @@ public class EditTransactionPage extends Activity implements View.OnClickListene
 
 
 
-        put2(widthsize);
+        LinearLayout ll=(LinearLayout)findViewById(R.id.category_layout);
+//        put2(widthsize);
+        if(isExpense)
+            putCategories(widthsize,300,ll,category_expense_buttons);
+        else
+            putCategories(widthsize,300,ll,category_income_buttons);
 
         tagLayoutHeight= ((int) (heightsize * (((LinearLayout.LayoutParams) tagLayout.getLayoutParams()).weight / parentLayout.getWeightSum())));
 //        tagLayoutHeight=((LinearLayout.LayoutParams) tagLayout.getLayoutParams()).weight) /(((LinearLayout.LayoutParams) tagLayout.getLayoutParams()).weight)*;
@@ -519,6 +525,80 @@ public class EditTransactionPage extends Activity implements View.OnClickListene
 
     }
 
+    public void putCategories(int screenWidth, int layoutHight,LinearLayout parentLayout,ImageButton[] inputButtons) {
+
+        int currentWidth=screenWidth;
+        int currentHight=layoutHight;
+//        currentHight-=300;
+//        currentHight=pager.measuredHeightSize;
+        ViewPagerAdapterLayout pagerAdapter = new ViewPagerAdapterLayout();
+        myViewPager pager=new myViewPager(this);
+        CirclePageIndicator title = new CirclePageIndicator(this);
+        pagerAdapter = new ViewPagerAdapterLayout();
+
+        title.setFillColor(0xff484848);
+        title.setStrokeColor(0xff303030);
+        pager.setAdapter(pagerAdapter);
+        title.setViewPager(pager);
+        title.setPadding(0,3,0,0);
+//        title.setLayoutParams(new ViewGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+
+        pager.setLayoutParams(new ViewGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+
+
+//        LinearLayout ll=(LinearLayout)findViewById(R.id.expense_tab);
+
+        parentLayout.addView(pager);
+        parentLayout.addView(title);
+
+        while (pagerAdapter.getCount()>0){
+            pagerAdapter.removeView(pager,0);
+        }
+
+        LinearLayout linearLayout=new LinearLayout(this);
+        linearLayout.setGravity(LinearLayout.VERTICAL);
+        LinearLayout linearLayoutVertical=new LinearLayout(this);
+        linearLayoutVertical.setGravity(Gravity.CENTER_HORIZONTAL);
+        linearLayoutVertical.setOrientation(LinearLayout.VERTICAL);
+        linearLayoutVertical.addView(linearLayout);
+        pagerAdapter.addView(linearLayoutVertical);
+        for (int i = 0; i < inputButtons.length; i++) {
+            inputButtons[i].measure(0, 0);
+            inputButtons[i].setTag(i);
+            if(currentWidth>inputButtons[i].getMeasuredWidth())
+            {
+                linearLayout.addView(inputButtons[i]);
+                currentWidth-=inputButtons[i].getMeasuredWidth();
+            }
+            else{
+
+                if(currentHight>inputButtons[i].getMeasuredHeight()){
+                    linearLayout=new LinearLayout(this);
+                    linearLayout.setGravity(LinearLayout.VERTICAL);
+                    linearLayoutVertical.addView(linearLayout);
+                    linearLayout.addView(inputButtons[i]);
+                    currentWidth=screenWidth-inputButtons[i].getMeasuredWidth();
+                    currentHight-=inputButtons[i].getMeasuredHeight();
+                }
+                else {
+                    currentHight=layoutHight;
+                    linearLayout=new LinearLayout(this);
+                    linearLayout.setGravity(LinearLayout.VERTICAL);
+                    linearLayoutVertical=new LinearLayout(this);
+                    linearLayoutVertical.setOrientation(LinearLayout.VERTICAL);
+                    linearLayoutVertical.setGravity(Gravity.CENTER_HORIZONTAL);
+                    linearLayoutVertical.addView(linearLayout);
+                    linearLayout.addView(inputButtons[i]);
+                    pagerAdapter.addView(linearLayoutVertical);
+                    currentWidth=screenWidth-inputButtons[i].getMeasuredWidth();
+                }
+            }
+        }
+        title.notifyDataSetChanged();
+        pagerAdapter.notifyDataSetChanged();
+    }
+
+
     public void addTransationToDatabase()
     {
 //        double amountValue=Double.parseDouble(cost_string);
@@ -553,7 +633,7 @@ public class EditTransactionPage extends Activity implements View.OnClickListene
         }
         else
         {
-            LocalDBServices.editUnhandyTransaction(getBaseContext(),category_index,id,selectedTags);
+            LocalDBServices.editUnhandyTransaction(getBaseContext(),category_index,id,selectedTags,description.getText().toString());
 //            String selection = TransactionEntry._ID + " LIKE ?";
 //            String[] selectionArgs = { String.valueOf(id) };
 //

@@ -5,18 +5,15 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.View;
@@ -85,7 +82,7 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 	ArrayList<FilterMenuItem> accountsAndTimeFilter = new ArrayList<FilterMenuItem>();
 
 	PullToRefreshPinnedHeaderListView phList;
-	TimelinePinnedHeaderAdapter2 pHAdapter;
+	TimelinePinnedHeaderAdapter pHAdapter;
 	public static FilterMenuAdapter accountMenuAdapter;
 
 	String titleText;
@@ -102,6 +99,7 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
     private String where;
     private LinearLayout totalIncomeCurrencyLayout;
     private LinearLayout totalExpenseCurrencyLayout;
+    private String PREFRENCES_FILE ="preferences";
 
     @Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -225,20 +223,13 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 
 		screenDpWidth = displayMetrics.widthPixels / displayMetrics.density;
 
-        addAccountsToList();
-		
-		accountsAndTimeFilter.add(new FilterMenuItem(getResources().getString(R.string.time_interval),
-				false, getResources().getString(R.string.daily), true, 0));
-		accountsAndTimeFilter.add(new FilterMenuItem("", false,
-				getResources().getString(R.string.weekly), true, 0));
-		accountsAndTimeFilter.add(new FilterMenuItem("", false,
-				getResources().getString(R.string.monthly), true, 0));
-		accountsAndTimeFilter.add(new FilterMenuItem("", true,
-				getResources().getString(R.string.yearly), true, 0));
+        addAccountsAndTimesToList();
+
+
 
 		// timeline listview
 		phList = (PullToRefreshPinnedHeaderListView) findViewById(R.id.pinnedHeaderListView1);
-		pHAdapter = new TimelinePinnedHeaderAdapter2(this,getResources(),(int)(screenDpWidth/2)-50);
+		pHAdapter = new TimelinePinnedHeaderAdapter(this,getResources(),(int)(screenDpWidth/2)-50);
 		pHAdapter.setItems(listItems);
 		phList.setPullToRefreshOverScrollEnabled(false);
 		phList.setMode(Mode.BOTH);
@@ -292,9 +283,11 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 
             }
         });
+
+        getSharedPreferences();
 	}
 
-    private void addAccountsToList() {
+    private void addAccountsAndTimesToList() {
 //        SQLiteDatabase db = trHelper.getReadableDatabase();
 //        Cursor c2;
 //        String query="select "+ TransactionsContract.Accounts.COLUMN_NAME_Account_Name+
@@ -303,7 +296,6 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 //        c2=db.rawQuery(query,null);
         Cursor c2;
         c2= LocalDBServices.getAccountList(this);
-        startManagingCursor(c2);
         c2.moveToFirst();
         if(c2.getCount() != 0)
         {
@@ -311,7 +303,6 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
             {
 
                 String accountName=c2.getString(c2.getColumnIndexOrThrow(TransactionsContract.Accounts.COLUMN_NAME_Account_Name));
-                System.out.println("account name is :"+accountName);
                 if(c2!=null){
                     if(c2.isFirst())
                         accountsAndTimeFilter.add(new FilterMenuItem("حساب‌ها", true,accountName, false, R.drawable.vaam_raw));
@@ -320,6 +311,16 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
                 }
             }while(c2.moveToNext());
         }
+        c2.close();
+
+        accountsAndTimeFilter.add(new FilterMenuItem(getResources().getString(R.string.time_interval),
+                false, getResources().getString(R.string.daily), true, 0));
+        accountsAndTimeFilter.add(new FilterMenuItem("", false,
+                getResources().getString(R.string.weekly), true, 0));
+        accountsAndTimeFilter.add(new FilterMenuItem("", false,
+                getResources().getString(R.string.monthly), true, 0));
+        accountsAndTimeFilter.add(new FilterMenuItem("", true,
+                getResources().getString(R.string.yearly), true, 0));
     }
 
 
@@ -366,7 +367,6 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
             c.moveToFirst();
             final double totalExp = c.getDouble(c.getColumnIndexOrThrow(colName));
             c.close();
-            Log.e("test","total is here you are! :"+totalExp);
 //            totalExpense.setText("  "+Utils.toPersianNumbers(Currency.getStandardAmount(totalExp)));
 
             colName = "totalIncome";
@@ -388,7 +388,6 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    System.out.println("jigar is here");
                     totalExpense.setText("  "+Utils.toPersianNumbers(Currency.getStdAmount(totalExp)));
                     totalIncome.setText("  "+Utils.toPersianNumbers(Currency.getStdAmount(totalInc)));
                 }
@@ -481,6 +480,23 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 	protected void onStop()
 	{
 		super.onStop();
+        SharedPreferences settings = getSharedPreferences(PREFRENCES_FILE, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        for(int i=0;i<accountsAndTimeFilter.size();i++){
+            if (!accountsAndTimeFilter.get(i).isRadioButton)
+            editor.putBoolean("AccountsAndTime:"+accountsAndTimeFilter.get(i).text,accountsAndTimeFilter.get(i).isChecked);
+            else
+            editor.putBoolean("AccountsAndTime:"+accountsAndTimeFilter.get(i).text,false);
+        }
+        editor.putBoolean("AccountsAndTime:"+getSelectedRadioTimeString(),true);
+        for(int i=0;i<expenseSelection.length;i++){
+            editor.putBoolean("expenseCatId:"+i,expenseSelection[i]);
+        }
+        for(int i=0;i<incomeSelection.length;i++){
+            editor.putBoolean("incomeCatId:"+i,incomeSelection[i]);
+        }
+        // Commit the edits!
+        editor.commit();
 	}
 
 	@Override
@@ -607,7 +623,6 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 //	        ColorMatrixColorFilter cf = new ColorMatrixColorFilter(cm);
 //	        Drawable myDrawable = getResources().getDrawable(R.drawable.big_add_button);
 //			myDrawable .setColorFilter(cf);
-            System.out.println("&&&&"+Currency.getCurrency());
 			button.setSelected(!button.isSelected());
 			Intent intent = new Intent(TimelineActivity.this, AddPage1.class);
 			TimelineActivity.this.startActivity(intent);
@@ -649,7 +664,6 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 			pHAdapter.setItems(listItems);
 			pHAdapter.notifyDataSetChanged();
 			phList.onRefreshComplete();
-			System.out.println("sync!!!");
 			setPullToRefreshLabels();
 			setTitleText();
 			super.onPostExecute(result);
@@ -715,7 +729,6 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 		if(shouldSync())
 		{
 			// Do work to refresh the list here.
-			System.out.println("sync");
 			new SyncTask().execute();
 			return;
 		}
@@ -1172,8 +1185,7 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
                public void onClick(View button)
                {
                    expenseSelection[tmpIndex] = !expenseSelection[tmpIndex];
-                   button.setSelected(!button.isSelected());
-                   if(button.isSelected())
+                   if(!expenseSelection[tmpIndex])
                    {
                        button.getBackground().setAlpha(HALF_TRANSPARENT);
                    }
@@ -1206,8 +1218,8 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
                public void onClick(View button)
                {
                    incomeSelection[tmpIndex] = !incomeSelection[tmpIndex];
-                   button.setSelected(!button.isSelected());
-                   if(button.isSelected())
+//                   button.setSelected(!button.isSelected());
+                   if(!incomeSelection[tmpIndex])
                    {
                        button.getBackground().setAlpha(HALF_TRANSPARENT);
                    }
@@ -1224,7 +1236,29 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 
    }
 
+private String getSelectedRadioTimeString(){
+    if(accountMenuAdapter.getRadioSelected()==YEARLY)
+        return getResources().getString(R.string.yearly);
+    else if(accountMenuAdapter.getRadioSelected()==MONTHLY)
+        return getResources().getString(R.string.monthly);
+    else if(accountMenuAdapter.getRadioSelected()==WEEKLY)
+        return getResources().getString(R.string.weekly);
+    else
+        return getResources().getString(R.string.daily);
+}
+private  void getSharedPreferences(){
+    SharedPreferences preferences=getSharedPreferences(PREFRENCES_FILE,0);
+    for(int i=0;i<accountsAndTimeFilter.size();i++){
+        accountsAndTimeFilter.get(i).isChecked=preferences.getBoolean("AccountsAndTime:"+accountsAndTimeFilter.get(i).text,true);
+    }
+    accountMenuAdapter.setRadioSelected();
+    for(int i=0;i<expenseSelection.length;i++){
+        expenseSelection[i]=preferences.getBoolean("expenseCatId:"+i,true);
+    }
+    for(int i=0;i<incomeSelection.length;i++){
+        incomeSelection[i]=preferences.getBoolean("incomeCatId:"+i,true);
+    }
 
-
+}
 
 }

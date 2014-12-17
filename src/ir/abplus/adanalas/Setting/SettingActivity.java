@@ -195,7 +195,7 @@ public class SettingActivity extends Activity {
                 values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_ACCOUNT_NAME,t.accountName);
 
 //                db.insert(TransactionsContract.TransactionEntry.TABLE_NAME, null, values);
-                LocalDBServices.addNewTransaction(getBaseContext(),dateTime,t.amount,t.isExpence,t.accountName,t.categoryID,null);
+                LocalDBServices.addNewTransaction(getBaseContext(),dateTime,t.amount,t.isExpence,t.accountName,t.categoryID,null,null);
             }
 
     }

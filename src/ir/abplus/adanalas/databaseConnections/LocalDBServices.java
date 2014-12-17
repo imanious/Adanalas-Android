@@ -327,7 +327,7 @@ public class LocalDBServices {
     }
 
 
-    public static void addNewTransaction(Context context,String dateTime, double amountValue, boolean isExpense, String defaultAccount, int category_index,ArrayList<String> selectedTags) {
+    public static void addNewTransaction(Context context,String dateTime, double amountValue, boolean isExpense, String defaultAccount, int category_index,ArrayList<String> selectedTags,String description) {
 //        trHelper= new TransactoinDatabaseHelper(context);
         trHelper= TransactoinDatabaseHelper.getInstance(context);
         db = trHelper.getWritableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
@@ -337,6 +337,8 @@ public class LocalDBServices {
         values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_IS_EXPENSE, isExpense);
         values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_ACCOUNT_NAME,defaultAccount);
         values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_CATEGORY, category_index);
+        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_DESCRIPTION, description);
+
         Long transactionID=db.insert(TransactionsContract.TransactionEntry.TABLE_NAME, null, values);
 
         if(selectedTags!=null){
@@ -350,7 +352,7 @@ public class LocalDBServices {
         }
     }
 
-    public static void editHandyTransaction(Context context, String dateTime, double amountValue, boolean isExpense, String defaultAccount, int category_index, int id, ArrayList<String> selectedTags) {
+    public static void editHandyTransaction(Context context, String dateTime, double amountValue, boolean isExpense, String defaultAccount, int category_index, int id, ArrayList<String> selectedTags,String description) {
 //        trHelper= new TransactoinDatabaseHelper(context);
         trHelper= TransactoinDatabaseHelper.getInstance(context);
         db = trHelper.getWritableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
@@ -358,21 +360,27 @@ public class LocalDBServices {
 
         String[] selectionArgs = { String.valueOf(id) };
         ContentValues values = new ContentValues();
-        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_DATE_TIME, dateTime);
+
         values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_AMOUNT, Currency.allToRial(amountValue));
         values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_IS_EXPENSE, isExpense);
-        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_ACCOUNT_NAME,defaultAccount);
         values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_CATEGORY, category_index);
 
+        if(dateTime!=null)
+        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_DATE_TIME, dateTime);
+        if(defaultAccount!=null)
+        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_ACCOUNT_NAME,defaultAccount);
+        if(description!=null)
+        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_DESCRIPTION, description);
         db.update(TransactionsContract.TransactionEntry.TABLE_NAME,values,selection,selectionArgs);
 
 
-        String selectionTags = TransactionsContract.TagsEntry.COLUMN_NAME_TRANSACTION_ID + " LIKE ?";
-        String[] selectionArgsTags = { String.valueOf(id) };
-        db.delete(TransactionsContract.TagsEntry.TABLE_NAME, selectionTags, selectionArgsTags);
 
             //TODO distinct
         if(selectedTags!=null) {
+            String selectionTags = TransactionsContract.TagsEntry.COLUMN_NAME_TRANSACTION_ID + " LIKE ?";
+            String[] selectionArgsTags = { String.valueOf(id) };
+            db.delete(TransactionsContract.TagsEntry.TABLE_NAME, selectionTags, selectionArgsTags);
+
             for (String tag : selectedTags) {
                 values = new ContentValues();
                 values.put(TransactionsContract.TagsEntry.COLUMN_NAME_TRANSACTION_ID, id);
@@ -384,7 +392,7 @@ public class LocalDBServices {
     }
 
 
-    public static void editUnhandyTransaction(Context context,int category_index,int id,ArrayList<String> selectedTags) {
+    public static void editUnhandyTransaction(Context context,int category_index,int id,ArrayList<String> selectedTags,String description) {
 //        trHelper= new TransactoinDatabaseHelper(context);
         trHelper= TransactoinDatabaseHelper.getInstance(context);
         db = trHelper.getWritableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
@@ -393,7 +401,7 @@ public class LocalDBServices {
         String[] selectionArgs = { String.valueOf(id) };
         ContentValues values = new ContentValues();
         values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_CATEGORY, category_index);
-
+        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_DESCRIPTION, description);
         db.update(TransactionsContract.TransactionEntry.TABLE_NAME,values,selection,selectionArgs);
 
 

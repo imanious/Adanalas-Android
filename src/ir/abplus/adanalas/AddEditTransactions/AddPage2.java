@@ -187,6 +187,8 @@ public class AddPage2 extends FragmentActivity implements View.OnTouchListener,V
                     category_index = c.getInt(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_CATEGORY));
                     isExpense = c.getInt(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_IS_EXPENSE))==1? true: false;
                     String dateTime = c.getString(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_DATE_TIME));
+
+
                     //TODO add new selected tags to usertags
 
                     int year = Integer.parseInt(dateTime.substring(0, 4));
@@ -225,16 +227,19 @@ public class AddPage2 extends FragmentActivity implements View.OnTouchListener,V
 //                            " FROM " +TagsEntry.TABLE_NAME +
 //                            " WHERE "+TagsEntry.COLUMN_NAME_TRANSACTION_ID + "=" + id;
 //                    c = db.rawQuery(query, null);
-                    c= LocalDBServices.getTagsFromID(id);
-                    c.moveToFirst();
+                    c.close();
 
-                    if(c.getCount() != 0)
+                    Cursor c2= LocalDBServices.getTagsFromID(id);
+                    c2.moveToFirst();
+
+                    if(c2.getCount() != 0)
                     {
                         do
                         {
-                            selectedTags.add(c.getString(c.getColumnIndexOrThrow(TagsEntry.COLUMN_NAME_TAG)));
-                        }while(c.moveToNext());
+                            selectedTags.add(c2.getString(c2.getColumnIndexOrThrow(TagsEntry.COLUMN_NAME_TAG)));
+                        }while(c2.moveToNext());
                     }
+                    c2.close();
                 }
             }
         }
@@ -657,7 +662,7 @@ public class AddPage2 extends FragmentActivity implements View.OnTouchListener,V
 
 //            transactionID = db.insert(TransactionEntry.TABLE_NAME, null, values);
 
-            LocalDBServices.addNewTransaction(this,dateTime,amount,isExpense,accountSpinner.getSelectedItem().toString(),category_index,selectedTags);
+            LocalDBServices.addNewTransaction(this,dateTime,amount,isExpense,accountSpinner.getSelectedItem().toString(),category_index,selectedTags,description);
 //
 //            for(String tag: selectedTags)
 //            {
@@ -669,7 +674,7 @@ public class AddPage2 extends FragmentActivity implements View.OnTouchListener,V
         }
         else
         {
-            LocalDBServices.editHandyTransaction(this,dateTime,amount,isExpense,accountSpinner.getSelectedItem().toString(),category_index,id,selectedTags);
+            LocalDBServices.editHandyTransaction(this,dateTime,amount,isExpense,accountSpinner.getSelectedItem().toString(),category_index,id,selectedTags,description);
 //            String selection = TransactionEntry._ID + " LIKE ?";
 //            String[] selectionArgs = { String.valueOf(id) };
 //
@@ -706,6 +711,7 @@ public class AddPage2 extends FragmentActivity implements View.OnTouchListener,V
                 accountsList.add(c.getString(c.getColumnIndexOrThrow(TransactionsContract.Accounts.COLUMN_NAME_Account_Name)));
             }while(c.moveToNext());
         }
+        c.close();
     }
 
     @Override
