@@ -93,7 +93,7 @@ public class AddPage2 extends FragmentActivity implements View.OnTouchListener,V
     private EditText descp;
     private Spinner accountSpinner;
 
-    private int id = Integer.MIN_VALUE;
+    private String id = "null";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -163,23 +163,17 @@ public class AddPage2 extends FragmentActivity implements View.OnTouchListener,V
         descp = (EditText)findViewById(R.id.descriptionText);
         descp.setTypeface(TimelineActivity.persianTypeface);
 
+        Log.e("debug","id before intent extra"+id);
         Intent intent = getIntent();
         if(intent != null)
         {
             Bundle extras = intent.getExtras();
             if(extras != null)
             {
-                id = extras.getInt(AddPage1.TRANSACTION_ID_KEY, Integer.MIN_VALUE);
-                if(id != Integer.MIN_VALUE)
+                id = extras.getString(AddPage1.TRANSACTION_ID_KEY, "null");
+                if(!id.equals("null"))
                 {
-//                    SQLiteDatabase db = trHelper.getReadableDatabase();
-//                    String query;
-//                    Cursor c;
-//
-//                    query = "SELECT *" +
-//                            " FROM "+TransactionEntry.TABLE_NAME +
-//                            " WHERE "+TransactionEntry._ID + "=" + id;
-//                    c = db.rawQuery(query, null);
+                    Log.e("debug","id in intent extra"+id);
                     Cursor c=LocalDBServices.getTransactionFromID(id);
                     c.moveToFirst();
 
@@ -639,8 +633,7 @@ public class AddPage2 extends FragmentActivity implements View.OnTouchListener,V
         return super.onOptionsItemSelected(item);
     }
 
-    public void addTransationToDatabase()
-    {
+    public void addTransationToDatabase(){
 //        SQLiteDatabase db = trHelper.getWritableDatabase();
 
         PersianDate date = new PersianDate((short)selectedDay, (short)selectedMonth, (short)selectedYear, PersianCalendar.weekdayFullNames[selectedWeekday]);
@@ -656,12 +649,13 @@ public class AddPage2 extends FragmentActivity implements View.OnTouchListener,V
         values.put(TransactionEntry.COLUMN_NAME_CATEGORY, category_index);
         values.put(TransactionEntry.COLUMN_NAME_DESCRIPTION, description);
         values.put(TransactionEntry.COLUMN_NAME_ACCOUNT_NAME,accountName);
-        if(id == Integer.MIN_VALUE)
+        if(id.equals("null"))
         {
 //            long transactionID;
 
 //            transactionID = db.insert(TransactionEntry.TABLE_NAME, null, values);
 
+            Log.e("debug","newTransactionCalled : "+id);
             LocalDBServices.addNewTransaction(this,dateTime,amount,isExpense,accountSpinner.getSelectedItem().toString(),category_index,selectedTags,description);
 //
 //            for(String tag: selectedTags)
@@ -674,6 +668,7 @@ public class AddPage2 extends FragmentActivity implements View.OnTouchListener,V
         }
         else
         {
+            Log.e("debug","editHandyCalled : "+id);
             LocalDBServices.editHandyTransaction(this,dateTime,amount,isExpense,accountSpinner.getSelectedItem().toString(),category_index,id,selectedTags,description);
 //            String selection = TransactionEntry._ID + " LIKE ?";
 //            String[] selectionArgs = { String.valueOf(id) };

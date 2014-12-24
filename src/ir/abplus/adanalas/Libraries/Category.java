@@ -1,5 +1,6 @@
 package ir.abplus.adanalas.Libraries;
 
+import android.util.Log;
 import ir.abplus.adanalas.R;
 
 public class Category
@@ -68,7 +69,73 @@ public class Category
 		incomeCategories[YARANEH] = "یارانه";
 		incomeCategories[INCOME_UNCATEGORIZED] = "دسته‌بندی‌نشده";
 	}
-	
+
+    public static int getExpenseCategoryID(String expenseString){
+        if(expenseString.equals("household"))
+            return SAKHTEMAN;
+        else if(expenseString.equals("food"))
+            return KHORAK;
+        else if(expenseString.equals("transportation"))
+            return RAFTO_AMAD;
+        else if(expenseString.equals("education"))
+            return AMOOZESH;
+        else if(expenseString.equals("bill"))
+            return GHABZ;
+        else if(expenseString.equals("hobby"))
+            return VARZESH;
+        else if(expenseString.equals("healthcare"))
+            return  DARMAN;
+        else if(expenseString.equals("hygiene"))
+            return ARAYESH;
+        else if(expenseString.equals("clothing"))
+            return POOSHAK;
+        else if(expenseString.equals("personal"))
+            return SHAKHSHI;
+        else if(expenseString.equals("present"))
+            return HADIYE_KHEYRIE;
+        else if(expenseString.equals("lend"))
+            return GHARZ;
+        else if(expenseString.equals("commitment"))
+            return AGHSAAT;
+        else if(expenseString.equals("investment"))
+            return SARMAYE;
+        else if(expenseString.equals("expense"))
+            return EXPENSE_UNCATEGORIZED;
+        else{
+            Log.e("Bug","Category.getExpenseID:Category String is not valid");
+            return -1;}
+    }
+    public static int getIncomeCategoryID(String incomeString){
+        if(incomeString.equals("bonus"))
+            return PADASH;
+        else if(incomeString.equals("salary"))
+            return DASTMOZD;
+        else if(incomeString.equals("subsidy"))
+            return YARANEH;
+        else if(incomeString.equals("gift"))
+            return HADIYE;
+        else if(incomeString.equals("rent"))
+            return EJAREH;
+        else if(incomeString.equals("interest"))
+            return SOOD;
+        else if(incomeString.equals("compensation"))
+            return  KHESARAT;
+        else if(incomeString.equals("sale"))
+            return FOROOSH_DARAYI;
+        else if(incomeString.equals("trust"))
+            return VADIE_DARYAFTI;
+        else if(incomeString.equals("borrow"))
+            return TALAB;
+        else if(incomeString.equals("loan"))
+            return VAAM;
+        else if(incomeString.equals("income"))
+            return INCOME_UNCATEGORIZED;
+        else{
+            Log.e("Bug","Category.getIncomeID:Category String is not valid");
+            return -1;}
+    }
+
+
 	public static int getExpenseIconID(int id)
 	{
 		switch (id) {

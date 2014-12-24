@@ -23,7 +23,7 @@ public class EditTransactionPage extends Activity implements View.OnClickListene
 
 
     private static int category_index;
-    private int id = Integer.MIN_VALUE;
+    private String id = "null";
     private ArrayList<String> selectedTags = new ArrayList<String>();
 
 
@@ -223,8 +223,8 @@ public class EditTransactionPage extends Activity implements View.OnClickListene
             Bundle extras = intent.getExtras();
             if(extras != null)
             {
-                id = extras.getInt(AddPage1.TRANSACTION_ID_KEY, Integer.MIN_VALUE);
-                if(id != Integer.MIN_VALUE)
+                id = extras.getString(AddPage1.TRANSACTION_ID_KEY, "null");
+                if(!id.equals("null"))
                 {
 //                    SQLiteDatabase db = trHelper.getReadableDatabase();
 //                    String query;
@@ -628,7 +628,7 @@ public class EditTransactionPage extends Activity implements View.OnClickListene
 //        values.put(TransactionEntry.COLUMN_NAME_CATEGORY, category_index);
 //        values.put(TransactionEntry.COLUMN_NAME_DESCRIPTION,description.getText().toString());
 
-        if(id == Integer.MIN_VALUE)
+        if(id.equals("null"))
         {
              Log.e("error","transaction not found");
 

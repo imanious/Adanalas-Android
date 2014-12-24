@@ -72,7 +72,8 @@ public final class TransactionsContract
                     Accounts._ID + " INTEGER PRIMARY KEY,\n" +
                     Accounts.COLUMN_NAME_Account_ID + INTEGER_TYPE + ",\n" +
                     Accounts.COLUMN_NAME_Account_Name + TEXT_TYPE + ",\n" +
-                    Accounts.COLUMN_NAME_Account_Type + TEXT_TYPE +
+                    Accounts.COLUMN_NAME_Account_Type + TEXT_TYPE + ",\n" +
+                    " UNIQUE( "+Accounts.COLUMN_NAME_Account_Name+" ) "+
                     " )";
 
 

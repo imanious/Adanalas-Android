@@ -14,13 +14,13 @@ public class TimelineItem
 	public PersianDate date;
 	public Time time;
 	public int categoryID;
-	int transactionID;
+	String transactionID;
     ArrayList<String> tags;
     LinearLayout tagLayout;
     String description;
     public String accountName;
 
-	public TimelineItem(int transactionID, boolean isExpence, double amount, PersianDate date, Time time, int categoryID,ArrayList<String> tags,boolean isSelected,String description, String accountName)
+	public TimelineItem(String transactionID, boolean isExpence, double amount, PersianDate date, Time time, int categoryID,ArrayList<String> tags,boolean isSelected,String description, String accountName)
 	{
 		this.transactionID = transactionID;
 		this.isExpence = isExpence;

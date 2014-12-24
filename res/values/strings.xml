@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+
+    <string name="username">نام کاربری</string>
+    <string name="password">رمز عبور</string>
+    <string name="enter">ورود</string>
+
     <string name="app_name">آدانالس</string>
     <string name="new_transaction">تراکنش جدید</string>
     <string name="edit_transaction">اصلاح تراکنش</string>

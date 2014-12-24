@@ -22,49 +22,58 @@ public class LocalDBServices {
     public static String where;
     public static Cursor cursor;
 
-//
-//    private void InitializeSQLCipher() {
-//        TransactoinDatabaseHelper.
-//    }
 
-
-
-    public static boolean deleteTransactionFromDB(Context context,String[] selectionArgs){
+    public static void addNewTransaction(Context context,String dateTime, double amountValue, boolean isExpense, String defaultAccount, int category_index,ArrayList<String> selectedTags,String description) {
 //        trHelper= new TransactoinDatabaseHelper(context);
         trHelper= TransactoinDatabaseHelper.getInstance(context);
         db = trHelper.getWritableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
-        String selection = TransactionsContract.TransactionEntry._ID + " LIKE ?";
-        db.delete(TransactionsContract.TransactionEntry.TABLE_NAME,selection,selectionArgs);
-//        db.close();
-        return true;
-    }
+        ContentValues values = new ContentValues();
+        String transactionId=java.util.UUID.randomUUID().toString();
+        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_DATE_TIME, dateTime);
+        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_AMOUNT, Currency.allToRial(amountValue));
+        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_IS_EXPENSE, isExpense);
+        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_ACCOUNT_NAME,defaultAccount);
+        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_CATEGORY, category_index);
+        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_DESCRIPTION, description);
+        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_TRANSACTION_ID,transactionId);
 
-    public static Cursor getAccountList(Context context){
-//        trHelper= new TransactoinDatabaseHelper(context);
+        db.insert(TransactionsContract.TransactionEntry.TABLE_NAME, null, values);
+
+        if(selectedTags!=null){
+            for(String tag: selectedTags)
+            {
+                values = new ContentValues();
+                values.put(TransactionsContract.TagsEntry.COLUMN_NAME_TRANSACTION_ID, transactionId);
+                values.put(TransactionsContract.TagsEntry.COLUMN_NAME_TAG, tag);
+                db.insert(TransactionsContract.TagsEntry.TABLE_NAME, null, values);
+            }
+        }
+    }
+    public static void addJsonTransaction(Context context,String transactionId,String dateTime, double amountValue, boolean isExpense, String defaultAccount, int category_index,ArrayList<String> selectedTags,String description) {
         trHelper= TransactoinDatabaseHelper.getInstance(context);
-        db = trHelper.getReadableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
-        String query="select *"+
-                " from "+ TransactionsContract.Accounts.TABLE_NAME;
+        db = trHelper.getWritableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
+        ContentValues values = new ContentValues();
+        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_DATE_TIME, dateTime);
+        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_AMOUNT, amountValue);
+        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_IS_EXPENSE, isExpense);
+        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_ACCOUNT_NAME,defaultAccount);
+        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_CATEGORY, category_index);
+        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_DESCRIPTION, description);
+        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_TRANSACTION_ID, transactionId);
 
-        cursor=db.rawQuery(query,null);
+        db.insert(TransactionsContract.TransactionEntry.TABLE_NAME, null, values);
 
-        return cursor;
+        if(selectedTags!=null){
+            for(String tag: selectedTags)
+            {
+                values = new ContentValues();
+                values.put(TransactionsContract.TagsEntry.COLUMN_NAME_TRANSACTION_ID, transactionId);
+                values.put(TransactionsContract.TagsEntry.COLUMN_NAME_TAG, tag);
+                db.insert(TransactionsContract.TagsEntry.TABLE_NAME, null, values);
+            }
+        }
     }
-
-    public static Cursor getHandyAccountList(Context context){
-        trHelper= TransactoinDatabaseHelper.getInstance(context);
-        SQLiteDatabase db = trHelper.getWritableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
-
-        String query="select "+ TransactionsContract.Accounts.COLUMN_NAME_Account_Name+
-                " from "+ TransactionsContract.Accounts.TABLE_NAME+
-                " where "+ TransactionsContract.Accounts.COLUMN_NAME_Account_Type +
-                " = 1";
-        cursor=db.rawQuery(query,null);
-        return cursor;
-    }
-
     public static void addTestAccounts(Context context){
-//        trHelper=new TransactoinDatabaseHelper(context);
         trHelper= TransactoinDatabaseHelper.getInstance(context);
         SQLiteDatabase db = trHelper.getWritableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
         ContentValues values = new ContentValues();
@@ -83,7 +92,41 @@ public class LocalDBServices {
         values.put(TransactionsContract.Accounts.COLUMN_NAME_Account_Type,0);
         db.insert(TransactionsContract.Accounts.TABLE_NAME,null,values);
     }
+    public static void addJsonAccounts(Context context,Account account){
+        //todo account name & account id should be standard -> account name is like shown and id is what we have in json file
+        trHelper= TransactoinDatabaseHelper.getInstance(context);
+        SQLiteDatabase db = trHelper.getWritableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
+        ContentValues values = new ContentValues();
+        for(int i=0;i<account.getDeposits().size();i++){
+            values.put(TransactionsContract.Accounts.COLUMN_NAME_Account_Name,account.getDeposits().get(i).getCode());
+            if(account.getDeposits().get(i).getType().equals("Handy"))
+                values.put(TransactionsContract.Accounts.COLUMN_NAME_Account_Type,1 );
+            else
+                values.put(TransactionsContract.Accounts.COLUMN_NAME_Account_Type,0 );
+            db.insertOrThrow(TransactionsContract.Accounts.TABLE_NAME, null, values);
+        }
 
+    }
+    public static Cursor getAccountList(Context context){
+        trHelper= TransactoinDatabaseHelper.getInstance(context);
+        db = trHelper.getReadableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
+        String query="select *"+
+                " from "+ TransactionsContract.Accounts.TABLE_NAME;
+
+        cursor=db.rawQuery(query,null);
+
+        return cursor;
+    }
+    public static Cursor getHandyAccountList(Context context){
+        trHelper= TransactoinDatabaseHelper.getInstance(context);
+        SQLiteDatabase db = trHelper.getWritableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
+        String query="select "+ TransactionsContract.Accounts.COLUMN_NAME_Account_Name+
+                " from "+ TransactionsContract.Accounts.TABLE_NAME+
+                " where "+ TransactionsContract.Accounts.COLUMN_NAME_Account_Type +
+                " = 1";
+        cursor=db.rawQuery(query,null);
+        return cursor;
+    }
     //todo make it better
     public static Cursor getTransactionsForBarChart(String query){
 //        trHelper= TransactoinDatabaseHelper.getInstance(context);
@@ -91,7 +134,6 @@ public class LocalDBServices {
         cursor=db.rawQuery(query,null);
         return cursor;
     }
-
     public static Cursor getTransactionsFromDBGroupedBYCategory(String where){
 //        trHelper= TransactoinDatabaseHelper.getInstance(context);
         db = trHelper.getReadableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
@@ -108,7 +150,6 @@ public class LocalDBServices {
         return cursor;
 
     }
-
     public static Cursor getTransactionsFromDB(Context context, boolean[] expenseSelection, boolean[] incomeSelection,int selectedTime,FilterMenuAdapter accountMenuAdapter,PersianCalendar filterdate){
 
         trHelper= TransactoinDatabaseHelper.getInstance(context);
@@ -274,7 +315,7 @@ public class LocalDBServices {
                 " , "+ TransactionsContract.TagsEntry.COLUMN_NAME_TAG+
                 " FROM "+ TransactionsContract.TransactionEntry.TABLE_NAME+
                 " LEFT JOIN "+ TransactionsContract.TagsEntry.TABLE_NAME+
-                " ON "+ TransactionsContract.TransactionEntry.TABLE_NAME+"."+ TransactionsContract.TransactionEntry._ID+
+                " ON "+TransactionsContract.TransactionEntry.TABLE_NAME+"."+ TransactionsContract.TransactionEntry.COLUMN_NAME_TRANSACTION_ID+
                 "="+ TransactionsContract.TagsEntry.TABLE_NAME+"."+
                 TransactionsContract.TagsEntry.COLUMN_NAME_TRANSACTION_ID+
                 " WHERE "+where+
@@ -296,7 +337,6 @@ public class LocalDBServices {
         return cursor;
     }
     public static Cursor getTotalIncome(Context context){
-//        trHelper= new TransactoinDatabaseHelper(context);
         trHelper= TransactoinDatabaseHelper.getInstance(context);
         db = trHelper.getReadableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
         String colName = "totalIncome";
@@ -304,61 +344,30 @@ public class LocalDBServices {
                 " FROM "+TransactionsContract.TransactionEntry.TABLE_NAME+
                 " WHERE "+TransactionsContract.TransactionEntry.COLUMN_NAME_IS_EXPENSE+"=0 and" + where;
         cursor = db.rawQuery(query, null);
-//        db.close();
         return cursor;
     }
-
-    public static Cursor getTransactionFromID(int id){
+    public static Cursor getTransactionFromID(String id){
         String query = "SELECT *" +
                 " FROM "+ TransactionsContract.TransactionEntry.TABLE_NAME +
-                " WHERE "+ TransactionsContract.TransactionEntry._ID + "=" + id;
+                " WHERE "+ TransactionsContract.TransactionEntry.COLUMN_NAME_TRANSACTION_ID + " ='" + id+"'";
         cursor = db.rawQuery(query, null);
 //        db.close();
         return cursor;
     }
-
-    public static Cursor getTagsFromID(int id){
+    public static Cursor getTagsFromID(String id){
         String query = "SELECT "+ TransactionsContract.TagsEntry.COLUMN_NAME_TAG +
                 " FROM " + TransactionsContract.TagsEntry.TABLE_NAME +
-                " WHERE "+ TransactionsContract.TagsEntry.COLUMN_NAME_TRANSACTION_ID + "=" + id;
+                " WHERE "+ TransactionsContract.TagsEntry.COLUMN_NAME_TRANSACTION_ID + "='" + id+"'";
         cursor = db.rawQuery(query, null);
 //        db.close();
         return cursor;
     }
-
-
-    public static void addNewTransaction(Context context,String dateTime, double amountValue, boolean isExpense, String defaultAccount, int category_index,ArrayList<String> selectedTags,String description) {
-//        trHelper= new TransactoinDatabaseHelper(context);
+    public static void editHandyTransaction(Context context, String dateTime, double amountValue, boolean isExpense, String defaultAccount, int category_index, String id, ArrayList<String> selectedTags,String description) {
         trHelper= TransactoinDatabaseHelper.getInstance(context);
         db = trHelper.getWritableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
-        ContentValues values = new ContentValues();
-        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_DATE_TIME, dateTime);
-        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_AMOUNT, Currency.allToRial(amountValue));
-        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_IS_EXPENSE, isExpense);
-        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_ACCOUNT_NAME,defaultAccount);
-        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_CATEGORY, category_index);
-        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_DESCRIPTION, description);
+        String selection = TransactionsContract.TransactionEntry.COLUMN_NAME_TRANSACTION_ID + " LIKE ?";
 
-        Long transactionID=db.insert(TransactionsContract.TransactionEntry.TABLE_NAME, null, values);
-
-        if(selectedTags!=null){
-            for(String tag: selectedTags)
-            {
-                values = new ContentValues();
-                values.put(TransactionsContract.TagsEntry.COLUMN_NAME_TRANSACTION_ID, transactionID);
-                values.put(TransactionsContract.TagsEntry.COLUMN_NAME_TAG, tag);
-                db.insert(TransactionsContract.TagsEntry.TABLE_NAME, null, values);
-            }
-        }
-    }
-
-    public static void editHandyTransaction(Context context, String dateTime, double amountValue, boolean isExpense, String defaultAccount, int category_index, int id, ArrayList<String> selectedTags,String description) {
-//        trHelper= new TransactoinDatabaseHelper(context);
-        trHelper= TransactoinDatabaseHelper.getInstance(context);
-        db = trHelper.getWritableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
-        String selection = TransactionsContract.TransactionEntry._ID + " LIKE ?";
-
-        String[] selectionArgs = { String.valueOf(id) };
+        String[] selectionArgs = { id };
         ContentValues values = new ContentValues();
 
         values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_AMOUNT, Currency.allToRial(amountValue));
@@ -366,19 +375,19 @@ public class LocalDBServices {
         values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_CATEGORY, category_index);
 
         if(dateTime!=null)
-        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_DATE_TIME, dateTime);
+            values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_DATE_TIME, dateTime);
         if(defaultAccount!=null)
-        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_ACCOUNT_NAME,defaultAccount);
+            values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_ACCOUNT_NAME,defaultAccount);
         if(description!=null)
-        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_DESCRIPTION, description);
+            values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_DESCRIPTION, description);
         db.update(TransactionsContract.TransactionEntry.TABLE_NAME,values,selection,selectionArgs);
 
 
 
-            //TODO distinct
+        //TODO distinct
         if(selectedTags!=null) {
             String selectionTags = TransactionsContract.TagsEntry.COLUMN_NAME_TRANSACTION_ID + " LIKE ?";
-            String[] selectionArgsTags = { String.valueOf(id) };
+            String[] selectionArgsTags = { id };
             db.delete(TransactionsContract.TagsEntry.TABLE_NAME, selectionTags, selectionArgsTags);
 
             for (String tag : selectedTags) {
@@ -390,22 +399,20 @@ public class LocalDBServices {
         }
 //        db.close();
     }
-
-
-    public static void editUnhandyTransaction(Context context,int category_index,int id,ArrayList<String> selectedTags) {
+    public static void editUnhandyTransaction(Context context,int category_index,String id,ArrayList<String> selectedTags) {
 //        trHelper= new TransactoinDatabaseHelper(context);
         trHelper= TransactoinDatabaseHelper.getInstance(context);
         db = trHelper.getWritableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
-        String selection = TransactionsContract.TransactionEntry._ID + " LIKE ?";
+        String selection = TransactionsContract.TransactionEntry.COLUMN_NAME_TRANSACTION_ID + " LIKE ?";
 
-        String[] selectionArgs = { String.valueOf(id) };
+        String[] selectionArgs = { id };
         ContentValues values = new ContentValues();
         values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_CATEGORY, category_index);
         db.update(TransactionsContract.TransactionEntry.TABLE_NAME,values,selection,selectionArgs);
 
 
         String selectionTags = TransactionsContract.TagsEntry.COLUMN_NAME_TRANSACTION_ID + " LIKE ?";
-        String[] selectionArgsTags = { String.valueOf(id) };
+        String[] selectionArgsTags = { id };
         db.delete(TransactionsContract.TagsEntry.TABLE_NAME, selectionTags, selectionArgsTags);
 
         //TODO distinct
@@ -418,6 +425,14 @@ public class LocalDBServices {
             }
         }
 //        db.close();
+    }
+    public static boolean deleteTransactionFromDB(Context context,String[] selectionArgs){
+        trHelper= TransactoinDatabaseHelper.getInstance(context);
+        db = trHelper.getWritableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
+        String selection = TransactionsContract.TransactionEntry.COLUMN_NAME_TRANSACTION_ID + " LIKE ?";
+        db.delete(TransactionsContract.TransactionEntry.TABLE_NAME,selection,selectionArgs);
+//        db.close();
+        return true;
     }
 
 }

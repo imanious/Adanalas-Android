@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.*;
 import android.widget.*;
@@ -39,7 +40,7 @@ public class AddPage1 extends Activity implements View.OnClickListener, View.OnL
     @SuppressWarnings("deprecation")
     private ArrayList<AbsoluteLayout> income_layouts = new ArrayList<AbsoluteLayout>();
 
-    private int id = Integer.MIN_VALUE;
+    private String id = "null";
 
 
     private TransactoinDatabaseHelper trHelper;
@@ -294,10 +295,11 @@ public class AddPage1 extends Activity implements View.OnClickListener, View.OnL
             if(extras != null)
             {
                 setTitle(R.string.edit_transaction);
-                id = extras.getInt(TRANSACTION_ID_KEY, Integer.MIN_VALUE);
-                if(id != Integer.MIN_VALUE)
+                id = extras.getString(TRANSACTION_ID_KEY, "null");
+                if(!id.equals("null"))
                 {
                     Cursor c;
+                    Log.e("debug","id in intent extra"+id);
                     c= LocalDBServices.getTransactionFromID(id);
                     c.moveToFirst();
 
@@ -572,13 +574,15 @@ public class AddPage1 extends Activity implements View.OnClickListener, View.OnL
                 Toast.makeText(this, "لطفا دسته بندی تراکنش را معلوم کنید", Toast.LENGTH_SHORT).show();
             else {
                 Intent myIntent = new Intent(AddPage1.this, AddPage2.class);
-                if (id == Integer.MIN_VALUE) {
+                if (id.equals("null")){
 //				System.out.println("intent started");
+                    Log.e("debug","add page2 with null value : "+id);
                     myIntent.putExtra(AddPage2.AMOUNT_KEY, amountvalue);
                     myIntent.putExtra(AddPage2.CATEGORY_KEY, category_index);
                     myIntent.putExtra(AddPage2.IS_EXPENSE_KEY, isExpense);
 
                 } else {
+                    Log.e("debug","add page2 with id value : "+id);
                     myIntent.putExtra(TRANSACTION_ID_KEY, id);
                     myIntent.putExtra(AddPage2.AMOUNT_KEY, amountvalue);
                     myIntent.putExtra(AddPage2.CATEGORY_KEY, category_index);
@@ -993,7 +997,7 @@ public class AddPage1 extends Activity implements View.OnClickListener, View.OnL
 
 //        LocalDBServices.addNewTransaction(this,dateTime,amountValue,isExpense,SettingActivity.defaultAccount,category_index);
 
-        if(id == Integer.MIN_VALUE)
+        if(id.equals("null"))
         {
 //            db.insert(TransactionEntry.TABLE_NAME, null, values);
             LocalDBServices.addNewTransaction(this,dateTime,amountValue,isExpense, SettingActivity.defaultAccount,category_index,null,null);

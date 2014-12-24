@@ -288,12 +288,6 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 	}
 
     private void addAccountsAndTimesToList() {
-//        SQLiteDatabase db = trHelper.getReadableDatabase();
-//        Cursor c2;
-//        String query="select "+ TransactionsContract.Accounts.COLUMN_NAME_Account_Name+
-//                " from "+ TransactionsContract.Accounts.TABLE_NAME;
-//
-//        c2=db.rawQuery(query,null);
         Cursor c2;
         c2= LocalDBServices.getAccountList(this);
         c2.moveToFirst();
@@ -1039,9 +1033,9 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
        }
 
        PersianCalendar tmpCal;
-       int lastTransID=-1;
+       String lastTransID="null";
        ArrayList<String> tags=new ArrayList<String>();
-       int id=0;
+       String id="null";
        String dateTime;
        double amount=-1;
        boolean isExpense=false;
@@ -1055,16 +1049,16 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
        int minute;
        do
        {
-           int transID=c.getInt(c.getColumnIndexOrThrow(TransactionEntry._ID));
+           String transID=c.getString(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_TRANSACTION_ID));
            if(c.isLast()){
-               if(lastTransID!=transID){
-                   if(lastTransID!=-1)
+               if(!lastTransID.equals(transID)){
+                   if(!lastTransID.equals("null"))
                    listItems.add(new TimelineItem(id,isExpense,amount,date,time,category_index,tags,false,descp,accountName));
                    tags=new ArrayList<String>();
                }
                String tagName=c.getString(c.getColumnIndexOrThrow(TransactionsContract.TagsEntry.COLUMN_NAME_TAG));
                tags.add(tagName);
-               id = c.getInt(c.getColumnIndexOrThrow(TransactionEntry._ID));
+               id = c.getString(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_TRANSACTION_ID));
                dateTime = c.getString(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_DATE_TIME));
                amount = c.getDouble(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_AMOUNT));
                isExpense = c.getInt(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_IS_EXPENSE))==0? false: true;
@@ -1084,14 +1078,14 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 
                listItems.add(new TimelineItem(id,isExpense,amount,date,time,category_index,tags,false,descp,accountName));}
            else {
-               if(lastTransID!=transID){
-                   if(lastTransID!=-1){
+               if(!lastTransID.equals(transID)){
+                   if(!lastTransID.equals("null")){
                        listItems.add(new TimelineItem(id,isExpense,amount,date,time,category_index,tags,false,descp,accountName));
                    }
                    tags=new ArrayList<String>();
                    String tagName=c.getString(c.getColumnIndexOrThrow(TransactionsContract.TagsEntry.COLUMN_NAME_TAG));
                    tags.add(tagName);
-                   id = c.getInt(c.getColumnIndexOrThrow(TransactionEntry._ID));
+                   id = c.getString(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_TRANSACTION_ID));
                    dateTime = c.getString(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_DATE_TIME));
                    amount = c.getDouble(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_AMOUNT));
                    isExpense = c.getInt(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_IS_EXPENSE))==0? false: true;
