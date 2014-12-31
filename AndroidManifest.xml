@@ -9,19 +9,21 @@
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/icon_96"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="ir.abplus.adanalas.Timeline.TimelineActivity"
+            android:name=".SyncCloud.LoginActivity2"
             android:uiOptions="splitActionBarWhenNarrow"
             android:screenOrientation="portrait"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
@@ -33,6 +35,13 @@
             android:name=".AddEditTransactions.AddPage1"
             android:screenOrientation="portrait"
             android:label="@string/new_transaction" >
+        </activity>
+
+        <activity
+                android:name=".Timeline.TimelineActivity"
+                android:screenOrientation="portrait"
+                android:uiOptions="splitActionBarWhenNarrow"
+                android:label="@string/new_transaction" >
         </activity>
 
         <activity

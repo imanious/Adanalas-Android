@@ -14,6 +14,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.View;
@@ -360,7 +361,10 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
             String colName = "totalExpense";
             Cursor c=LocalDBServices.getTotalExpense(this);
             c.moveToFirst();
-            final double totalExp = c.getDouble(c.getColumnIndexOrThrow(colName));
+            final Long totalExp = c.getLong(c.getColumnIndexOrThrow(colName));
+            Long totalst=c.getLong(c.getColumnIndexOrThrow(colName));
+            Log.e("debug","total expense: "+totalExp);
+            Log.e("debug","total!!expense: "+totalst);
             c.close();
 //            totalExpense.setText("  "+Utils.toPersianNumbers(Currency.getStandardAmount(totalExp)));
 
@@ -371,7 +375,7 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 //			c = db.rawQuery(query, null);
             c=LocalDBServices.getTotalIncome(this);
             c.moveToFirst();
-            final double totalInc = c.getDouble(c.getColumnIndexOrThrow(colName));
+            final Long totalInc = c.getLong(c.getColumnIndexOrThrow(colName));
             c.close();
 //            totalIncome.setText("  "+Utils.toPersianNumbers(Currency.getStandardAmount(totalInc)));
 
@@ -410,7 +414,7 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 			String colName = "totalExpense";
             Cursor c=LocalDBServices.getTotalExpense(this);
 			c.moveToFirst();
-			double total = c.getDouble(c.getColumnIndexOrThrow(colName));
+			Long total = c.getLong(c.getColumnIndexOrThrow(colName));
             c.close();
             totalExpense.setText("  "+Utils.toPersianNumbers(Currency.getStdAmount(total)));
             Currency.setCurrencyLayout(totalExpenseCurrencyLayout, this, getResources().getColor(R.color.red), persianTypeface, Currency.SMALL_TEXT_SIZE);
@@ -418,7 +422,7 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 			colName = "totalIncome";
             c=LocalDBServices.getTotalIncome(this);
 			c.moveToFirst();
-			total = c.getDouble(c.getColumnIndexOrThrow(colName));
+			total = c.getLong(c.getColumnIndexOrThrow(colName));
             c.close();
 			totalIncome.setText("  "+Utils.toPersianNumbers(Currency.getStdAmount(total)));
             Currency.setCurrencyLayout(totalIncomeCurrencyLayout, this, getResources().getColor(R.color.green), persianTypeface, Currency.SMALL_TEXT_SIZE);
