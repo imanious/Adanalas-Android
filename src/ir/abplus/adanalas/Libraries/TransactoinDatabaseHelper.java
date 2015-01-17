@@ -48,6 +48,7 @@ public class TransactoinDatabaseHelper extends SQLiteOpenHelper
 		db.execSQL(TransactionsContract.SQL_CREATE_TRANSACTIONS);
 		db.execSQL(TransactionsContract.SQL_CREATE_TAGS);
         db.execSQL(TransactionsContract.SQL_CREATE_ACCOUNTS);
+        db.execSQL(TransactionsContract.SQL_CREATE_TOKENS);
 	}
 
 	@Override

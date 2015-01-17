@@ -1,6 +1,7 @@
 package ir.abplus.adanalas.SyncCloud;
 
 import android.annotation.SuppressLint;
+import android.os.StrictMode;
 import android.util.Log;
 import ir.abplus.adanalas.Libraries.Account;
 import ir.abplus.adanalas.Libraries.Category;
@@ -40,7 +41,8 @@ public class JsonParser {
     public JsonParser(String transUrlString,String accountUrlString){
         this.TransUrlString = transUrlString;
         this.AccountUrlString=accountUrlString;
-
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
     }
 
     public String getTransUrlString() {
@@ -276,9 +278,9 @@ public class JsonParser {
         return output;
     }
 
-    public String getTransactions(Account account,String type){
+    public String getTransactions(Account account,String type,String offset){
         String tranactionsResultString="";
-        String transUrl=getTransactionRequest("0","100",type,account.getDeposits());
+        String transUrl=getTransactionRequest(offset,"100",type,account.getDeposits());
         transUrl=transUrl.replaceAll(" ","%20");
 
         Log.e("debug",transUrl);

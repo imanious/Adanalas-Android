@@ -3,7 +3,6 @@ package ir.abplus.adanalas.Timeline;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -31,13 +30,14 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
 import com.handmark.pulltorefresh.library.PullToRefreshPinnedHeaderListView;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import ir.abplus.adanalas.AddEditTransactions.AddPage1;
-import ir.abplus.adanalas.Libraries.*;
-import ir.abplus.adanalas.R;
-import ir.abplus.adanalas.Libraries.TransactionsContract.TransactionEntry;
-import ir.abplus.adanalas.databaseConnections.LocalDBServices;
 import ir.abplus.adanalas.Charts.ChartActivity;
+import ir.abplus.adanalas.Libraries.*;
+import ir.abplus.adanalas.Libraries.TransactionsContract.TransactionEntry;
+import ir.abplus.adanalas.R;
 import ir.abplus.adanalas.Setting.SettingActivity;
+import ir.abplus.adanalas.SyncCloud.LoginActivity2;
 import ir.abplus.adanalas.Uncategoried.UncategoriedActivity;
+import ir.abplus.adanalas.databaseConnections.LocalDBServices;
 import za.co.immedia.pinnedheaderlistview.PinnedHeaderListView;
 
 import java.text.ParseException;
@@ -65,7 +65,6 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 	//	public static int screenHeight;
 	boolean firstTime = true;
 
-	TransactoinDatabaseHelper trHelper;
 
 	public static boolean[] expenseSelection = new boolean[Category.EXPENSE_SIZE];
 	public static boolean[] incomeSelection = new boolean[Category.INCOME_SIZE];
@@ -130,8 +129,6 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 		title = (TextView) findViewById(R.id.timeline_title);
 		title.setTypeface(persianTypeface);
 //		final SearchView searchView = (SearchView) findViewById(R.id.search_view);
-		//TODO R.string
-		final Context context = this;
 //		searchView.setQueryHint("جست‌وجو");
 //		searchView.setOnSearchClickListener(new OnClickListener()
 //		{
@@ -289,6 +286,7 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 	}
 
     private void addAccountsAndTimesToList() {
+        accountsAndTimeFilter = new ArrayList<FilterMenuItem>();
         Cursor c2;
         c2= LocalDBServices.getAccountList(this);
         c2.moveToFirst();
@@ -443,6 +441,10 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 	@Override
 	protected void onResume()
 	{
+
+
+
+
 //		//TODO change to dip
 		GridLayout expenses = (GridLayout) findViewById(R.id.expense_grid);
 
@@ -474,6 +476,9 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+
+        addAccountsAndTimesToList();
+        addSlidingMenu();
 	}
 
 	@Override
@@ -482,6 +487,10 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 		super.onStop();
         SharedPreferences settings = getSharedPreferences(PREFRENCES_FILE, 0);
         SharedPreferences.Editor editor = settings.edit();
+
+//        editor.putString("pfmtoken",ConnectionManager.pfmToken);
+//        editor.putString("pfmcookie",ConnectionManager.pfmCookie);
+
         for(int i=0;i<accountsAndTimeFilter.size();i++){
             if (!accountsAndTimeFilter.get(i).isRadioButton)
             editor.putBoolean("AccountsAndTime:"+accountsAndTimeFilter.get(i).text,accountsAndTimeFilter.get(i).isChecked);
@@ -526,8 +535,8 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
         if(!doNothig){
         if(intent!=null){
 //            finish();
-            startActivity(intent);
-            overridePendingTransition(0,0);
+            startActivityForResult(intent,100);
+            overridePendingTransition(0, 0);
         }
         }
         return super.onOptionsItemSelected(item);
@@ -1251,6 +1260,24 @@ private String getSelectedRadioTimeString(){
 }
 private  void getSharedPreferences(){
     SharedPreferences preferences=getSharedPreferences(PREFRENCES_FILE,0);
+    getTokensFromDB();
+//    String pfmcookie = preferences.getString("pfmcookie","");
+//    String pfmtoken = preferences.getString("pfmtoken","");
+//    ConnectionManager.pfmCookie=pfmcookie;
+//    ConnectionManager.pfmToken=pfmtoken;
+//    if(ConnectionManager.pfmCookie.equals("")){
+//        SharedPreferences.Editor edit = preferences.edit();
+//        edit.putBoolean("ProgramIsPreviouslyStarted", Boolean.TRUE);
+//        edit.commit();
+//        Intent intent = new Intent(TimelineActivity.this, LoginActivity2.class);
+//        finish();
+//        startActivity(intent);
+//        return;
+//    }
+//    if(!previouslyStarted) {
+//
+//    }
+
     for(int i=0;i<accountsAndTimeFilter.size();i++){
         accountsAndTimeFilter.get(i).isChecked=preferences.getBoolean("AccountsAndTime:"+accountsAndTimeFilter.get(i).text,true);
     }
@@ -1264,4 +1291,32 @@ private  void getSharedPreferences(){
 
 }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        System.out.println("on result called");
+        if(resultCode==SettingActivity.LOGOUT_CODE)
+        {
+                LocalDBServices.invalidTokens(this);
+                Intent intent= new Intent(TimelineActivity.this,LoginActivity2.class);
+                finish();
+                startActivity(intent);
+                return;
+        }
+    }
+
+    private void getTokensFromDB(){
+        Boolean res=LocalDBServices.getTokens(this);
+        if(res){
+            Log.e("debug","result is ok, added to db ");
+        }
+        else {
+            LocalDBServices.invalidTokens(this);
+            Intent intent= new Intent(TimelineActivity.this,LoginActivity2.class);
+            finish();
+            startActivity(intent);
+            return;
+        }
+
+    }
 }

@@ -14,6 +14,7 @@ public class DataBaseTransactionHelperEncrypted  {
     public static final String DATABASE_ENCRYPT_KEY = "adanalas-password";
     private static final String DATABASE_NAME = "adanalas_transactions.db";
     Context context;
+    private static DataBaseTransactionHelperEncrypted  mInstance = null;
 
     public DataBaseTransactionHelperEncrypted(Context context) {
 //        super();
@@ -29,9 +30,6 @@ public class DataBaseTransactionHelperEncrypted  {
         databaseFile.delete();
         SQLiteDatabase database = SQLiteDatabase.openOrCreateDatabase(databaseFile, DATABASE_ENCRYPT_KEY, null);
         onCreate(database);
-//        database.execSQL("create table t1(a, b)");
-//        database.execSQL("insert into t1(a, b) values(?, ?)", new Object[]{"one for the money",
-//                "two for the show"});
     }
 
     public void onCreate(SQLiteDatabase db)
@@ -41,6 +39,19 @@ public class DataBaseTransactionHelperEncrypted  {
         db.execSQL(TransactionsContract.SQL_CREATE_TRANSACTIONS);
         db.execSQL(TransactionsContract.SQL_CREATE_TAGS);
         db.execSQL(TransactionsContract.SQL_CREATE_ACCOUNTS);
+        db.execSQL(TransactionsContract.SQL_CREATE_TOKENS);
     }
 
+    public static DataBaseTransactionHelperEncrypted getInstance(Context ctx) {
+        /**
+         * use the application context as suggested by CommonsWare.
+         * this will ensure that you dont accidentally leak an Activitys
+         * context (see this article for more information:
+         * http://android-developers.blogspot.nl/2009/01/avoiding-memory-leaks.html)
+         */
+        if (mInstance == null) {
+            mInstance = new DataBaseTransactionHelperEncrypted(ctx);
+        }
+        return mInstance;
+    }
 }

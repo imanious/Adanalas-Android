@@ -18,7 +18,6 @@ import com.echo.holographlibrary.PieGraph.OnSliceClickedListener;
 import com.echo.holographlibrary.PieSlice;
 import ir.abplus.adanalas.Libraries.Category;
 import ir.abplus.adanalas.Libraries.Currency;
-import ir.abplus.adanalas.Libraries.TransactoinDatabaseHelper;
 import ir.abplus.adanalas.R;
 import ir.abplus.adanalas.Timeline.TimelineActivity;
 import ir.abplus.adanalas.databaseConnections.LocalDBServices;
@@ -27,7 +26,6 @@ import java.util.ArrayList;
 
 public class PieChartFragment extends Fragment {
 
-    TransactoinDatabaseHelper trHelper;
     Cursor c;
     View v ;
     //    View listLayout ;

@@ -43,7 +43,6 @@ public class AddPage1 extends Activity implements View.OnClickListener, View.OnL
     private String id = "null";
 
 
-    private TransactoinDatabaseHelper trHelper;
 
     boolean decimalPointEntered = false;
     int decimalDigits = 0;

@@ -44,7 +44,6 @@ public class AddPage2 extends FragmentActivity implements View.OnTouchListener,V
     public static final String PERSIAN_DATEPICKER_TAG = "pdatepicker";
     public static final String PERSIAN_TIMEPICKER_TAG = "ptimepicker";
 
-    private TransactoinDatabaseHelper trHelper;
 
     private PersianCalendar calendar;
     private PersianDatePickerDialog datePicker;

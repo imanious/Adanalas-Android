@@ -3,8 +3,10 @@ package ir.abplus.adanalas.databaseConnections;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 import com.fourmob.datetimepicker.date.PersianCalendar;
 import ir.abplus.adanalas.Libraries.*;
+import ir.abplus.adanalas.SyncCloud.ConnectionManager;
 import ir.abplus.adanalas.Timeline.FilterMenuAdapter;
 import ir.abplus.adanalas.Timeline.TimelineActivity;
 import net.sqlcipher.database.SQLiteDatabase;
@@ -61,7 +63,7 @@ public class LocalDBServices {
         values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_DESCRIPTION, description);
         values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_TRANSACTION_ID, transactionId);
 
-        db.insert(TransactionsContract.TransactionEntry.TABLE_NAME, null, values);
+        db.insertWithOnConflict(TransactionsContract.TransactionEntry.TABLE_NAME, null, values,SQLiteDatabase.CONFLICT_IGNORE);
 
         if(selectedTags!=null){
             for(String tag: selectedTags)
@@ -69,7 +71,7 @@ public class LocalDBServices {
                 values = new ContentValues();
                 values.put(TransactionsContract.TagsEntry.COLUMN_NAME_TRANSACTION_ID, transactionId);
                 values.put(TransactionsContract.TagsEntry.COLUMN_NAME_TAG, tag);
-                db.insert(TransactionsContract.TagsEntry.TABLE_NAME, null, values);
+                db.insertWithOnConflict(TransactionsContract.TagsEntry.TABLE_NAME, null, values,SQLiteDatabase.CONFLICT_IGNORE);
             }
         }
     }
@@ -103,7 +105,8 @@ public class LocalDBServices {
                 values.put(TransactionsContract.Accounts.COLUMN_NAME_Account_Type,1 );
             else
                 values.put(TransactionsContract.Accounts.COLUMN_NAME_Account_Type,0 );
-            db.insertOrThrow(TransactionsContract.Accounts.TABLE_NAME, null, values);
+//            db.insertOrThrow(TransactionsContract.Accounts.TABLE_NAME, null, values);
+            db.insertWithOnConflict(TransactionsContract.Accounts.TABLE_NAME, null, values,SQLiteDatabase.CONFLICT_IGNORE);
         }
 
     }
@@ -435,4 +438,60 @@ public class LocalDBServices {
         return true;
     }
 
+    public static void addTokens(Context context,String token,String cookie){
+        trHelper= TransactoinDatabaseHelper.getInstance(context);
+        db = trHelper.getWritableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
+        db.delete(TransactionsContract.Tokens.TABLE_NAME,null,null);
+        ContentValues values = new ContentValues();
+        values.put(TransactionsContract.Tokens.COLUMN_NAME_IS_Valid, true);
+        values.put(TransactionsContract.Tokens.COLUMN_NAME_PFM_Cookie, cookie);
+        values.put(TransactionsContract.Tokens.COLUMN_NAME_PFM_Token, token);
+        db.insert(TransactionsContract.Tokens.TABLE_NAME,null,values);
+    }
+
+    public static void invalidTokens(Context context){
+        trHelper= TransactoinDatabaseHelper.getInstance(context);
+        db = trHelper.getWritableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
+        ContentValues values = new ContentValues();
+        values.put(TransactionsContract.Tokens.COLUMN_NAME_IS_Valid, "0");
+        db.update(TransactionsContract.Tokens.TABLE_NAME,values,TransactionsContract.Tokens.COLUMN_NAME_IS_Valid+" == 1",null);
+
+    }
+
+    public static boolean getTokens(Context context){
+        trHelper= TransactoinDatabaseHelper.getInstance(context);
+        db = trHelper.getWritableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
+        String query="select *"+
+                " from "+ TransactionsContract.Tokens.TABLE_NAME;
+        Cursor c=db.rawQuery(query,null);
+        c.moveToFirst();
+                    try {
+                        String isValid = c.getString(c.getColumnIndexOrThrow(TransactionsContract.Tokens.COLUMN_NAME_IS_Valid));
+                        String pfmToken = c.getString(c.getColumnIndexOrThrow(TransactionsContract.Tokens.COLUMN_NAME_PFM_Token));
+                        String pfmCookie = c.getString(c.getColumnIndexOrThrow(TransactionsContract.Tokens.COLUMN_NAME_PFM_Cookie));
+                        Log.e("debug","is valid is:"+isValid);
+                        c.close();
+                        if(isValid.equals("1")){
+                            Log.e("debug",pfmCookie +" "+pfmToken);
+                            ConnectionManager.pfmCookie=pfmCookie;
+                            ConnectionManager.pfmToken=pfmToken;
+                            return true;
+                        }
+                        else{
+                            Log.e("debug","cant get it was invalid token");
+                            return false;
+                        }
+
+                    }
+                    catch (Exception e){
+                        c.close();
+                        return false;
+                    }
+
+
+
+
+
+
+    }
 }

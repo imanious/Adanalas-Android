@@ -39,6 +39,15 @@ public final class TransactionsContract
         //account type will be 1 if it's editable or 0 if it's not!
     }
 
+    public static abstract class Tokens implements BaseColumns
+    {
+        public static final String TABLE_NAME = "tokens";
+        public static final String COLUMN_NAME_IS_Valid = "IS_Valid";
+        public static final String COLUMN_NAME_PFM_Token = "PFM_Token";
+        public static final String COLUMN_NAME_PFM_Cookie = "PFM_Cookie";
+        //account type will be 1 if it's editable or 0 if it's not!
+    }
+
 	private static final String INTEGER_TYPE = " INTEGER";
 	private static final String DATE_TIME_TYPE = " TEXT";
 	private static final String FLOAT_TYPE = " REAL";
@@ -54,7 +63,8 @@ public final class TransactionsContract
 					TransactionEntry.COLUMN_NAME_IS_EXPENSE + BOOLEAN_TYPE + ",\n" +
 					TransactionEntry.COLUMN_NAME_DESCRIPTION + TEXT_TYPE + ",\n" +
 					TransactionEntry.COLUMN_NAME_ACCOUNT_NAME+ TEXT_TYPE + ",\n" +
-					TransactionEntry.COLUMN_NAME_CATEGORY + INTEGER_TYPE +
+					TransactionEntry.COLUMN_NAME_CATEGORY + INTEGER_TYPE + ",\n" +
+                    " UNIQUE( "+TransactionEntry.COLUMN_NAME_TRANSACTION_ID +" ) "+
 					" )";
 
 	public static final String SQL_DELETE_TRANSACTIONS =
@@ -64,7 +74,8 @@ public final class TransactionsContract
 			"CREATE TABLE IF NOT EXISTS " + TagsEntry.TABLE_NAME + " (\n" +
 					TagsEntry._ID + " INTEGER PRIMARY KEY,\n" +
 					TagsEntry.COLUMN_NAME_TRANSACTION_ID + INTEGER_TYPE + ",\n" +
-					TagsEntry.COLUMN_NAME_TAG + TEXT_TYPE +
+					TagsEntry.COLUMN_NAME_TAG + TEXT_TYPE +",\n" +
+                    " UNIQUE( "+TagsEntry.COLUMN_NAME_TRANSACTION_ID+","+ TagsEntry.COLUMN_NAME_TAG+" ) "+
 					" )";
 
     public static final String SQL_CREATE_ACCOUNTS =
@@ -74,6 +85,14 @@ public final class TransactionsContract
                     Accounts.COLUMN_NAME_Account_Name + TEXT_TYPE + ",\n" +
                     Accounts.COLUMN_NAME_Account_Type + TEXT_TYPE + ",\n" +
                     " UNIQUE( "+Accounts.COLUMN_NAME_Account_Name+" ) "+
+                    " )";
+
+    public static final String SQL_CREATE_TOKENS=
+            "CREATE TABLE IF NOT EXISTS " + Tokens.TABLE_NAME + " (\n" +
+                    Tokens._ID + " INTEGER PRIMARY KEY,\n" +
+                    Tokens.COLUMN_NAME_IS_Valid+ BOOLEAN_TYPE+ ",\n" +
+                    Tokens.COLUMN_NAME_PFM_Cookie+ TEXT_TYPE+ ",\n" +
+                    Tokens.COLUMN_NAME_PFM_Token+ TEXT_TYPE+
                     " )";
 
 

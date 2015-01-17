@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import ir.abplus.adanalas.R;
 import ir.abplus.adanalas.Timeline.TimelineActivity;
+import ir.abplus.adanalas.databaseConnections.LocalDBServices;
 import org.apache.http.*;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
@@ -86,6 +87,7 @@ public class LoginActivity2 extends Activity {
             if (pishkhanResObject.getPfmCookie() != null) {
                 ConnectionManager.pfmCookie = pishkhanResObject.getPfmCookie();
                 ConnectionManager.pfmToken = pishkhanResObject.getPfmToken();
+                LocalDBServices.addTokens(this,pishkhanResObject.getPfmToken(),pishkhanResObject.getPfmCookie());
                 Intent intent = new Intent(LoginActivity2.this, TimelineActivity.class);
                 finish();
                 startActivity(intent);

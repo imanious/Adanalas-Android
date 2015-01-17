@@ -65,4 +65,9 @@
             android:layout_height="wrap_content"
             android:text="Add json to DB"
             android:id="@+id/urltobutton"/>
+    <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sign out"
+            android:id="@+id/signout_button" android:layout_gravity="center_horizontal"/>
 </LinearLayout>

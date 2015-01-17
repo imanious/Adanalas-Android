@@ -27,7 +27,6 @@ public class EditTransactionPage extends Activity implements View.OnClickListene
     private ArrayList<String> selectedTags = new ArrayList<String>();
 
 
-    private TransactoinDatabaseHelper trHelper;
 
 
     private ImageButton[] category_expense_buttons;

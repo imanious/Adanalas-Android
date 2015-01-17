@@ -18,7 +18,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".SyncCloud.LoginActivity2"
+            android:name=".Timeline.TimelineActivity"
             android:uiOptions="splitActionBarWhenNarrow"
             android:screenOrientation="portrait"
             android:label="@string/app_name" >
@@ -38,10 +38,10 @@
         </activity>
 
         <activity
-                android:name=".Timeline.TimelineActivity"
+                android:name=".SyncCloud.LoginActivity2"
                 android:screenOrientation="portrait"
                 android:uiOptions="splitActionBarWhenNarrow"
-                android:label="@string/new_transaction" >
+                 >
         </activity>
 
         <activity

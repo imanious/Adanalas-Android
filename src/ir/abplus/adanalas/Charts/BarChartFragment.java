@@ -56,7 +56,6 @@ public class BarChartFragment extends Fragment {
     Resources resources ;
     ArrayList<Bar> aBars ;
     BarGraph barGraph;
-    TransactoinDatabaseHelper trHelper;
     Cursor c;
     boolean isDetailed=false;
     private PersianCalendar calendar;
