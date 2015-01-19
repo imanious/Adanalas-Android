@@ -141,6 +141,12 @@ public final class TransactionsContract
     public static final String SQL_DELETE_TAGS =
 			"DROP TABLE IF EXISTS " + TagsEntry.TABLE_NAME;
 
-    public static final String SQL_DELETE_ACCOUNTS =
+    public static final String SQL_DELETE_ACCOUNTS=
             "DROP TABLE IF EXISTS " + Accounts.TABLE_NAME;
+    public static final String SQL_DELETE_TOKENS =
+            "DROP TABLE IF EXISTS " + Tokens.TABLE_NAME;
+    public static final String SQL_DELETE_DELETED_TRANSACTIONS=
+            "DROP TABLE IF EXISTS " + DeletedTransactions.TABLE_NAME;
+    public static final String SQL_DELETE_SYNC_LOG_DATA =
+            "DROP TABLE IF EXISTS " + SyncLogData.TABLE_NAME;
 }

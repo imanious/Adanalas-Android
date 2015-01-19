@@ -37,10 +37,6 @@ public class TransactoinDatabaseHelper extends SQLiteOpenHelper
         return mInstance;
     }
 
-
-
-
-
     @Override
 	public void onCreate(SQLiteDatabase db)
 	{
@@ -59,6 +55,9 @@ public class TransactoinDatabaseHelper extends SQLiteOpenHelper
 		db.execSQL(TransactionsContract.SQL_DELETE_TRANSACTIONS);
 		db.execSQL(TransactionsContract.SQL_DELETE_TAGS);
 		db.execSQL(TransactionsContract.SQL_DELETE_ACCOUNTS);
+        db.execSQL(TransactionsContract.SQL_DELETE_TOKENS);
+        db.execSQL(TransactionsContract.SQL_DELETE_DELETED_TRANSACTIONS);
+        db.execSQL(TransactionsContract.SQL_DELETE_SYNC_LOG_DATA);
 		onCreate(db);
 	}
 }

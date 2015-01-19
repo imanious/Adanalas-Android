@@ -38,9 +38,8 @@ public class SettingActivity extends Activity {
     Button tomanButton;
     Button toasandButton;
     Button rialButton;
-    Button jsontodbButton;
     Button getAllTransButton;
-    Button syncAccountButton;
+    Button clearDBButton;
     Button signOutButton;
     Spinner accountSpinner;
     TransactoinDatabaseHelper trHelper;
@@ -60,8 +59,7 @@ public class SettingActivity extends Activity {
         tomanButton=(Button)findViewById(R.id.toman_button);
         toasandButton=(Button)findViewById(R.id.tousandtoman_button);
         rialButton=(Button)findViewById(R.id.rial_button);
-        jsontodbButton=(Button)findViewById(R.id.urltobutton);
-        syncAccountButton=(Button)findViewById(R.id.syncaccount);
+        clearDBButton =(Button)findViewById(R.id.clearDB);
         getAllTransButton=(Button)findViewById(R.id.syncAllTrans);
         signOutButton=(Button)findViewById(R.id.signout_button);
 
@@ -152,108 +150,18 @@ public class SettingActivity extends Activity {
             }
         });
 
-        jsontodbButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String url="";
 
 
-
-
-                JsonParser jsonParser=JsonParser.getInstance();
-
-                try {
-                    String accountIn=jsonParser.getAccountInfo();
-                    jsonParser.readAndParseAccountJSON(accountIn);
-
-
-                    Account account=jsonParser.getUserAccount();
-                    LocalDBServices.addJsonAccounts(getBaseContext(),account);
-
-
-                    PersianCalendar calendar = new PersianCalendar();
-                    int selectedDay = calendar.get(PersianCalendar.DAY_OF_MONTH);
-                    int selectedMonth = calendar.get(PersianCalendar.MONTH);
-                    int selectedYear = calendar.get(PersianCalendar.YEAR);
-                    int selectedWeekday = calendar.get(PersianCalendar.DAY_OF_WEEK);
-
-                    PersianDate date = new PersianDate((short)selectedDay, (short)selectedMonth, (short)selectedYear, PersianCalendar.weekdayFullNames[selectedWeekday]);
-                    int monthInt=Integer.parseInt(date.getSTDString().substring(4,6))+1;
-                        String dateString=date.getSTDString().substring(0,4)+monthInt+date.getSTDString().substring(6,8);
-                        Log.e("debug","last sync date is set to"+dateString);
-                        LocalDBServices.updateSyncTime(getBaseContext(),dateString);
-
-                    String transExpenseIn=jsonParser.getAllTransaction(account, "d", "0");
-                    jsonParser.readAndParseTransactionJSON(transExpenseIn);
-                    ArrayList <TimelineItem2> t2=jsonParser.getTransItems();
-                    for(int i=0;i<t2.size();i++){
-                        LocalDBServices.addJsonTransactionForce(getBaseContext(), t2.get(i).getTransactionID(), t2.get(i).getDateString(), t2.get(i).getAmount(), t2.get(i).isExpence(), t2.get(i).getAccountName(), t2.get(i).getCategoryID(), t2.get(i).getTags(), t2.get(i).getDescription());
-                    }
-                    if(t2.size()==100){
-                        int j=1;
-                        transExpenseIn=jsonParser.getAllTransaction(account, "d", j * 100 + "");
-                        jsonParser.readAndParseTransactionJSON(transExpenseIn);
-                        t2=jsonParser.getTransItems();
-                        for(int i=0;i<t2.size();i++){
-                            LocalDBServices.addJsonTransactionForce(getBaseContext(), t2.get(i).getTransactionID(), t2.get(i).getDateString(), t2.get(i).getAmount(), t2.get(i).isExpence(), t2.get(i).getAccountName(), t2.get(i).getCategoryID(), t2.get(i).getTags(), t2.get(i).getDescription());
-                        }
-                    }
-
-                    String transIncomeIn=jsonParser.getAllTransaction(account, "c", "0");
-                    jsonParser.readAndParseTransactionJSON(transIncomeIn);
-                    t2=jsonParser.getTransItems();
-                    for(int i=0;i<t2.size();i++){
-                        LocalDBServices.addJsonTransactionForce(getBaseContext(), t2.get(i).getTransactionID(), t2.get(i).getDateString(), t2.get(i).getAmount(), t2.get(i).isExpence(), t2.get(i).getAccountName(), t2.get(i).getCategoryID(), t2.get(i).getTags(), t2.get(i).getDescription());
-                    }
-                    if(t2.size()==100){
-                        int j=1;
-                        transExpenseIn=jsonParser.getAllTransaction(account, "c", j * 100 + "");
-                        jsonParser.readAndParseTransactionJSON(transExpenseIn);
-                        t2=jsonParser.getTransItems();
-                        for(int i=0;i<t2.size();i++){
-                            LocalDBServices.addJsonTransactionForce(getBaseContext(), t2.get(i).getTransactionID(), t2.get(i).getDateString(), t2.get(i).getAmount(), t2.get(i).isExpence(), t2.get(i).getAccountName(), t2.get(i).getCategoryID(), t2.get(i).getTags(), t2.get(i).getDescription());
-                        }
-                    }
-
-                }
-                catch (Exception e){
-                 Log.e("debug","there is a problem on posting cookie, should try login again");
-                    LocalDBServices.invalidTokens(getBaseContext());
-                    ConnectionManager.pfmCookie="";
-                    ConnectionManager.pfmToken="";
-                    setResult(LOGOUT_CODE);
-                    finish();
-                }
-
-
-
-
-            }
-
-        });
-
-
-        syncAccountButton.setOnClickListener(new View.OnClickListener() {
+        clearDBButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                JsonParser jsonParser=JsonParser.getInstance();
-
-                try {
-                    String accountIn=jsonParser.getAccountInfo();
-                    jsonParser.readAndParseAccountJSON(accountIn);
-                    Account account=jsonParser.getUserAccount();
-                    LocalDBServices.addJsonAccounts(getBaseContext(),account);
-                }
-                catch (Exception e){
-                    Log.e("debug","there is a problem on posting cookie, should try login again");
-                    LocalDBServices.invalidTokens(getBaseContext());
-                    ConnectionManager.pfmCookie="";
-                    ConnectionManager.pfmToken="";
-                    setResult(LOGOUT_CODE);
-                    finish();
-                }
-
+            LocalDBServices.clearTable(SettingActivity.this,TransactionsContract.TransactionEntry.TABLE_NAME);
+            LocalDBServices.clearTable(SettingActivity.this,TransactionsContract.Accounts.TABLE_NAME);
+            LocalDBServices.clearTable(SettingActivity.this,TransactionsContract.Tokens.TABLE_NAME);
+            LocalDBServices.clearTable(SettingActivity.this,TransactionsContract.DeletedTransactions.TABLE_NAME);
+            LocalDBServices.clearTable(SettingActivity.this,TransactionsContract.SyncLogData.TABLE_NAME);
+            LocalDBServices.clearTable(SettingActivity.this,TransactionsContract.TagsEntry.TABLE_NAME);
             }
         });
 

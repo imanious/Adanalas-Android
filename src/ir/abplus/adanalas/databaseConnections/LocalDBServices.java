@@ -106,6 +106,7 @@ public class LocalDBServices {
         ContentValues values = new ContentValues();
         for(int i=0;i<account.getDeposits().size();i++){
             values.put(TransactionsContract.Accounts.COLUMN_NAME_Account_Name,account.getDeposits().get(i).getCode());
+            System.out.println(account.getDeposits().get(i).getCode()+"checking account name");
             if(account.getDeposits().get(i).getType().equals("Handy"))
                 values.put(TransactionsContract.Accounts.COLUMN_NAME_Account_Type,1 );
             else
@@ -512,6 +513,12 @@ public class LocalDBServices {
                         c.close();
                         return false;
                     }
+    }
+
+    public static void clearTable(Context context,String tableName){
+        trHelper= TransactoinDatabaseHelper.getInstance(context);
+        SQLiteDatabase db = trHelper.getWritableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
+        db.delete(tableName,null,null);
     }
 
     public static void updateSyncTime(Context context,String lastSyncDate){

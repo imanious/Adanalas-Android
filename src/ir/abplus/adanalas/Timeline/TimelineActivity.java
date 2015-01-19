@@ -280,6 +280,18 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
         });
 
         getSharedPreferences();
+
+        //here is get first refresh
+        new SyncTask().execute();
+
+        try {
+            immediateRefreshTimeline();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        addAccountsAndTimesToList();
+        addSlidingMenu();
+
 	}
 
     private void addAccountsAndTimesToList() {
@@ -293,6 +305,7 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
             {
 
                 String accountName=c2.getString(c2.getColumnIndexOrThrow(TransactionsContract.Accounts.COLUMN_NAME_Account_Name));
+                System.out.println(accountName);
                 if(c2!=null){
                     if(c2.isFirst())
                         accountsAndTimeFilter.add(new FilterMenuItem("حساب‌ها", true,accountName, false, R.drawable.vaam_raw));
@@ -429,9 +442,6 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 	@Override
 	protected void onResume()
 	{
-
-
-
 
 //		//TODO change to dip
 		GridLayout expenses = (GridLayout) findViewById(R.id.expense_grid);
@@ -729,9 +739,11 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 		{
 			// Do work to refresh the list here.
 			new SyncTask().execute();
-//            addSlidingMenu();
+
             try {
                 immediateRefreshTimeline();
+                addAccountsAndTimesToList();
+                addSlidingMenu();
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -963,6 +975,7 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
    private void addSlidingMenu(){
 
        // configure the SlidingMenu
+       Log.d("debug","addSliding menu called");
        SlidingMenu menu = new SlidingMenu(this);
        menu.setMode(SlidingMenu.LEFT_RIGHT);
        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);

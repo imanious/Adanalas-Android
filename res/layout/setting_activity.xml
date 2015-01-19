@@ -60,16 +60,12 @@
                 android:text="واحد پولی پیشفرض:"
                 android:id="@+id/textView2" android:gravity="right"/>
     </LinearLayout>
+
     <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add json to DB"
-            android:id="@+id/urltobutton"/>
-    <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Sync Account"
-            android:id="@+id/syncaccount"/>
+            android:text="Clear Database"
+            android:id="@+id/clearDB"/>
     <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
