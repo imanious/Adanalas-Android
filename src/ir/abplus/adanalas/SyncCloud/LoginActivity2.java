@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+import ir.abplus.adanalas.Libraries.LodingDialog;
 import ir.abplus.adanalas.R;
 import ir.abplus.adanalas.Timeline.TimelineActivity;
 import ir.abplus.adanalas.databaseConnections.LocalDBServices;
@@ -22,6 +24,9 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -36,6 +41,14 @@ public class LoginActivity2 extends Activity {
     EditText passwordEditText;
     ImageView logoImageView;
     Button enterButton;
+    AsyncTask loginTask;
+    LodingDialog dialog;
+    private static int ERROR_CONNECTION=0;
+    private static int ERROR_USERPASS=1;
+    private static int ERROR_PFM_NOT_FOUND=2;
+    private static int ERROR_UNKNOWN=3;
+    private static int LOGIN_SUCSESS=4;
+
     private static String PISHKHAN_ADDRESS = "https://www.abplus.ir/panel/login/index/";
 
 //    private static String PISHKHAN_ADDRESS = "https://www.abplus.ir/panel/login/index/";
@@ -60,7 +73,12 @@ public class LoginActivity2 extends Activity {
         enterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                doLogin(usernameEditText.getText().toString(), passwordEditText.getText().toString());
+                    loginTask=new DoLogin().execute();
+//                    new DoAnimation().execute();
+                dialog=new LodingDialog(LoginActivity2.this,getResources(),"ورود به سیستم");
+                dialog.show();
+
+//                doLogin(usernameEditText.getText().toString(), passwordEditText.getText().toString());
             }
 
 
@@ -68,47 +86,46 @@ public class LoginActivity2 extends Activity {
 
     }
 
-    private void doLogin(String username, String password) {
-        String loginStatus = tryLogin(username, password);
-        if (loginStatus != null) {
-            //try connect to pfm.abplus.ir and get all transactions using getTransactions
-            Log.e("debug", "login success");
-        } else {
-            Log.e("debug", "login failed");
-            Toast.makeText(LoginActivity2.this, "نام کاربری یا رمز عبور نامعتبر می باشد.", Toast.LENGTH_SHORT).show();
-        }
-    }
 
-    private String tryLogin(String username, String password) {
+    private int tryLogin(String username, String password) {
+        int result;
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            PFMResObject pishkhanResObject = pishkhanLoginTask(LoginActivity2.PISHKHAN_ADDRESS, username, password);
-            if (pishkhanResObject.getPfmCookie() != null) {
-                ConnectionManager.pfmCookie = pishkhanResObject.getPfmCookie();
-                ConnectionManager.pfmToken = pishkhanResObject.getPfmToken();
-                LocalDBServices.addTokens(this,pishkhanResObject.getPfmToken(),pishkhanResObject.getPfmCookie());
+            Log.e("debug","try to call pishkhanLoginTask method");
+            int  pishkhanResInt = pishkhanLoginTask(LoginActivity2.PISHKHAN_ADDRESS, username, password);
+            result=pishkhanResInt;
+            Log.e("debug","after call pishkhanLoginTask method");
+            if (pishkhanResInt==LOGIN_SUCSESS) {
+                result=LOGIN_SUCSESS;
+//                ConnectionManager.pfmCookie = pishkhanResObject.getPfmCookie();
+//                ConnectionManager.pfmToken = pishkhanResObject.getPfmToken();
+                LocalDBServices.addTokens(this,ConnectionManager.pfmToken ,ConnectionManager.pfmCookie);
                 Intent intent = new Intent(LoginActivity2.this, TimelineActivity.class);
                 finish();
                 startActivity(intent);
-                return "login ok";
+                return result;
             } else {
-                Toast.makeText(LoginActivity2.this, "اشکال در دریافت اطلاعات از آدانالس", Toast.LENGTH_SHORT).show();
-                Log.e("debug", "pfm cookie does not get!");
+                dialog.cancel();
+//                result=ERROR_PFM_NOT_FOUND;
+                return result;
             }
 
         } else {
-            Toast.makeText(LoginActivity2.this, "اتصال به اینترنت وجود ندارد", Toast.LENGTH_SHORT).show();
+            result=ERROR_CONNECTION;
+            dialog.cancel();
+            return result;
         }
-        return null;
+//        return ERROR_UNKNOWN;
     }
 
-    private PFMResObject pishkhanLoginTask(String myurl, String username, String password) {
+    private int pishkhanLoginTask(String myurl, String username, String password) {
 
-        PFMResObject result = new PFMResObject();
-        DefaultHttpClient httpclient = new DefaultHttpClient();
+        final HttpParams httpParams = new BasicHttpParams();
+        HttpConnectionParams.setConnectionTimeout(httpParams, 15000);
+        DefaultHttpClient httpclient = new DefaultHttpClient(httpParams);
         HttpGet httpGet = new HttpGet(myurl);
-//        todo add related headers to http Post
+
         HttpResponse response = null;
         try {
             response = httpclient.execute(httpGet);
@@ -121,7 +138,7 @@ public class LoginActivity2 extends Activity {
                 String responseString = out.toString();
                 //trying to get pishkhan's login form csrf token
                 String csrf_token = responseString.substring(responseString.indexOf("name=\"csrf_token\" value=\"") + 25, responseString.indexOf("name=\"csrf_token\" value=\"") + 57);
-//                Log.e("login debug","pishkhan csrfToken:"+csrf_token);
+                Log.e("login debug","pishkhan csrfToken:"+csrf_token);
 
                 //http login post
                 HttpPost httpPost = new HttpPost(myurl);
@@ -139,17 +156,14 @@ public class LoginActivity2 extends Activity {
                     out.close();
                     responseString = out.toString();
 
-//                    System.out.println(responseString.toString());
-                    Log.e("debug", "here is the index of keyvan:" + responseString.indexOf("کیوان"));
-
-//                    String pfmToken=responseString.substring(responseString.indexOf("verify?token")+13,responseString.indexOf("verify?token")+57);
                     String pfmVerifyUrl = responseString.substring(responseString.indexOf("https://pfm.abplus.ir"), responseString.indexOf("https://pfm.abplus.ir") + 87);
 //                    Log.e("debug", "here is pfm token:" +pfmToken);
                     Log.e("debug", "here is pfm url:" + pfmVerifyUrl);
-                    if (!pfmVerifyUrl.contains("verify?token"))
+                    if (!pfmVerifyUrl.contains("verify?token")){
                         Log.e("debug", "user name or password is incorrect");
+                        return ERROR_USERPASS;
+                    }
                     else {
-
                         HttpGet pfmGet = new HttpGet(pfmVerifyUrl);
                         response = httpclient.execute(pfmGet);
                         statusLine = response.getStatusLine();
@@ -158,9 +172,7 @@ public class LoginActivity2 extends Activity {
                             response.getEntity().writeTo(out);
                             out.close();
                             responseString = out.toString();
-//                            System.out.println(responseString);
                             String pfmCSRFToken = responseString.substring(responseString.indexOf("csrfToken") + 18, responseString.indexOf("csrfToken") + 54);
-//                        String pfmcookie=responseString.substring(responseString.indexOf("set")+18,responseString.indexOf("csrfToken")+54);
                             String pfmcookie = "";
                             Header[] headers = response.getAllHeaders();
                             for (Header header : headers) {
@@ -172,94 +184,18 @@ public class LoginActivity2 extends Activity {
                                             break;
                                         }
                                     }
-//                                pfmcookie = header.getValue();
                                 }
                                 System.out.println("Key : " + header.getName()
                                         + " ,Value : " + header.getValue());
                             }
 
-                            result.setPfmToken(pfmCSRFToken);
-                            result.setPfmCookie(pfmcookie);
-                            System.out.println("pfm cookie is : " + pfmcookie);
-                            System.out.println("trying to get /me");
-
-
-
-//                                                        URL url = new URL("https://pfm.abplus.ir/me");
-//                            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-//                            urlConnection.setRequestProperty("Cookie", "sid=" + pfmcookie);
-//                            urlConnection.connect();
-//                            try {
-//                                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-//                                StringBuffer sb = new StringBuffer();
-//                                InputStreamReader isr = new InputStreamReader(in);
-//                                int numCharsRead;
-//                                char[] charArray = new char[1024];
-//                                while ((numCharsRead = isr.read(charArray)) > 0) {
-//                                    sb.append(charArray, 0, numCharsRead);
-//                                }
-//                                System.out.println("CLIENT RECEIVED: " + sb.toString());
-//
-//                            } catch (Exception e) {
-//                                System.out.println(e);
-//                            } finally {
-//                                urlConnection.disconnect();
-//                            }
-
-//
-//                            String transUrl="https://pfm.abplus.ir/transactions?offset=0&limit=100&sortField=date&sortReverse=1&type=d&hidden=false&deposits=0201434050006&deposits=0017494550*%D9%86%D9%82%D8%AF%DB%8C&deposits=0017494550*%D9%86%D9%82%D8%AF%DB%8C%204&from=&to=&categories=household&categories=food&categories=transportation&categories=education&categories=bill&categories=hobby&categories=healthcare&categories=hygiene&categories=clothing&categories=personal&categories=present&categories=lend&categories=commitment&categories=investment&categories=expense&categories=bonus&categories=salary&categories=subsidy&categories=gift&categories=rent&categories=interest&categories=compensation&categories=sale&categories=trust&categories=borrow&categories=loan&categories=income&min=&max=&importName=&_=1419681104559";
-//                            url = null;
-//                            urlConnection = null;
-//                            String accountResultString="";
-//                            try {
-//                                url = new URL(transUrl);
-//                                urlConnection = (HttpURLConnection) url.openConnection();
-//                                urlConnection.setRequestProperty("Cookie", "sid=" + pfmcookie);
-//                                urlConnection.connect();
-//                                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-//                                StringBuffer sb = new StringBuffer();
-//                                InputStreamReader isr = new InputStreamReader(in);
-//                                int numCharsRead;
-//                                char[] charArray = new char[100000];
-//                                while ((numCharsRead = isr.read(charArray)) > 0) {
-//                                    sb.append(charArray, 0, numCharsRead);
-//                                }
-//                                System.out.println("CLIENT RECEIVED: " + sb.toString());
-////                                tranactionsResultString=sb.toString();
-//
-//                            } catch (MalformedURLException e) {
-//                                e.printStackTrace();
-//                            } catch (IOException e) {
-//                                e.printStackTrace();
-//                            }
-//                            finally {
-//                                urlConnection.disconnect();
-//                            }
-//
-//
-
-
-//
-//                            URL url = new URL(PFM_ME_ADDRESS);
-//                            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-//                            urlConnection.setRequestProperty("Cookie", "sid=" + pfmcookie);
-//                            urlConnection.connect();
-//                            try {
-//                                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-//                                StringBuffer sb = new StringBuffer();
-//                                InputStreamReader isr = new InputStreamReader(in);
-//                                int numCharsRead;
-//                                char[] charArray = new char[1024];
-//                                while ((numCharsRead = isr.read(charArray)) > 0) {
-//                                    sb.append(charArray, 0, numCharsRead);
-//                                }
-//                                System.out.println("CLIENT RECEIVED: " + sb.toString());
-//
-//                            } catch (Exception e) {
-//                                System.out.println(e);
-//                            } finally {
-//                                urlConnection.disconnect();
-//                            }
+//                            result.setPfmToken(pfmCSRFToken);
+//                            result.setPfmCookie(pfmcookie);
+                            ConnectionManager.pfmToken=pfmCSRFToken;
+                            ConnectionManager.pfmCookie=pfmcookie;
+                            return LOGIN_SUCSESS;
+//                            System.out.println("pfm cookie is : " + pfmcookie);
+//                            System.out.println("trying to get /me");
 
                         }
                     }
@@ -269,14 +205,49 @@ public class LoginActivity2 extends Activity {
                 Log.e("debug", "there is a problem on getting main connection result!");
                 response.getEntity().getContent().close();
                 throw new IOException(statusLine.getReasonPhrase());
-
             }
-            return result;
-
         } catch (IOException e) {
             e.printStackTrace();
+            return ERROR_UNKNOWN;
         }
-        return null;
+        return ERROR_UNKNOWN;
     }
 
+    private class DoLogin extends AsyncTask{
+
+        int result;
+        @Override
+        protected Object doInBackground(Object[] objects) {
+                Log.e("debug", "DoLogin class called");
+//                doLogin(usernameEditText.getText().toString(), passwordEditText.getText().toString());
+            result=tryLogin(usernameEditText.getText().toString(), passwordEditText.getText().toString());
+            System.out.println("result is:"+result);
+            cancel(true);
+            return null;
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            if(result==ERROR_CONNECTION){
+                Toast.makeText(LoginActivity2.this, "اتصال به اینترنت وجود ندارد", Toast.LENGTH_SHORT).show();
+            }
+            else if(result==ERROR_PFM_NOT_FOUND){
+                Toast.makeText(LoginActivity2.this, "خطا در اتصال به سرور", Toast.LENGTH_SHORT).show();
+            }
+            else if(result==ERROR_USERPASS){
+                Toast.makeText(LoginActivity2.this, "نام کاربری یا رمز عبور نامعتبر می باشد", Toast.LENGTH_SHORT).show();
+            }
+            else if(result==ERROR_UNKNOWN){
+                Toast.makeText(LoginActivity2.this, "خطای نامشخص، لطفا دوباره تلاش کنید", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+//        @Override
+//        protected void onPostExecute(Object o) {
+//            super.onPostExecute(o);
+//            System.out.println(result);
+//            Toast.makeText(LoginActivity2.this, "اتصال به اینترنت وجود ندارد", Toast.LENGTH_SHORT).show();
+//        }
+    }
 }

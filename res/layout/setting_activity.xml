@@ -68,6 +68,17 @@
     <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Sync Account"
+            android:id="@+id/syncaccount"/>
+    <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sync all Transactions"
+            android:id="@+id/syncAllTrans"/>
+
+    <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="Sign out"
             android:id="@+id/signout_button" android:layout_gravity="center_horizontal"/>
 </LinearLayout>

@@ -1,19 +1,21 @@
 package ir.abplus.adanalas.SyncCloud;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.StrictMode;
 import android.util.Log;
 import ir.abplus.adanalas.Libraries.Account;
 import ir.abplus.adanalas.Libraries.Category;
 import ir.abplus.adanalas.Libraries.Deposit;
 import ir.abplus.adanalas.Timeline.TimelineItem2;
+import ir.abplus.adanalas.databaseConnections.LocalDBServices;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.*;
 import java.util.ArrayList;
 
 /**
@@ -21,15 +23,13 @@ import java.util.ArrayList;
  */
 public class JsonParser {
 
-    private String TransUrlString = null;
-    private String AccountUrlString = null;
     private static String PFM_ME_ADDRESS = "https://pfm.abplus.ir/me";
-
+    private static JsonParser  mInstance = null;
 
     private ArrayList<TimelineItem2> transItems;
-    private Account userAccount;
+    private static Account userAccount;
 
-    public Account getUserAccount() {
+    public static Account getUserAccount() {
         return userAccount;
     }
 
@@ -39,15 +39,10 @@ public class JsonParser {
 
     public volatile boolean parsingComplete = true;
     public JsonParser(String transUrlString,String accountUrlString){
-        this.TransUrlString = transUrlString;
-        this.AccountUrlString=accountUrlString;
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
     }
 
-    public String getTransUrlString() {
-        return TransUrlString;
-    }
 
     @SuppressLint("NewApi")
     public void readAndParseTransactionJSON(String in) {
@@ -199,20 +194,19 @@ public class JsonParser {
             @Override
             public void run() {
                 try {
-                    URL url = new URL(TransUrlString);
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    conn.setReadTimeout(10000 /* milliseconds */);
-                    conn.setConnectTimeout(15000 /* milliseconds */);
-                    conn.setRequestMethod("GET");
-                    conn.setDoInput(true);
-                    // Starts the query
-                    conn.connect();
-                    InputStream stream = conn.getInputStream();
-
-                    String data = convertStreamToString(stream);
-
-                    readAndParseTransactionJSON(data);
-                    stream.close();
+//                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+//                    conn.setReadTimeout(10000 /* milliseconds */);
+//                    conn.setConnectTimeout(15000 /* milliseconds */);
+//                    conn.setRequestMethod("GET");
+//                    conn.setDoInput(true);
+//                    Starts the query
+//                    conn.connect();
+//                    InputStream stream = conn.getInputStream();
+//
+//                    String data = convertStreamToString(stream);
+//
+//                    readAndParseTransactionJSON(data);
+//                    stream.close();
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -262,9 +256,10 @@ public class JsonParser {
     }
 
 
-    static String getTransactionRequest(String offset,String limit,String type,ArrayList<Deposit> deposits){
+    static String getTransactionRequest(String offset,String limit,String type,ArrayList<Deposit> deposits,String fromDate,String toDate){
         String output="";
-        output+="https://pfm.abplus.ir/transactions?";
+
+//        output+="https://pfm.abplus.ir/transactions?";
         output+="offset="+offset+"&";
         output+="limit="+limit+"&";
         output+="sortField=date&sortReverse=1&";
@@ -274,13 +269,25 @@ public class JsonParser {
         for(Deposit s:deposits){
             output+="deposits="+s.getCode()+"&";
         }
-        output+="from=&to=&categories=household&categories=food&categories=transportation&categories=education&categories=bill&categories=hobby&categories=healthcare&categories=hygiene&categories=clothing&categories=personal&categories=present&categories=lend&categories=commitment&categories=investment&categories=expense&categories=bonus&categories=salary&categories=subsidy&categories=gift&categories=rent&categories=interest&categories=compensation&categories=sale&categories=trust&categories=borrow&categories=loan&categories=income&min=&max=&importName=&_=1419681104559";
+        output+="from="+fromDate
+                +"&to="+toDate
+                +"&categories=household&categories=food&categories=transportation&categories=education&categories=bill&categories=hobby&categories=healthcare&categories=hygiene&categories=clothing&categories=personal&categories=present&categories=lend&categories=commitment&categories=investment&categories=expense&categories=bonus&categories=salary&categories=subsidy&categories=gift&categories=rent&categories=interest&categories=compensation&categories=sale&categories=trust&categories=borrow&categories=loan&categories=income&min=&max=&importName=&_=1419681104559";
+        URI uri = null;
+        try {
+            uri = new URI("https","pfm.abplus.ir","/transactions?",output,null);
+            output= uri.toASCIIString();
+            output=output.replaceAll("%3F","");
+        } catch (URISyntaxException e) {
+            System.out.println(output);
+            e.printStackTrace();
+        }
+        Log.e("debug",output);
         return output;
     }
 
-    public String getTransactions(Account account,String type,String offset){
+    public String getAllTransaction(Account account, String type, String offset){
         String tranactionsResultString="";
-        String transUrl=getTransactionRequest(offset,"100",type,account.getDeposits());
+        String transUrl=getTransactionRequest(offset,"100",type,account.getDeposits(),"","");
         transUrl=transUrl.replaceAll(" ","%20");
 
         Log.e("debug",transUrl);
@@ -329,7 +336,58 @@ public class JsonParser {
         return tranactionsResultString;
     }
 
-    public String getAccountUrlString() {
-        return AccountUrlString;
+    public String getnewTransactions(Context context,Account account, String type, String offset) throws URISyntaxException {
+        String tranactionsResultString="";
+        String lastDate="";
+        try {
+            lastDate=LocalDBServices.getSyncTime(context);
+            if(lastDate.length()>7)
+            lastDate=lastDate.substring(0,4)+"/"+lastDate.substring(4,6)+"/"+lastDate.substring(6,8);
+        }catch (Exception e){
+
+        }
+        String transUrl=getTransactionRequest(offset,"100",type,account.getDeposits(),lastDate,"");
+        URL url = null;
+        HttpURLConnection urlConnection = null;
+        String accountResultString="";
+        try {
+            url = new URL(transUrl);
+            urlConnection = (HttpURLConnection) url.openConnection();
+            System.out.println(ConnectionManager.pfmCookie);
+            urlConnection.setRequestProperty("Cookie", "sid=" + ConnectionManager.pfmCookie);
+//            urlConnection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+            urlConnection.connect();
+
+            InputStream in = urlConnection.getInputStream();
+            String sb=convertStreamToString(in);
+            tranactionsResultString=sb;
+            Log.e("debug","result is:"+tranactionsResultString);
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        finally {
+            urlConnection.disconnect();
+        }
+
+
+
+        return tranactionsResultString;
     }
+    public static JsonParser getInstance() {
+        /**
+         * use the application context as suggested by CommonsWare.
+         * this will ensure that you dont accidentally leak an Activitys
+         * context (see this article for more information:
+         * http://android-developers.blogspot.nl/2009/01/avoiding-memory-leaks.html)
+         */
+        if (mInstance == null) {
+            mInstance = new JsonParser("","");
+        }
+        return mInstance;
+    }
+
+
 }

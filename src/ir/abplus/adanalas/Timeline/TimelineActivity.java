@@ -35,6 +35,8 @@ import ir.abplus.adanalas.Libraries.*;
 import ir.abplus.adanalas.Libraries.TransactionsContract.TransactionEntry;
 import ir.abplus.adanalas.R;
 import ir.abplus.adanalas.Setting.SettingActivity;
+import ir.abplus.adanalas.SyncCloud.ConnectionManager;
+import ir.abplus.adanalas.SyncCloud.JsonParser;
 import ir.abplus.adanalas.SyncCloud.LoginActivity2;
 import ir.abplus.adanalas.Uncategoried.UncategoriedActivity;
 import ir.abplus.adanalas.databaseConnections.LocalDBServices;
@@ -61,15 +63,13 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 	public static final int FULLY_OPAQUE = 255;
 	public static Typeface persianTypeface;
 	public static Typeface persianBoldTypeface;
-	// 	public static int screenWidth;
-	//	public static int screenHeight;
 	boolean firstTime = true;
 
 
 	public static boolean[] expenseSelection = new boolean[Category.EXPENSE_SIZE];
 	public static boolean[] incomeSelection = new boolean[Category.INCOME_SIZE];
-	public static boolean[] accountSelection=  new boolean[4];
-
+	public static boolean[] accountSelection;
+    public static boolean isDBChanged=true;
 	String totalIncomeString;
 	String totalExpenseString;
 	
@@ -92,11 +92,8 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 	DisplayMetrics displayMetrics;
 	float screenDpWidth;
 	private String lastUpdateString = "";
-    private Cursor c;
     private PersianDate date = null;
     private Time time = null;
-    private String query;
-    private String where;
     private LinearLayout totalIncomeCurrencyLayout;
     private LinearLayout totalExpenseCurrencyLayout;
     private String PREFRENCES_FILE ="preferences";
@@ -353,7 +350,9 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 
 //			setCursor();
             System.out.println("refreshTimeline called");
-            makeItemFromCursor(LocalDBServices.getTransactionsFromDB(this,expenseSelection,incomeSelection,accountMenuAdapter.getRadioSelected(),accountMenuAdapter,filterDate));
+            Cursor cursor=LocalDBServices.getTransactionsFromDB(this, expenseSelection, incomeSelection, accountMenuAdapter.getRadioSelected(), accountMenuAdapter, filterDate);
+            makeItemFromCursor(cursor);
+            cursor.close();
 //            pHAdapter.notifyDataSetChanged();
 //            new ReceiverThread().run();
             String colName = "totalExpense";
@@ -364,24 +363,14 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
             Log.e("debug","total expense: "+totalExp);
             Log.e("debug","total!!expense: "+totalst);
             c.close();
-//            totalExpense.setText("  "+Utils.toPersianNumbers(Currency.getStandardAmount(totalExp)));
 
             colName = "totalIncome";
-//			query = "SELECT SUM("+TransactionEntry.COLUMN_NAME_AMOUNT+") AS "+colName+
-//					" FROM "+TransactionEntry.TABLE_NAME+
-//					" WHERE "+TransactionEntry.COLUMN_NAME_IS_EXPENSE+"=0 and" + where;
-//			c = db.rawQuery(query, null);
             c=LocalDBServices.getTotalIncome(this);
             c.moveToFirst();
             final Long totalInc = c.getLong(c.getColumnIndexOrThrow(colName));
             c.close();
-//            totalIncome.setText("  "+Utils.toPersianNumbers(Currency.getStandardAmount(totalInc)));
 
-//            ReceiverThread rt=new ReceiverThread();
-//            rt.totalExp=totalExp;
-//            rt.totalInc=totalInc;
-//            rt.run();
-
+            isDBChanged=false;
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -395,18 +384,15 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 
 
 	}
-
-
-
 	public void immediateRefreshTimeline() throws IllegalArgumentException, ParseException{
+        accountSelection=new boolean[accountMenuAdapter.getAccountsSelection().length];
         System.arraycopy(accountMenuAdapter.getAccountsSelection(),0,accountSelection,0,accountMenuAdapter.getAccountsSelection().length);
         pHAdapter.notifyDataSetChanged();
         if(isDatabaseChanged()){
-//			SQLiteDatabase db = trHelper.getReadableDatabase();
-			
-//			setCursor();
             System.out.println("immediateRefreshTimeline called");
-            makeItemFromCursor(LocalDBServices.getTransactionsFromDB(this,expenseSelection,incomeSelection,accountMenuAdapter.getRadioSelected(),accountMenuAdapter,filterDate));
+            Cursor cursor=LocalDBServices.getTransactionsFromDB(this,expenseSelection,incomeSelection,accountMenuAdapter.getRadioSelected(),accountMenuAdapter,filterDate);
+            makeItemFromCursor(cursor);
+            cursor.close();
 
             pHAdapter.notifyDataSetChanged();
 			String colName = "totalExpense";
@@ -424,12 +410,14 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
             c.close();
 			totalIncome.setText("  "+Utils.toPersianNumbers(Currency.getStdAmount(total)));
             Currency.setCurrencyLayout(totalIncomeCurrencyLayout, this, getResources().getColor(R.color.green), persianTypeface, Currency.SMALL_TEXT_SIZE);
+            isDBChanged=false;
 		}
 	}
 
 	private boolean isDatabaseChanged() throws ParseException
 	{
-		return true;
+        Log.e("debug","checks if database is changed or not");
+        return true;
 	}
 
 	@Override
@@ -655,9 +643,11 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 			// Simulates a background job.
 			try
 			{
-				refreshTimeline();
+                Log.e("debug","syncTask called ,try to sync!");
+                getNewTransFromServer();
+
             }
-			catch (ParseException e1)
+			catch (Exception e1)
 			{
 				e1.printStackTrace();
 			}
@@ -739,7 +729,13 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 		{
 			// Do work to refresh the list here.
 			new SyncTask().execute();
-			return;
+//            addSlidingMenu();
+            try {
+                immediateRefreshTimeline();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return;
 		}
 		
 		switch(accountMenuAdapter.getRadioSelected())
@@ -800,21 +796,26 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 		{
 			if(shouldSync())
 			{
+
 				PersianCalendar tmpCal = new PersianCalendar();
 				Calendar tmpTime = Calendar.getInstance();
 
 				int dayOfWeek = tmpCal.get(PersianCalendar.DAY_OF_WEEK);
 				int dayOfMonth = tmpCal.get(PersianCalendar.DAY_OF_MONTH);
 				int month = tmpCal.get(PersianCalendar.MONTH);
-				String date = PersianCalendar.weekdayFullNames[dayOfWeek]+" "+dayOfMonth+" "+PersianCalendar.months[month];
-
-				int minute = tmpTime.get(Calendar.MINUTE);
-				int hour = tmpTime.get(Calendar.HOUR_OF_DAY);
-				String time = hour+":"+String.format("%02d", minute);
+//				String date = PersianCalendar.weekdayFullNames[dayOfWeek]+" "+dayOfMonth+" "+PersianCalendar.months[month];
+                String tmpDate=LocalDBServices.getSyncTime(this);
+                String date="";
+                if(tmpDate.length()>7) {
+                    date = tmpDate.substring(0, 4) + "/"+tmpDate.substring(4,6)+ "/" + tmpDate.substring(6, 8);
+                }
+//				int minute = tmpTime.get(Calendar.MINUTE);
+//				int hour = tmpTime.get(Calendar.HOUR_OF_DAY);
+//				String time = hour+":"+String.format("%02d", minute);
 
 				refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(lastUpdateString);
 				// Update the lastUpdatedString
-				lastUpdateString = Utils.toPersianNumbers(time+" - "+date);
+				lastUpdateString = Utils.toPersianNumbers(date);
 
 				refreshView.getLoadingLayoutProxy().setPullLabelUp(
 						getResources().getString(R.string.sync_string));
@@ -860,176 +861,6 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 		phList.getLoadingLayoutProxy().setReleaseLabelBottom(bottomLabel);
 		phList.getLoadingLayoutProxy().setLastUpdatedLabel(" ");
 	}
-    public void setCursor(){
-//        SQLiteDatabase db = trHelper.getReadableDatabase();
-//
-//
-//
-//        where = "(";
-//        where += "("+TransactionEntry.COLUMN_NAME_IS_EXPENSE + "=" + 1 + ") and (";
-//        for(int i = 0; i < Category.EXPENSE_SIZE; i++)
-//        {
-//            if(expenseSelection[i])
-//            {
-//                where += TransactionEntry.COLUMN_NAME_CATEGORY + "=" + i + " or ";
-//            }
-//        }
-//        if(where.substring(where.length()-4, where.length()).equals(" or "))
-//        {
-//            where = where.substring(0, where.length()-4);
-//            where += ")";
-//        }
-//        else
-//        {
-//            where += "1=0)";
-//        }
-//
-//        where += " or ("+TransactionEntry.COLUMN_NAME_IS_EXPENSE + "=" + 0 + ") and (";
-//        for(int i = 0; i < Category.INCOME_SIZE; i++)
-//        {
-//            if(incomeSelection[i])
-//            {
-//                where += TransactionEntry.COLUMN_NAME_CATEGORY + "=" + i + " or ";
-//            }
-//        }
-//        if(where.substring(where.length()-4, where.length()).equals(" or "))
-//        {
-//            where = where.substring(0, where.length()-4);
-//            where += ")";
-//        }
-//        else
-//        {
-//            where += "1=0)";
-//        }
-//
-//        where += ")";
-//
-//        String startDate = "";
-//        String endDate = "";
-//        //TODO set cal to a custom date
-////			filterDate = new PersianCalendar();
-//        PersianDate date = null;
-//        Time time = null;
-//        int tmp;
-//        switch(accountMenuAdapter.getRadioSelected())
-//        {
-//            case DAILY:
-//                date = new PersianDate((short)filterDate.get(PersianCalendar.DAY_OF_MONTH),
-//                        (short)filterDate.get(PersianCalendar.MONTH),
-//                        (short)filterDate.get(PersianCalendar.YEAR), "");
-//                time = new Time((short)0, (short)0);
-//                startDate = date.getSTDString()+time.getSTDString();
-//                time = new Time((short)99, (short)99);
-//                endDate = date.getSTDString()+time.getSTDString();
-//                break;
-//            case WEEKLY:
-//                int amount = -filterDate.get(PersianCalendar.DAY_OF_WEEK);
-//                if(amount == -7)
-//                    amount = 0;
-//
-//                filterDate.add(PersianCalendar.DATE, amount);
-//                date = new PersianDate((short)filterDate.get(PersianCalendar.DAY_OF_MONTH),
-//                        (short)filterDate.get(PersianCalendar.MONTH),
-//                        (short)filterDate.get(PersianCalendar.YEAR), "");
-//                time = new Time((short)0, (short)0);
-//                startDate = date.getSTDString()+time.getSTDString();
-//
-//                filterDate.add(PersianCalendar.DATE, +6);
-//                date = new PersianDate((short)filterDate.get(PersianCalendar.DAY_OF_MONTH),
-//                        (short)filterDate.get(PersianCalendar.MONTH),
-//                        (short)filterDate.get(PersianCalendar.YEAR), "");
-//                time = new Time((short)99, (short)99);
-//                endDate = date.getSTDString()+time.getSTDString();
-//                filterDate.add(PersianCalendar.DATE, -6-amount);
-//                break;
-//            case MONTHLY:
-//                tmp = filterDate.get(PersianCalendar.DAY_OF_MONTH);
-//                filterDate.set(PersianCalendar.DAY_OF_MONTH, 1);
-//                date = new PersianDate((short)filterDate.get(PersianCalendar.DAY_OF_MONTH),
-//                        (short)filterDate.get(PersianCalendar.MONTH),
-//                        (short)filterDate.get(PersianCalendar.YEAR), "");
-//                time = new Time((short)0, (short)0);
-//                startDate = date.getSTDString()+time.getSTDString();
-//
-//                filterDate.set(PersianCalendar.DAY_OF_MONTH,
-//                        PersianCalendar.jalaliDaysInMonth[filterDate.get(PersianCalendar.MONTH)]);
-//                date = new PersianDate((short)filterDate.get(PersianCalendar.DAY_OF_MONTH),
-//                        (short)filterDate.get(PersianCalendar.MONTH),
-//                        (short)filterDate.get(PersianCalendar.YEAR), "");
-//                time = new Time((short)99, (short)99);
-//                endDate = date.getSTDString()+time.getSTDString();
-//                filterDate.set(PersianCalendar.DAY_OF_MONTH, tmp);
-//                break;
-//            case YEARLY:
-//                tmp = filterDate.get(PersianCalendar.DAY_OF_YEAR);
-//                filterDate.set(PersianCalendar.DAY_OF_YEAR, 1);
-//                date = new PersianDate((short)filterDate.get(PersianCalendar.DAY_OF_MONTH),
-//                        (short)filterDate.get(PersianCalendar.MONTH),
-//                        (short)filterDate.get(PersianCalendar.YEAR), "");
-//                time = new Time((short)0, (short)0);
-//                startDate = date.getSTDString()+time.getSTDString();
-//
-//                filterDate.set(PersianCalendar.DAY_OF_YEAR,
-//                        PersianCalendar.isLeapYear(filterDate.get(PersianCalendar.YEAR))? 366: 365);
-//                date = new PersianDate((short)filterDate.get(PersianCalendar.DAY_OF_MONTH),
-//                        (short)filterDate.get(PersianCalendar.MONTH),
-//                        (short)filterDate.get(PersianCalendar.YEAR), "");
-//                time = new Time((short)99, (short)99);
-//                endDate = date.getSTDString()+time.getSTDString();
-//                filterDate.set(PersianCalendar.DAY_OF_YEAR, tmp);
-//                break;
-//        }
-//
-//
-//        where += " and "+TransactionEntry.COLUMN_NAME_DATE_TIME+">="+startDate;
-//        where += " and "+TransactionEntry.COLUMN_NAME_DATE_TIME+"<="+endDate;
-//
-//
-//        ArrayList<String> ar=new ArrayList<String>();
-//        for (int i=0;i<accountMenuAdapter.getAccountsSelection().length;i++){
-//            if(accountMenuAdapter.getAccountsSelection()[i])
-//                ar.add(accountMenuAdapter.getSelectedAccountString(i));
-//        }
-//
-        System.arraycopy(accountMenuAdapter.getAccountsSelection(),0,accountSelection,0,accountMenuAdapter.getAccountsSelection().length);
-////        accountSelection=accountMenuAdapter.getAccountsSelection();
-//
-//        where += " and (";
-//        for(int i = 0; i < ar.size(); i++)
-//        {
-//         where += "( "+TransactionEntry.COLUMN_NAME_ACCOUNT_NAME+ " = '" + ar.get(i) +"' ) "+ " or ";
-//        }
-//        if(where.substring(where.length()-4, where.length()).equals(" or "))
-//        {
-//            where = where.substring(0, where.length()-4);
-//            where += ")";
-//        }
-//        else
-//        {
-//            where += "1=0)";
-//        }
-//
-//
-//
-//        query = "SELECT " +TransactionEntry.TABLE_NAME+"."+TransactionEntry._ID+
-//                " , "+TransactionEntry.TABLE_NAME+"."+TransactionEntry.COLUMN_NAME_TRANSACTION_ID+
-//                " , "+TransactionEntry.COLUMN_NAME_DATE_TIME+
-//                " , "+TransactionEntry.COLUMN_NAME_AMOUNT+
-//                " , "+TransactionEntry.COLUMN_NAME_IS_EXPENSE+
-//                " , "+TransactionEntry.COLUMN_NAME_DESCRIPTION+
-//                " , "+TransactionEntry.COLUMN_NAME_CATEGORY+
-//                " , "+TransactionEntry.COLUMN_NAME_ACCOUNT_NAME+
-//                " , "+ TransactionsContract.TagsEntry.COLUMN_NAME_TAG+
-//                " FROM "+TransactionEntry.TABLE_NAME+
-//                " LEFT JOIN "+ TransactionsContract.TagsEntry.TABLE_NAME+
-//                " ON "+TransactionEntry.TABLE_NAME+"."+TransactionEntry._ID+
-//                "="+ TransactionsContract.TagsEntry.TABLE_NAME+"."+
-//                TransactionsContract.TagsEntry.COLUMN_NAME_TRANSACTION_ID+
-//                " WHERE "+where+
-//                " ORDER BY "+TransactionEntry.COLUMN_NAME_DATE_TIME+" DESC";
-//        c = db.rawQuery(query, null);
-        LocalDBServices.getTransactionsFromDB(this,expenseSelection,incomeSelection,accountMenuAdapter.getRadioSelected(),accountMenuAdapter,filterDate);
-    }
    private void makeItemFromCursor(Cursor c){
 
 
@@ -1261,22 +1092,6 @@ private String getSelectedRadioTimeString(){
 private  void getSharedPreferences(){
     SharedPreferences preferences=getSharedPreferences(PREFRENCES_FILE,0);
     getTokensFromDB();
-//    String pfmcookie = preferences.getString("pfmcookie","");
-//    String pfmtoken = preferences.getString("pfmtoken","");
-//    ConnectionManager.pfmCookie=pfmcookie;
-//    ConnectionManager.pfmToken=pfmtoken;
-//    if(ConnectionManager.pfmCookie.equals("")){
-//        SharedPreferences.Editor edit = preferences.edit();
-//        edit.putBoolean("ProgramIsPreviouslyStarted", Boolean.TRUE);
-//        edit.commit();
-//        Intent intent = new Intent(TimelineActivity.this, LoginActivity2.class);
-//        finish();
-//        startActivity(intent);
-//        return;
-//    }
-//    if(!previouslyStarted) {
-//
-//    }
 
     for(int i=0;i<accountsAndTimeFilter.size();i++){
         accountsAndTimeFilter.get(i).isChecked=preferences.getBoolean("AccountsAndTime:"+accountsAndTimeFilter.get(i).text,true);
@@ -1319,4 +1134,70 @@ private  void getSharedPreferences(){
         }
 
     }
+
+    private void getNewTransFromServer(){
+
+        try {
+            JsonParser jsonParser=JsonParser.getInstance();
+//            Account account= jsonParser.getUserAccount();
+//            String transExpenseIn=jsonParser.getAllTransaction(account, "d", "0");
+            String accountIn=jsonParser.getAccountInfo();
+            jsonParser.readAndParseAccountJSON(accountIn);
+            Account account=jsonParser.getUserAccount();
+            LocalDBServices.addJsonAccounts(getBaseContext(),account);
+
+
+            String transExpenseIn=jsonParser.getnewTransactions(this,account, "d", "0");
+            jsonParser.readAndParseTransactionJSON(transExpenseIn);
+            ArrayList <TimelineItem2> t2=jsonParser.getTransItems();
+            for(int i=0;i<t2.size();i++){
+                LocalDBServices.addJsonTransactionForce(getBaseContext(), t2.get(i).getTransactionID(), t2.get(i).getDateString(), t2.get(i).getAmount(), t2.get(i).isExpence(), t2.get(i).getAccountName(), t2.get(i).getCategoryID(), t2.get(i).getTags(), t2.get(i).getDescription());
+            }
+            if(t2.size()==100){
+                int j=1;
+                transExpenseIn=jsonParser.getnewTransactions(this,account, "d", j * 100 + "");
+                jsonParser.readAndParseTransactionJSON(transExpenseIn);
+                t2=jsonParser.getTransItems();
+                for(int i=0;i<t2.size();i++){
+                    LocalDBServices.addJsonTransactionForce(getBaseContext(), t2.get(i).getTransactionID(), t2.get(i).getDateString(), t2.get(i).getAmount(), t2.get(i).isExpence(), t2.get(i).getAccountName(), t2.get(i).getCategoryID(), t2.get(i).getTags(), t2.get(i).getDescription());
+                }
+            }
+            String transIncomeIn=jsonParser.getnewTransactions(this,account, "c", "0");
+            jsonParser.readAndParseTransactionJSON(transIncomeIn);
+            t2=jsonParser.getTransItems();
+            for(int i=0;i<t2.size();i++){
+                LocalDBServices.addJsonTransactionForce(getBaseContext(), t2.get(i).getTransactionID(), t2.get(i).getDateString(), t2.get(i).getAmount(), t2.get(i).isExpence(), t2.get(i).getAccountName(), t2.get(i).getCategoryID(), t2.get(i).getTags(), t2.get(i).getDescription());
+            }
+            if(t2.size()==100){
+                int j=1;
+                transExpenseIn=jsonParser.getnewTransactions(this,account, "c", j * 100 + "");
+                jsonParser.readAndParseTransactionJSON(transExpenseIn);
+                t2=jsonParser.getTransItems();
+                for(int i=0;i<t2.size();i++){
+                    LocalDBServices.addJsonTransactionForce(getBaseContext(), t2.get(i).getTransactionID(), t2.get(i).getDateString(), t2.get(i).getAmount(), t2.get(i).isExpence(), t2.get(i).getAccountName(), t2.get(i).getCategoryID(), t2.get(i).getTags(), t2.get(i).getDescription());
+                }
+            }
+
+            PersianCalendar calendar = new PersianCalendar();
+            int selectedDay = calendar.get(PersianCalendar.DAY_OF_MONTH);
+            int selectedMonth = calendar.get(PersianCalendar.MONTH);
+            int selectedYear = calendar.get(PersianCalendar.YEAR);
+            int selectedWeekday = calendar.get(PersianCalendar.DAY_OF_WEEK);
+
+            PersianDate date = new PersianDate((short)selectedDay, (short)selectedMonth, (short)selectedYear, PersianCalendar.weekdayFullNames[selectedWeekday]);
+            int monthInt=Integer.parseInt(date.getSTDString().substring(4,6))+1;
+            String dateString=date.getSTDString().substring(0,4)+monthInt+date.getSTDString().substring(6,8);
+            Log.e("debug","last sync date is set to"+dateString);
+            LocalDBServices.updateSyncTime(getBaseContext(),dateString);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            Log.e("debug","there is a problem on posting cookie, should try login again");
+            LocalDBServices.invalidTokens(getBaseContext());
+            ConnectionManager.pfmCookie="";
+            ConnectionManager.pfmToken="";
+            finish();
+        }
+    }
 }
+

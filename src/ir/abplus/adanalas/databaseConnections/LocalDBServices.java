@@ -38,9 +38,10 @@ public class LocalDBServices {
         values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_CATEGORY, category_index);
         values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_DESCRIPTION, description);
         values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_TRANSACTION_ID,transactionId);
+        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_IS_SYNCED,false);
 
         db.insert(TransactionsContract.TransactionEntry.TABLE_NAME, null, values);
-
+        TimelineActivity.isDBChanged=true;
         if(selectedTags!=null){
             for(String tag: selectedTags)
             {
@@ -51,7 +52,8 @@ public class LocalDBServices {
             }
         }
     }
-    public static void addJsonTransaction(Context context,String transactionId,String dateTime, double amountValue, boolean isExpense, String defaultAccount, int category_index,ArrayList<String> selectedTags,String description) {
+    public static void addJsonTransactionForce(Context context, String transactionId, String dateTime, double amountValue, boolean isExpense, String defaultAccount, int category_index, ArrayList<String> selectedTags, String description) {
+        // This method get all transactions from adanalas db and add it to mobile
         trHelper= TransactoinDatabaseHelper.getInstance(context);
         db = trHelper.getWritableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
         ContentValues values = new ContentValues();
@@ -62,9 +64,10 @@ public class LocalDBServices {
         values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_CATEGORY, category_index);
         values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_DESCRIPTION, description);
         values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_TRANSACTION_ID, transactionId);
+        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_IS_SYNCED, true);
 
-        db.insertWithOnConflict(TransactionsContract.TransactionEntry.TABLE_NAME, null, values,SQLiteDatabase.CONFLICT_IGNORE);
-
+        db.insertWithOnConflict(TransactionsContract.TransactionEntry.TABLE_NAME, null, values,SQLiteDatabase.CONFLICT_REPLACE);
+        TimelineActivity.isDBChanged=true;
         if(selectedTags!=null){
             for(String tag: selectedTags)
             {
@@ -93,11 +96,13 @@ public class LocalDBServices {
         values.put(TransactionsContract.Accounts.COLUMN_NAME_Account_Name,"کوتاه مدت آینده");
         values.put(TransactionsContract.Accounts.COLUMN_NAME_Account_Type,0);
         db.insert(TransactionsContract.Accounts.TABLE_NAME,null,values);
+        TimelineActivity.isDBChanged=true;
     }
     public static void addJsonAccounts(Context context,Account account){
         //todo account name & account id should be standard -> account name is like shown and id is what we have in json file
         trHelper= TransactoinDatabaseHelper.getInstance(context);
         SQLiteDatabase db = trHelper.getWritableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
+        db.delete(TransactionsContract.Accounts.TABLE_NAME,"1=1",null);
         ContentValues values = new ContentValues();
         for(int i=0;i<account.getDeposits().size();i++){
             values.put(TransactionsContract.Accounts.COLUMN_NAME_Account_Name,account.getDeposits().get(i).getCode());
@@ -107,6 +112,7 @@ public class LocalDBServices {
                 values.put(TransactionsContract.Accounts.COLUMN_NAME_Account_Type,0 );
 //            db.insertOrThrow(TransactionsContract.Accounts.TABLE_NAME, null, values);
             db.insertWithOnConflict(TransactionsContract.Accounts.TABLE_NAME, null, values,SQLiteDatabase.CONFLICT_IGNORE);
+            TimelineActivity.isDBChanged=true;
         }
 
     }
@@ -376,6 +382,7 @@ public class LocalDBServices {
         values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_AMOUNT, Currency.allToRial(amountValue));
         values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_IS_EXPENSE, isExpense);
         values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_CATEGORY, category_index);
+        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_IS_SYNCED,false);
 
         if(dateTime!=null)
             values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_DATE_TIME, dateTime);
@@ -411,6 +418,7 @@ public class LocalDBServices {
         String[] selectionArgs = { id };
         ContentValues values = new ContentValues();
         values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_CATEGORY, category_index);
+        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_IS_SYNCED,false);
         db.update(TransactionsContract.TransactionEntry.TABLE_NAME,values,selection,selectionArgs);
 
 
@@ -433,6 +441,25 @@ public class LocalDBServices {
         trHelper= TransactoinDatabaseHelper.getInstance(context);
         db = trHelper.getWritableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
         String selection = TransactionsContract.TransactionEntry.COLUMN_NAME_TRANSACTION_ID + " LIKE ?";
+        Cursor c=db.rawQuery("SELECT * FROM " + TransactionsContract.TransactionEntry.TABLE_NAME + " WHERE " + selection, selectionArgs);
+        ContentValues values=new ContentValues();
+        c.moveToFirst();
+        try {
+//            values.put(TransactionsContract.DeletedTransactions.COLUMN_NAME_DATE_TIME, c.getString(c.getColumnIndexOrThrow(TransactionsContract.TransactionEntry.COLUMN_NAME_DATE_TIME)));
+//            values.put(TransactionsContract.DeletedTransactions.COLUMN_NAME_AMOUNT, c.getString(c.getColumnIndexOrThrow(TransactionsContract.TransactionEntry.COLUMN_NAME_DATE_TIME)));
+//            values.put(TransactionsContract.DeletedTransactions.COLUMN_NAME_IS_EXPENSE, c.getString(c.getColumnIndexOrThrow(TransactionsContract.TransactionEntry.COLUMN_NAME_DATE_TIME)));
+//            values.put(TransactionsContract.DeletedTransactions.COLUMN_NAME_ACCOUNT_NAME,c.getString(c.getColumnIndexOrThrow(TransactionsContract.TransactionEntry.COLUMN_NAME_DATE_TIME)));
+//            values.put(TransactionsContract.DeletedTransactions.COLUMN_NAME_CATEGORY, c.getString(c.getColumnIndexOrThrow(TransactionsContract.TransactionEntry.COLUMN_NAME_DATE_TIME)));
+//            values.put(TransactionsContract.DeletedTransactions.COLUMN_NAME_DESCRIPTION, c.getString(c.getColumnIndexOrThrow(TransactionsContract.TransactionEntry.COLUMN_NAME_DATE_TIME)));
+            values.put(TransactionsContract.DeletedTransactions.COLUMN_NAME_TRANSACTION_ID,c.getString(c.getColumnIndexOrThrow(TransactionsContract.TransactionEntry.COLUMN_NAME_DATE_TIME)));
+            values.put(TransactionsContract.DeletedTransactions.COLUMN_NAME_IS_SYNCED,false);
+            c.close();
+        }
+        catch (Exception e){
+            c.close();
+            return false;
+        }
+        db.insert(TransactionsContract.DeletedTransactions.TABLE_NAME,null,values);
         db.delete(TransactionsContract.TransactionEntry.TABLE_NAME,selection,selectionArgs);
 //        db.close();
         return true;
@@ -448,7 +475,6 @@ public class LocalDBServices {
         values.put(TransactionsContract.Tokens.COLUMN_NAME_PFM_Token, token);
         db.insert(TransactionsContract.Tokens.TABLE_NAME,null,values);
     }
-
     public static void invalidTokens(Context context){
         trHelper= TransactoinDatabaseHelper.getInstance(context);
         db = trHelper.getWritableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
@@ -457,7 +483,6 @@ public class LocalDBServices {
         db.update(TransactionsContract.Tokens.TABLE_NAME,values,TransactionsContract.Tokens.COLUMN_NAME_IS_Valid+" == 1",null);
 
     }
-
     public static boolean getTokens(Context context){
         trHelper= TransactoinDatabaseHelper.getInstance(context);
         db = trHelper.getWritableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
@@ -487,11 +512,38 @@ public class LocalDBServices {
                         c.close();
                         return false;
                     }
+    }
 
+    public static void updateSyncTime(Context context,String lastSyncDate){
+        trHelper= TransactoinDatabaseHelper.getInstance(context);
+        db = trHelper.getWritableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
+        ContentValues values = new ContentValues();
+        values.put(TransactionsContract.SyncLogData._ID,1);
+        values.put(TransactionsContract.SyncLogData.COLUMN_NAME_LAST_SYNC,lastSyncDate);
+        db.insertWithOnConflict(TransactionsContract.SyncLogData.TABLE_NAME,null,values,SQLiteDatabase.CONFLICT_REPLACE);
 
+    }
+    public static String getSyncTime(Context context){
+        trHelper= TransactoinDatabaseHelper.getInstance(context);
+        db = trHelper.getWritableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
+//        ContentValues values = new ContentValues();
+//        values.put(TransactionsContract.Tokens.COLUMN_NAME_IS_Valid, "0");
+//        db.update(TransactionsContract.Tokens.TABLE_NAME,values,TransactionsContract.Tokens.COLUMN_NAME_IS_Valid+" == 1",null);
+        String query="select *"+
+                " from "+ TransactionsContract.SyncLogData.TABLE_NAME;
 
+        Cursor cursor=db.rawQuery(query,null);
+        cursor.moveToFirst();
+        String dateString="";
+        try{
+            dateString=cursor.getString(cursor.getColumnIndexOrThrow(TransactionsContract.SyncLogData.COLUMN_NAME_LAST_SYNC));
 
+        }
+        catch (Exception e){
+            Log.e("debug","never synced before");
+        }
+        cursor.close();
 
-
+        return dateString;
     }
 }

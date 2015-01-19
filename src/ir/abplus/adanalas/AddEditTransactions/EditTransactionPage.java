@@ -417,7 +417,7 @@ public class EditTransactionPage extends Activity implements View.OnClickListene
         if(item.getItemId()==R.id.next_button) {
 //            if(amountvalue==0)
 //                Toast.makeText(this,"لطفا مبلغ تراکنش را وارد کنید", Toast.LENGTH_SHORT).show();
-            if (category_index == Category.EXPENSE_UNCATEGORIZED || category_index == Category.INCOME_UNCATEGORIZED)
+            if ((isExpense && category_index == Category.EXPENSE_UNCATEGORIZED) ||(!isExpense && category_index == Category.INCOME_UNCATEGORIZED))
                 Toast.makeText(this, "لطفا دسته بندی تراکنش را معلوم کنید", Toast.LENGTH_SHORT).show();
             else {
                 addTransationToDatabase();
