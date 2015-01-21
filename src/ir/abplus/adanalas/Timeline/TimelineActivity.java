@@ -55,7 +55,7 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
     public static final int YEARLY = 3;
 	
 	private static String[] ordinal = {"", "اول", "دوم", "سوم", "چهارم", "پنجم", "ششم", "هفتم"};
-	
+
 
 	private static final String TYPEFACE_NAME = "nassim-regular.ttf";
 	private static final String BOLD_TYPEFACE_NAME = "nassim-bold.ttf";
@@ -65,11 +65,11 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 	public static Typeface persianBoldTypeface;
 	boolean firstTime = true;
 
+    int counter = 0;
 
 	public static boolean[] expenseSelection = new boolean[Category.EXPENSE_SIZE];
 	public static boolean[] incomeSelection = new boolean[Category.INCOME_SIZE];
 	public static boolean[] accountSelection;
-    public static boolean isDBChanged=true;
 	String totalIncomeString;
 	String totalExpenseString;
 	
@@ -78,8 +78,8 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 	TextView totalIncome;
 	LinearLayout totalIncomeLayout;
 	TextView totalExpense;
-	ArrayList<TimelineItem> listItems = new ArrayList<TimelineItem>();
-	ArrayList<FilterMenuItem> accountsAndTimeFilter = new ArrayList<FilterMenuItem>();
+	ArrayList<TimelineItem2> listItems = new ArrayList<TimelineItem2>();
+	ArrayList<FilterMenuItem> accountTimeFilterMenuItem = new ArrayList<FilterMenuItem>();
 
 	PullToRefreshPinnedHeaderListView phList;
 	TimelinePinnedHeaderAdapter pHAdapter;
@@ -92,33 +92,24 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 	DisplayMetrics displayMetrics;
 	float screenDpWidth;
 	private String lastUpdateString = "";
-    private PersianDate date = null;
-    private Time time = null;
     private LinearLayout totalIncomeCurrencyLayout;
     private LinearLayout totalExpenseCurrencyLayout;
     private String PREFRENCES_FILE ="preferences";
 
     @Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
+	protected void onCreate(Bundle savedInstanceState){
 
+        getTokensFromDB();
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.timeline_layout);
-//        System.out.println("@@@"+Currency.thousandToRial("1123.03"));
-
-//		TextView title = (TextView) findViewById(getResources().getIdentifier("action_bar_title", "id","android"));
-//		title.setTypeface(persianTypeface);
-//		title.setTextSize(TypedValue.COMPLEX_UNIT_SP, TITLE_SIZE);
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); 
 		getActionBar().setCustomView(R.layout.timeline_actionbar_layout);
 
 
-
 		Currency.setCurrency(Currency.TOMAN);
-        SettingActivity.defaultAccount="نقدی 1";
 		persianTypeface = Typeface.createFromAsset(this.getAssets(), TYPEFACE_NAME);
 		persianBoldTypeface = Typeface.createFromAsset(this.getAssets(), BOLD_TYPEFACE_NAME);
 		Category.initialize();
@@ -190,11 +181,11 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 //			}
 //		});
 
-		for(int i = 0; i < Category.EXPENSE_SIZE; i++)
-			expenseSelection[i] = true;
-		
-		for(int i = 0; i < Category.INCOME_SIZE; i++)
-			incomeSelection[i] = true;
+//		for(int i = 0; i < Category.EXPENSE_SIZE; i++)
+//			expenseSelection[i] = true;
+//
+//		for(int i = 0; i < Category.INCOME_SIZE; i++)
+//			incomeSelection[i] = true;
 		
 		totalExpenseLayout = (LinearLayout) findViewById(R.id.total_expense_layout);
 		totalExpense = (TextView) totalExpenseLayout.findViewById(R.id.total_expense_text);
@@ -212,15 +203,16 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 		totalIncome.setTypeface(persianTypeface);
 		totalIncome.setTextColor(getResources().getColor(R.color.green));
 
+        addButton = (ImageButton) findViewById(R.id.add_button);
+        addButton.setOnClickListener(this);
 
 
-		displayMetrics = getResources().getDisplayMetrics();
+
+        displayMetrics = getResources().getDisplayMetrics();
 
 		screenDpWidth = displayMetrics.widthPixels / displayMetrics.density;
 
-        addAccountsAndTimesToList();
-
-
+        updateAccountTimeFilterMenuItem();
 
 		// timeline listview
 		phList = (PullToRefreshPinnedHeaderListView) findViewById(R.id.pinnedHeaderListView1);
@@ -240,139 +232,165 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 		phList.setOnPullEventListener(this);
 		phList.setOnRefreshListener(this);
 
-
         phList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-
-
-                OnClickedDialog onClickedDialog=new OnClickedDialog(TimelineActivity.this,((TimelineItem)adapterView.getAdapter().getItem(i)),getResources());
+                OnClickedDialog onClickedDialog=new OnClickedDialog(TimelineActivity.this,((TimelineItem2)adapterView.getAdapter().getItem(i)),getResources());
                 onClickedDialog.show();
-
             }
         });
 
 
-        addSlidingMenu();
 
-		setTitleText();
 
-		addButton = (ImageButton) findViewById(R.id.add_button);
-		addButton.setOnClickListener(this);
+        getNewTransFromServer();
 
-//		try {
-//			immediateRefreshTimeline();
-//		} catch (NumberFormatException e) {
-//			e.printStackTrace();
-//		} catch (IllegalArgumentException e) {
-//			e.printStackTrace();
-//		} catch (ParseException e) {
-//			e.printStackTrace();
-//		}
-		setPullToRefreshLabels();
+	}
 
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-
-            }
-        });
-
-        getSharedPreferences();
-
-        //here is get first refresh
-        new SyncTask().execute();
+    @Override
+    protected void onResume() {
 
         try {
+
+            updateAccountTimeFilterMenuItem();
+            addSlidingMenu();
+
+            setTitleText();
+            setPullToRefreshLabels();
+            getSharedPreferences();
+
+
             immediateRefreshTimeline();
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        addAccountsAndTimesToList();
-        addSlidingMenu();
 
-	}
+        Log.e("debug","onResume Called");
+//		//TODO change to dip
+        GridLayout expenses = (GridLayout) findViewById(R.id.expense_grid);
 
-    private void addAccountsAndTimesToList() {
-        accountsAndTimeFilter = new ArrayList<FilterMenuItem>();
-        Cursor c2;
-        c2= LocalDBServices.getAccountList(this);
-        c2.moveToFirst();
-        if(c2.getCount() != 0)
-        {
-            do
-            {
+        int count = expenses.getChildCount();
+        for(int i = 0; i < count; i++)
+            if(expenseSelection[i])
+                expenses.getChildAt(i).getBackground().setAlpha(FULLY_OPAQUE);
+            else
+                expenses.getChildAt(i).getBackground().setAlpha(HALF_TRANSPARENT);
 
-                String accountName=c2.getString(c2.getColumnIndexOrThrow(TransactionsContract.Accounts.COLUMN_NAME_Account_Name));
-                System.out.println(accountName);
-                if(c2!=null){
-                    if(c2.isFirst())
-                        accountsAndTimeFilter.add(new FilterMenuItem("حساب‌ها", true,accountName, false, R.drawable.vaam_raw));
-                    else
-                        accountsAndTimeFilter.add(new FilterMenuItem("", true,accountName, false, R.drawable.vaam_raw));
-                }
-            }while(c2.moveToNext());
+        GridLayout incomes = (GridLayout) findViewById(R.id.incomes_grid);
+
+        count = incomes.getChildCount();
+        for(int i = 0; i < count; i++)
+            if(incomeSelection[i])
+                incomes.getChildAt(i).getBackground().setAlpha(FULLY_OPAQUE);
+            else
+                incomes.getChildAt(i).getBackground().setAlpha(HALF_TRANSPARENT);
+
+        super.onResume();
+        ((ImageButton)(findViewById(R.id.add_button))).getDrawable().setAlpha(FULLY_OPAQUE);
+//		new RefreshTask().execute();
+
+
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+        SharedPreferences settings = getSharedPreferences(PREFRENCES_FILE, 0);
+        SharedPreferences.Editor editor = settings.edit();
+
+        for(int i=0;i< accountTimeFilterMenuItem.size();i++){
+            if (!accountTimeFilterMenuItem.get(i).isRadioButton)
+                editor.putBoolean("AccountsAndTime:"+ accountTimeFilterMenuItem.get(i).text, accountTimeFilterMenuItem.get(i).isChecked);
+            else
+                editor.putBoolean("AccountsAndTime:"+ accountTimeFilterMenuItem.get(i).text,false);
         }
-        c2.close();
+        editor.putBoolean("AccountsAndTime:"+getSelectedRadioTimeString(),true);
+        for(int i=0;i<expenseSelection.length;i++){
+            editor.putBoolean("expenseCatId:"+i,expenseSelection[i]);
+        }
+        for(int i=0;i<incomeSelection.length;i++){
+            editor.putBoolean("incomeCatId:"+i,incomeSelection[i]);
+        }
+        // Commit the edits!
+        editor.commit();
+    }
 
-        accountsAndTimeFilter.add(new FilterMenuItem(getResources().getString(R.string.time_interval),
-                false, getResources().getString(R.string.daily), true, 0));
-        accountsAndTimeFilter.add(new FilterMenuItem("", false,
-                getResources().getString(R.string.weekly), true, 0));
-        accountsAndTimeFilter.add(new FilterMenuItem("", false,
-                getResources().getString(R.string.monthly), true, 0));
-        accountsAndTimeFilter.add(new FilterMenuItem("", true,
-                getResources().getString(R.string.yearly), true, 0));
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main_timeline, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(android.view.MenuItem item) {
+        Intent intent = null;
+        boolean doNothig=false;
+        if(item.toString().equals(getResources().getString(R.string.action_uncategorized))){
+            intent=new Intent(TimelineActivity.this, UncategoriedActivity.class);
+        }
+        else if(item.toString().equals(getResources().getString(R.string.action_settings))){
+            intent=new Intent(TimelineActivity.this, SettingActivity.class);
+        }
+        else if(item.toString().equals(getResources().getString(R.string.action_charts))){
+            intent=new Intent(TimelineActivity.this, ChartActivity.class);
+        }
+        else if(item.toString().equals(getResources().getString(R.string.action_timeline))){
+            doNothig=true;
+        }
+        if(!doNothig){
+            if(intent!=null){
+//            finish();
+                startActivityForResult(intent,100);
+                overridePendingTransition(0, 0);
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==SettingActivity.LOGOUT_CODE)
+        {
+            LocalDBServices.invalidTokens(this);
+            Intent intent= new Intent(TimelineActivity.this,LoginActivity2.class);
+            finish();
+            startActivity(intent);
+            return;
+        }
+    }
+
+    @Override
+    public void onClick(View button){
+        if(button.getId() == addButton.getId())
+        {
+            button.setSelected(!button.isSelected());
+            Intent intent = new Intent(TimelineActivity.this, AddPage1.class);
+            TimelineActivity.this.startActivity(intent);
+        }
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        finish();
     }
 
 
 
-    private void setTitleText()
-	{
-		switch(accountMenuAdapter.getRadioSelected())
-		{
-		case DAILY:
-			titleText = new PersianDate((short)filterDate.get(PersianCalendar.DATE),
-					(short)filterDate.get(PersianCalendar.MONTH),
-					(short)filterDate.get(PersianCalendar.YEAR),
-					PersianCalendar.weekdayFullNames[filterDate.get(PersianCalendar.DAY_OF_WEEK)])
-			.toString();
-			break;
-		case WEEKLY:
-			titleText = "هفته" + " " + ordinal[filterDate.get(PersianCalendar.WEEK_OF_MONTH)]
-					+ " " + PersianCalendar.months[filterDate.get(PersianCalendar.MONTH)];
-			break;
-		case MONTHLY:
-			titleText = PersianCalendar.months[filterDate.get(PersianCalendar.MONTH)] + " " +
-					filterDate.get(PersianCalendar.YEAR);
-			break;
-		case YEARLY:
-			titleText = filterDate.get(PersianCalendar.YEAR)+"";
-			break;
-		}
-		title.setText(Utils.toPersianNumbers(titleText));
-	}
-
 	private void refreshTimeline() throws ParseException{
 
-//        pHAdapter.notifyDataSetChanged();
-//        new ReceiverThread().run();
         if(isDatabaseChanged()){
-//            SQLiteDatabase db = trHelper.getReadableDatabase();
-
-//			setCursor();
             System.out.println("refreshTimeline called");
             Cursor cursor=LocalDBServices.getTransactionsFromDB(this, expenseSelection, incomeSelection, accountMenuAdapter.getRadioSelected(), accountMenuAdapter, filterDate);
             makeItemFromCursor(cursor);
             cursor.close();
-//            pHAdapter.notifyDataSetChanged();
-//            new ReceiverThread().run();
             String colName = "totalExpense";
             Cursor c=LocalDBServices.getTotalExpense(this);
             c.moveToFirst();
             final Long totalExp = c.getLong(c.getColumnIndexOrThrow(colName));
-            Long totalst=c.getLong(c.getColumnIndexOrThrow(colName));
+            String totalst=c.getString(c.getColumnIndexOrThrow(colName));
             Log.e("debug","total expense: "+totalExp);
             Log.e("debug","total!!expense: "+totalst);
             c.close();
@@ -383,11 +401,11 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
             final Long totalInc = c.getLong(c.getColumnIndexOrThrow(colName));
             c.close();
 
-            isDBChanged=false;
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    totalExpense.setText("  "+Utils.toPersianNumbers(Currency.getStdAmount(totalExp)));
+                    Log.e("debug","totalExp string  "+Utils.toPersianNumbers(Currency.getStdAmount(totalExp)));
+                    totalExpense.setText("  " + Utils.toPersianNumbers(Currency.getStdAmount(totalExp)));
                     totalIncome.setText("  "+Utils.toPersianNumbers(Currency.getStdAmount(totalInc)));
                 }
             });
@@ -397,6 +415,7 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 
 
 	}
+
 	public void immediateRefreshTimeline() throws IllegalArgumentException, ParseException{
         accountSelection=new boolean[accountMenuAdapter.getAccountsSelection().length];
         System.arraycopy(accountMenuAdapter.getAccountsSelection(),0,accountSelection,0,accountMenuAdapter.getAccountsSelection().length);
@@ -423,126 +442,15 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
             c.close();
 			totalIncome.setText("  "+Utils.toPersianNumbers(Currency.getStdAmount(total)));
             Currency.setCurrencyLayout(totalIncomeCurrencyLayout, this, getResources().getColor(R.color.green), persianTypeface, Currency.SMALL_TEXT_SIZE);
-            isDBChanged=false;
 		}
 	}
 
-	private boolean isDatabaseChanged() throws ParseException
-	{
-        Log.e("debug","checks if database is changed or not");
+	private boolean isDatabaseChanged() throws ParseException{
         return true;
 	}
 
-	@Override
-	protected void onPause()
-	{
-		super.onPause();
-	}
-
-	@Override
-	protected void onResume()
-	{
-
-//		//TODO change to dip
-		GridLayout expenses = (GridLayout) findViewById(R.id.expense_grid);
-
-		int count = expenses.getChildCount();
-		for(int i = 0; i < count; i++)
-			if(expenseSelection[i])
-				expenses.getChildAt(i).getBackground().setAlpha(FULLY_OPAQUE);
-			else
-				expenses.getChildAt(i).getBackground().setAlpha(HALF_TRANSPARENT);
-		
-		GridLayout incomes = (GridLayout) findViewById(R.id.incomes_grid);
-
-		count = incomes.getChildCount();
-		for(int i = 0; i < count; i++)
-			if(incomeSelection[i])
-				incomes.getChildAt(i).getBackground().setAlpha(FULLY_OPAQUE);
-			else
-				incomes.getChildAt(i).getBackground().setAlpha(HALF_TRANSPARENT);
-		
-		super.onResume();
-		((ImageButton)(findViewById(R.id.add_button))).getDrawable().setAlpha(FULLY_OPAQUE);
-//		new RefreshTask().execute();
-		try {
-			immediateRefreshTimeline();
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-
-        addAccountsAndTimesToList();
-        addSlidingMenu();
-	}
-
-	@Override
-	protected void onStop()
-	{
-		super.onStop();
-        SharedPreferences settings = getSharedPreferences(PREFRENCES_FILE, 0);
-        SharedPreferences.Editor editor = settings.edit();
-
-//        editor.putString("pfmtoken",ConnectionManager.pfmToken);
-//        editor.putString("pfmcookie",ConnectionManager.pfmCookie);
-
-        for(int i=0;i<accountsAndTimeFilter.size();i++){
-            if (!accountsAndTimeFilter.get(i).isRadioButton)
-            editor.putBoolean("AccountsAndTime:"+accountsAndTimeFilter.get(i).text,accountsAndTimeFilter.get(i).isChecked);
-            else
-            editor.putBoolean("AccountsAndTime:"+accountsAndTimeFilter.get(i).text,false);
-        }
-        editor.putBoolean("AccountsAndTime:"+getSelectedRadioTimeString(),true);
-        for(int i=0;i<expenseSelection.length;i++){
-            editor.putBoolean("expenseCatId:"+i,expenseSelection[i]);
-        }
-        for(int i=0;i<incomeSelection.length;i++){
-            editor.putBoolean("incomeCatId:"+i,incomeSelection[i]);
-        }
-        // Commit the edits!
-        editor.commit();
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu)
-	{
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main_timeline, menu);
-		return true;
-	}
-
-    @Override
-    public boolean onOptionsItemSelected(android.view.MenuItem item) {
-        Intent intent = null;
-        boolean doNothig=false;
-        if(item.toString().equals(getResources().getString(R.string.action_uncategorized))){
-            intent=new Intent(TimelineActivity.this, UncategoriedActivity.class);
-        }
-        else if(item.toString().equals(getResources().getString(R.string.action_settings))){
-            intent=new Intent(TimelineActivity.this, SettingActivity.class);
-        }
-        else if(item.toString().equals(getResources().getString(R.string.action_charts))){
-            intent=new Intent(TimelineActivity.this, ChartActivity.class);
-        }
-        else if(item.toString().equals(getResources().getString(R.string.action_timeline))){
-         doNothig=true;
-        }
-        if(!doNothig){
-        if(intent!=null){
-//            finish();
-            startActivityForResult(intent,100);
-            overridePendingTransition(0, 0);
-        }
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-	private int getSlidingMenuRightPaddding(int column, int resID)
-	{
+	private int getSlidingMenuRightPaddding(int column, int resID){
 		BitmapFactory.Options o = new BitmapFactory.Options();
 		switch((int)(4*(getResources().getDisplayMetrics().density)))
 		{
@@ -569,8 +477,7 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 	}
 
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-	private int getSlidingMenuNumberOfColumns(GridLayout gridLayout, int resourceID)
-	{
+	private int getSlidingMenuNumberOfColumns(GridLayout gridLayout, int resourceID){
 		BitmapFactory.Options o = new BitmapFactory.Options();
 		switch((int)(4*(getResources().getDisplayMetrics().density)))
 		{
@@ -602,50 +509,9 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 		return column;
 	}
 
-	@Override
-	public void onClick(View button)
-	{
-		if(button.getId() == addButton.getId())
-		{
-			//Set the button's appearance
-//			((ImageButton)button).getDrawable().setAlpha(HALF_TRANSPARENT);
-//			Drawable mDrawable = getResources().getDrawable(R.drawable.big_add_button);
-//			mDrawable.setColorFilter(new PorterDuffColorFilter(0x00ff00,android.graphics.PorterDuff.Mode.MULTIPLY));
-			// Assuming "color" is your target color
-//			int color = 0xFFFFFF;
-//	        float r = Color.red(color) / 255f;
-//	        float g = Color.green(color) / 255f;
-//	        float b = Color.blue(color) / 255f;
-//
-//	        ColorMatrix cm = new ColorMatrix(new float[] {
-//	                // Change red channel
-//	                r, 0, 0, 0, 0,
-//	                // Change green channel
-//	                0, g, 0, 0, 0,
-//	                // Change blue channel
-//	                0, 0, b, 0, 0,
-//	                // Keep alpha channel
-//	                0, 0, 0, 1, 0,
-//	        });
-//	        ColorMatrixColorFilter cf = new ColorMatrixColorFilter(cm);
-//	        Drawable myDrawable = getResources().getDrawable(R.drawable.big_add_button);
-//			myDrawable .setColorFilter(cf);
-			button.setSelected(!button.isSelected());
-			Intent intent = new Intent(TimelineActivity.this, AddPage1.class);
-			TimelineActivity.this.startActivity(intent);
-		}
-	}
 
-
-	@Override
-	protected void onDestroy()
-	{
-		super.onDestroy();
-		finish();
-	}
-	
-	private class SyncTask extends AsyncTask<Void, Void, Void>
-	{
+	private class SyncTask extends AsyncTask<Void, Void, Void>{
+        // every time we need to get data from server and refresh timeline after it
 
 		@Override
 		protected Void doInBackground(Void... params)
@@ -655,7 +521,6 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 			{
                 Log.e("debug","syncTask called ,try to sync!");
                 getNewTransFromServer();
-
             }
 			catch (Exception e1)
 			{
@@ -679,9 +544,9 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 		}
 	}
 
-	private class RefreshTask extends AsyncTask<Void, Void, Void>
-	{
-
+	private class RefreshTask extends AsyncTask<Void, Void, Void>{
+            //every time we pull or push that should change the items
+            // it only calls refreshTimeline()
 		@Override
 		protected Void doInBackground(Void... params)
 		{
@@ -711,39 +576,17 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 		}
 	}
 	
-	private boolean shouldSync()
-	{
-		// TODO set to greatest date
-		PersianCalendar tmpCal = new PersianCalendar();
-		switch(accountMenuAdapter.getRadioSelected())
-		{
-		case DAILY:
-			return tmpCal.equalDay(filterDate);
-		case WEEKLY:
-			return tmpCal.equalWeek(filterDate);
-		case MONTHLY:
-			return tmpCal.equalMonth(filterDate);
-		case YEARLY:
-			return tmpCal.equalYear(filterDate);
-		}
-
-		return false;
-	}
-
-
-	int counter = 0;
 	@Override
-	public void onPullDownToRefresh(PullToRefreshBase<PinnedHeaderListView> refreshView)
-	{
+	public void onPullDownToRefresh(PullToRefreshBase<PinnedHeaderListView> refreshView){
 		if(shouldSync())
 		{
 			// Do work to refresh the list here.
 			new SyncTask().execute();
 
             try {
-                immediateRefreshTimeline();
-                addAccountsAndTimesToList();
+                updateAccountTimeFilterMenuItem();
                 addSlidingMenu();
+                immediateRefreshTimeline();
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -769,15 +612,13 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 //		caltext.setText(getFilterDate()+"\n"+counter);
 		counter++;
 		{
-			System.out.println("refresh");
 			// Do work to refresh the list here.
 			new RefreshTask().execute();
 		}
 	}
 
 	@Override
-	public void onPullUpToRefresh(PullToRefreshBase<PinnedHeaderListView> refreshView)
-	{
+	public void onPullUpToRefresh(PullToRefreshBase<PinnedHeaderListView> refreshView){
 		switch(accountMenuAdapter.getRadioSelected())
 		{
 		case DAILY:
@@ -801,14 +642,10 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 	}
 
 	@Override
-	public void onPullEvent(PullToRefreshBase<PinnedHeaderListView> refreshView,
-			State state,Mode direction)
-	{
+	public void onPullEvent(PullToRefreshBase<PinnedHeaderListView> refreshView,State state,Mode direction){
 		if(state == State.PULL_TO_REFRESH && direction == Mode.PULL_FROM_START)
 		{
-			if(shouldSync())
-			{
-
+			if(shouldSync()){
 				PersianCalendar tmpCal = new PersianCalendar();
 				Calendar tmpTime = Calendar.getInstance();
 
@@ -837,15 +674,86 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 			}
 			else
 				refreshView.getLoadingLayoutProxy().setLastUpdatedLabel("");
-
 		}
 		else if(state == State.PULL_TO_REFRESH && direction == Mode.PULL_FROM_END)
 			refreshView.getLoadingLayoutProxy().setLastUpdatedLabel("");
-
 	}
-	
-	private void setPullToRefreshLabels()
-	{
+
+    private void updateAccountTimeFilterMenuItem() {
+        accountTimeFilterMenuItem = new ArrayList<FilterMenuItem>();
+        Cursor c2;
+        c2= LocalDBServices.getAccountList(this);
+        c2.moveToFirst();
+        if(c2.getCount() != 0)
+        {
+            do
+            {
+
+                String accountName=c2.getString(c2.getColumnIndexOrThrow(TransactionsContract.Accounts.COLUMN_NAME_Account_Name));
+                if(c2!=null){
+                    if(c2.isFirst())
+                        accountTimeFilterMenuItem.add(new FilterMenuItem("حساب‌ها", true,accountName, false, R.drawable.vaam_raw));
+                    else
+                        accountTimeFilterMenuItem.add(new FilterMenuItem("", true,accountName, false, R.drawable.vaam_raw));
+                }
+            }while(c2.moveToNext());
+        }
+        c2.close();
+
+        accountTimeFilterMenuItem.add(new FilterMenuItem(getResources().getString(R.string.time_interval),
+                false, getResources().getString(R.string.daily), true, 0));
+        accountTimeFilterMenuItem.add(new FilterMenuItem("", false,
+                getResources().getString(R.string.weekly), true, 0));
+        accountTimeFilterMenuItem.add(new FilterMenuItem("", false,
+                getResources().getString(R.string.monthly), true, 0));
+        accountTimeFilterMenuItem.add(new FilterMenuItem("", true,
+                getResources().getString(R.string.yearly), true, 0));
+    }
+
+    private void setTitleText(){
+        switch(accountMenuAdapter.getRadioSelected())
+        {
+            case DAILY:
+                titleText = new PersianDate((short)filterDate.get(PersianCalendar.DATE),
+                        (short)filterDate.get(PersianCalendar.MONTH),
+                        (short)filterDate.get(PersianCalendar.YEAR),
+                        PersianCalendar.weekdayFullNames[filterDate.get(PersianCalendar.DAY_OF_WEEK)])
+                        .toString();
+                break;
+            case WEEKLY:
+                titleText = "هفته" + " " + ordinal[filterDate.get(PersianCalendar.WEEK_OF_MONTH)]
+                        + " " + PersianCalendar.months[filterDate.get(PersianCalendar.MONTH)];
+                break;
+            case MONTHLY:
+                titleText = PersianCalendar.months[filterDate.get(PersianCalendar.MONTH)] + " " +
+                        filterDate.get(PersianCalendar.YEAR);
+                break;
+            case YEARLY:
+                titleText = filterDate.get(PersianCalendar.YEAR)+"";
+                break;
+        }
+        title.setText(Utils.toPersianNumbers(titleText));
+    }
+
+    private boolean shouldSync(){
+        // TODO set to greatest date
+        PersianCalendar tmpCal = new PersianCalendar();
+        switch(accountMenuAdapter.getRadioSelected())
+        {
+            case DAILY:
+                return tmpCal.equalDay(filterDate);
+            case WEEKLY:
+                return tmpCal.equalWeek(filterDate);
+            case MONTHLY:
+                return tmpCal.equalMonth(filterDate);
+            case YEARLY:
+                return tmpCal.equalYear(filterDate);
+        }
+
+        return false;
+    }
+
+	private void setPullToRefreshLabels(){
 		String upLabel = "";
 		String bottomLabel = "";
 		switch (accountMenuAdapter.getRadioSelected())
@@ -873,18 +781,17 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 		phList.getLoadingLayoutProxy().setReleaseLabelBottom(bottomLabel);
 		phList.getLoadingLayoutProxy().setLastUpdatedLabel(" ");
 	}
-   private void makeItemFromCursor(Cursor c){
 
-
+    private void makeItemFromCursor(Cursor c){
 
        c.moveToFirst();
        listItems.clear();
        if(c.getCount() == 0)
        {
-           listItems = new ArrayList<TimelineItem>();
+           listItems = new ArrayList<TimelineItem2>();
            pHAdapter.setItems(listItems);
-           totalExpenseString = "  "+Utils.toPersianNumbers(Currency.getStdAmount(0.0));
-           totalIncomeString = "  "+Utils.toPersianNumbers(Currency.getStdAmount(0.0));
+           totalExpenseString = "  "+Utils.toPersianNumbers(Currency.getStdAmount((long) 0.0));
+           totalIncomeString = "  "+Utils.toPersianNumbers(Currency.getStdAmount((long) 0.0));
            return;
        }
 
@@ -892,8 +799,8 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
        String lastTransID="null";
        ArrayList<String> tags=new ArrayList<String>();
        String id="null";
-       String dateTime;
-       double amount=-1;
+       String dateTime="";
+       long amount=-1;
        boolean isExpense=false;
        String descp="";
        String accountName="";
@@ -909,55 +816,56 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
            if(c.isLast()){
                if(!lastTransID.equals(transID)){
                    if(!lastTransID.equals("null"))
-                   listItems.add(new TimelineItem(id,isExpense,amount,date,time,category_index,tags,false,descp,accountName));
+                   listItems.add(new TimelineItem2(id,isExpense,amount,dateTime,category_index,tags,descp,accountName,null,null,false,false,null));
                    tags=new ArrayList<String>();
                }
                String tagName=c.getString(c.getColumnIndexOrThrow(TransactionsContract.TagsEntry.COLUMN_NAME_TAG));
                tags.add(tagName);
                id = c.getString(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_TRANSACTION_ID));
                dateTime = c.getString(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_DATE_TIME));
-               amount = c.getDouble(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_AMOUNT));
+               amount = c.getLong(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_AMOUNT));
                isExpense = c.getInt(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_IS_EXPENSE))==0? false: true;
                category_index = c.getInt(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_CATEGORY));
                descp=c.getString(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_DESCRIPTION));
                accountName=c.getString(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_ACCOUNT_NAME));
 
-               year = Integer.parseInt(dateTime.substring(0, 4));
-               month = Integer.parseInt(dateTime.substring(4, 6));
-               day = Integer.parseInt(dateTime.substring(6, 8));
-               hour = Integer.parseInt(dateTime.substring(8, 10));
-               minute = Integer.parseInt(dateTime.substring(10, 12));
+//               year = Integer.parseInt(dateTime.substring(0, 4));
+//               month = Integer.parseInt(dateTime.substring(4, 6));
+//               day = Integer.parseInt(dateTime.substring(6, 8));
+//               hour = Integer.parseInt(dateTime.substring(8, 10));
+//               minute = Integer.parseInt(dateTime.substring(10, 12));
+//
+//               tmpCal = new PersianCalendar(year, month, day);
+//               date = new PersianDate((short)day, (short)(month+1), (short)year, PersianCalendar.weekdayFullNames[tmpCal.get(PersianCalendar.DAY_OF_WEEK)]);
+//               time = new Time((short)hour, (short)minute);
 
-               tmpCal = new PersianCalendar(year, month, day);
-               date = new PersianDate((short)day, (short)(month+1), (short)year, PersianCalendar.weekdayFullNames[tmpCal.get(PersianCalendar.DAY_OF_WEEK)]);
-               time = new Time((short)hour, (short)minute);
-
-               listItems.add(new TimelineItem(id,isExpense,amount,date,time,category_index,tags,false,descp,accountName));}
+               listItems.add(new TimelineItem2(id,isExpense,amount,dateTime,category_index,tags,descp,accountName,null,null,false,false,null));
+           }
            else {
                if(!lastTransID.equals(transID)){
                    if(!lastTransID.equals("null")){
-                       listItems.add(new TimelineItem(id,isExpense,amount,date,time,category_index,tags,false,descp,accountName));
+                       listItems.add(new TimelineItem2(id,isExpense,amount,dateTime,category_index,tags,descp,accountName,null,null,false,false,null));
                    }
                    tags=new ArrayList<String>();
                    String tagName=c.getString(c.getColumnIndexOrThrow(TransactionsContract.TagsEntry.COLUMN_NAME_TAG));
                    tags.add(tagName);
                    id = c.getString(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_TRANSACTION_ID));
                    dateTime = c.getString(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_DATE_TIME));
-                   amount = c.getDouble(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_AMOUNT));
+                   amount = c.getLong(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_AMOUNT));
                    isExpense = c.getInt(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_IS_EXPENSE))==0? false: true;
                    category_index = c.getInt(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_CATEGORY));
                    descp=c.getString(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_DESCRIPTION));
                    accountName=c.getString(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_ACCOUNT_NAME));
 
-                   year = Integer.parseInt(dateTime.substring(0, 4));
-                   month = Integer.parseInt(dateTime.substring(4, 6));
-                   day = Integer.parseInt(dateTime.substring(6, 8));
-                   hour = Integer.parseInt(dateTime.substring(8, 10));
-                   minute = Integer.parseInt(dateTime.substring(10, 12));
+//                   year = Integer.parseInt(dateTime.substring(0, 4));
+//                   month = Integer.parseInt(dateTime.substring(4, 6));
+//                   day = Integer.parseInt(dateTime.substring(6, 8));
+//                   hour = Integer.parseInt(dateTime.substring(8, 10));
+//                   minute = Integer.parseInt(dateTime.substring(10, 12));
 
-                   tmpCal = new PersianCalendar(year, month, day);
-                   date = new PersianDate((short)day, (short)(month+1), (short)year, PersianCalendar.weekdayFullNames[tmpCal.get(PersianCalendar.DAY_OF_WEEK)]);
-                   time = new Time((short)hour, (short)minute);
+//                   tmpCal = new PersianCalendar(year, month, day);
+//                   date = new PersianDate((short)day, (short)(month+1), (short)year, PersianCalendar.weekdayFullNames[tmpCal.get(PersianCalendar.DAY_OF_WEEK)]);
+//                   time = new Time((short)hour, (short)minute);
                    lastTransID=transID;
                }
                else {
@@ -967,12 +875,10 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
            }
        }while(c.moveToNext());
        c.close();
-       System.out.println("cursor is closed");
        pHAdapter.setItems(listItems);
    }
 
-
-   private void addSlidingMenu(){
+    private void addSlidingMenu(){
 
        // configure the SlidingMenu
        Log.d("debug","addSliding menu called");
@@ -1006,7 +912,7 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
        menu.setShadowDrawable(R.drawable.left_shadow);
        PinnedHeaderListView accountMenu = (PinnedHeaderListView) findViewById(R.id.account_time_filter_listview);
        accountMenuAdapter = new FilterMenuAdapter(this, null);
-       accountMenuAdapter.setItems(accountsAndTimeFilter);
+       accountMenuAdapter.setItems(accountTimeFilterMenuItem);
        accountMenu.setAdapter(accountMenuAdapter);
 
        // right menu:
@@ -1092,7 +998,7 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 
    }
 
-private String getSelectedRadioTimeString(){
+    private String getSelectedRadioTimeString(){
     if(accountMenuAdapter.getRadioSelected()==YEARLY)
         return getResources().getString(R.string.yearly);
     else if(accountMenuAdapter.getRadioSelected()==MONTHLY)
@@ -1102,12 +1008,13 @@ private String getSelectedRadioTimeString(){
     else
         return getResources().getString(R.string.daily);
 }
-private  void getSharedPreferences(){
-    SharedPreferences preferences=getSharedPreferences(PREFRENCES_FILE,0);
-    getTokensFromDB();
 
-    for(int i=0;i<accountsAndTimeFilter.size();i++){
-        accountsAndTimeFilter.get(i).isChecked=preferences.getBoolean("AccountsAndTime:"+accountsAndTimeFilter.get(i).text,true);
+    private  void getSharedPreferences(){
+    SharedPreferences preferences=getSharedPreferences(PREFRENCES_FILE,0);
+
+
+    for(int i=0;i< accountTimeFilterMenuItem.size();i++){
+        accountTimeFilterMenuItem.get(i).isChecked=preferences.getBoolean("AccountsAndTime:"+ accountTimeFilterMenuItem.get(i).text,true);
     }
     accountMenuAdapter.setRadioSelected();
     for(int i=0;i<expenseSelection.length;i++){
@@ -1119,24 +1026,9 @@ private  void getSharedPreferences(){
 
 }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        System.out.println("on result called");
-        if(resultCode==SettingActivity.LOGOUT_CODE)
-        {
-                LocalDBServices.invalidTokens(this);
-                Intent intent= new Intent(TimelineActivity.this,LoginActivity2.class);
-                finish();
-                startActivity(intent);
-                return;
-        }
-    }
-
     private void getTokensFromDB(){
         Boolean res=LocalDBServices.getTokens(this);
         if(res){
-            Log.e("debug","result is ok, added to db ");
         }
         else {
             LocalDBServices.invalidTokens(this);
@@ -1151,6 +1043,7 @@ private  void getSharedPreferences(){
     private void getNewTransFromServer(){
 
         try {
+            Log.e("debug","getNewTransFromServer called");
             JsonParser jsonParser=JsonParser.getInstance();
 //            Account account= jsonParser.getUserAccount();
 //            String transExpenseIn=jsonParser.getAllTransaction(account, "d", "0");
@@ -1200,8 +1093,8 @@ private  void getSharedPreferences(){
             PersianDate date = new PersianDate((short)selectedDay, (short)selectedMonth, (short)selectedYear, PersianCalendar.weekdayFullNames[selectedWeekday]);
             int monthInt=Integer.parseInt(date.getSTDString().substring(4,6))+1;
             String dateString=date.getSTDString().substring(0,4)+monthInt+date.getSTDString().substring(6,8);
-            Log.e("debug","last sync date is set to"+dateString);
             LocalDBServices.updateSyncTime(getBaseContext(),dateString);
+            Log.e("debug","sync time updated "+ LocalDBServices.getSyncTime(getBaseContext()));
         }
         catch (Exception e){
             e.printStackTrace();

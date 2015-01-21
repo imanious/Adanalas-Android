@@ -144,7 +144,7 @@ public abstract class Currency
         }
     }
 
-    public static String getStdAmount(double amount){
+    public static String getStdAmount(Long amount){
         if(getCurrency()==RIAL){
             return separateThousand(amount+"");
         }

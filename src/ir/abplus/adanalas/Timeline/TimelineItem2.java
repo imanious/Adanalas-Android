@@ -1,6 +1,9 @@
 package ir.abplus.adanalas.Timeline;
 
 import android.widget.LinearLayout;
+import com.fourmob.datetimepicker.date.PersianCalendar;
+import ir.abplus.adanalas.Libraries.PersianDate;
+import ir.abplus.adanalas.Libraries.Time;
 
 import java.util.ArrayList;
 
@@ -8,7 +11,7 @@ public class TimelineItem2
 {
     private String transactionID;
     private boolean isExpence;
-	private double amount;
+	private Long amount;
 //	private PersianDate date;
 //	private Time time;
     private String dateString;
@@ -27,7 +30,7 @@ public class TimelineItem2
 
     private LinearLayout tagLayout;
 
-    public TimelineItem2(String transactionID, boolean isExpence, double amount, String dateString, int categoryID, ArrayList<String> tags,  String description, String accountName,String detail,String operation,boolean handy, boolean hidden,LinearLayout tagLayout)
+    public TimelineItem2(String transactionID, boolean isExpence, Long amount, String dateString, int categoryID, ArrayList<String> tags,  String description, String accountName,String detail,String operation,boolean handy, boolean hidden,LinearLayout tagLayout)
     {
         this.transactionID = transactionID;
         this.isExpence = isExpence;
@@ -52,7 +55,7 @@ public class TimelineItem2
         return isExpence;
     }
 
-    public double getAmount() {
+    public Long getAmount() {
         return amount;
     }
 
@@ -100,6 +103,20 @@ public class TimelineItem2
         return handy;
     }
 
+    public String getFormatedDate(){
+      int  year = Integer.parseInt(dateString.substring(0, 4));
+       int month = Integer.parseInt(dateString.substring(4, 6));
+       int day = Integer.parseInt(dateString.substring(6, 8));
+        PersianCalendar tmpCal = new PersianCalendar(year, month, day);
+        PersianDate date = new PersianDate((short)day, (short)(month+1), (short)year, PersianCalendar.weekdayFullNames[tmpCal.get(PersianCalendar.DAY_OF_WEEK)]);
+        return date.toString();
+    }
+    public String getFormatedTime(){
+        int hour = Integer.parseInt(dateString.substring(8, 10));
+        int minute = Integer.parseInt(dateString.substring(10, 12));
+        Time time = new Time((short)hour, (short)minute);
+        return time.toString();
+    }
 
     private String parentId="";
     private String terminal="";

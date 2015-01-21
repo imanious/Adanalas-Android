@@ -31,7 +31,7 @@ public class OnClickedDialog extends Dialog implements
     ImageView iconImage;
     TextView amount;
     TextView account;
-    TimelineItem item;
+    TimelineItem2 item;
     LinearLayout tagVerticalLayout;
     LinearLayout currencyLayout;
     TextView descpTextVIew;
@@ -42,7 +42,7 @@ public class OnClickedDialog extends Dialog implements
     Button editButton;
     GradientDrawable roundButton;
 
-    public OnClickedDialog(Activity a,TimelineItem timelineItem,Resources resources) {
+    public OnClickedDialog(Activity a,TimelineItem2 timelineItem,Resources resources) {
         super(a);
         // TODO Auto-generated constructor stub
         this.c = a;
@@ -69,29 +69,29 @@ public class OnClickedDialog extends Dialog implements
         currencyLayout=(LinearLayout)findViewById(R.id.currency_layout);
         roundButton.setColor(res.getColor(R.color.light_grey));
 
-        if(item.isExpence)
+        if(item.isExpence())
         {
-            iconImage.setImageResource(Category.getExpenseIconID(item.categoryID));
+            iconImage.setImageResource(Category.getExpenseIconID(item.getCategoryID()));
 //            amount.setTextColor(res.getColor(Category.getExpenseColorID(item.categoryID)));
         }
         else
         {
-            iconImage.setImageResource(Category.getIncomeIconID(item.categoryID));
+            iconImage.setImageResource(Category.getIncomeIconID(item.getCategoryID()));
 //            amount.setTextColor(res.getColor(Category.getIncomeColorID(item.categoryID)));
         }
 
 
         amount.setTypeface(TimelineActivity.persianTypeface);
-        amount.setText("مبلغ: "+Currency.getStdAmount(item.amount));
+        amount.setText("مبلغ: "+Currency.getStdAmount(item.getAmount()));
         amount.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
 
 
         Currency.setCurrencyLayout(currencyLayout,getContext(),res.getColor(R.color.black), TimelineActivity.persianTypeface, Currency.SMALL_TEXT_SIZE);
 
         account.setTypeface(TimelineActivity.persianTypeface);
-        account.setText("حساب: "+item.accountName);
+        account.setText("حساب: "+item.getAccountName());
 
-        dateTextView.setText("تاریخ: "+item.date.toString()+"     ساعت: "+item.time);
+        dateTextView.setText("تاریخ: "+item.getFormatedDate()+"     ساعت: "+item.getFormatedTime());
         dateTextView.setTypeface(TimelineActivity.persianTypeface);
         descpTextVIew=(TextView)findViewById(R.id.description_text);
 
@@ -117,16 +117,16 @@ public class OnClickedDialog extends Dialog implements
 
 
 
-        if(item.tags!=null)
-            if(item.tags.size()>0){
+        if(item.getTags()!=null)
+            if(item.getTags().size()>0){
                 LinearLayout a=new LinearLayout(getContext());
                 a.setLayoutParams(params2);
                 a.setGravity(Gravity.RIGHT);
-                for(int i=0;i<item.tags.size();i++)
+                for(int i=0;i<item.getTags().size();i++)
                 {
-                    if(item.tags.get(i)!=null) {
+                    if(item.getTags().get(i)!=null) {
                         Button b = new Button(getContext());
-                        b.setText(item.tags.get(i));
+                        b.setText(item.getTags().get(i));
                         b.setTypeface(TimelineActivity.persianTypeface);
                         b.setBackground(roundButton);
                         b.setLayoutParams(params);
@@ -145,8 +145,8 @@ public class OnClickedDialog extends Dialog implements
 
 
         descpTextVIew.setTypeface(TimelineActivity.persianTypeface);
-        if(item.description!=null&&!item.description.isEmpty()){
-            descpTextVIew.setText("توضیحات: \n   "+item.description);
+        if(item.getDescription()!=null&&!item.getDescription().isEmpty()){
+            descpTextVIew.setText("توضیحات: \n   "+item.getDescription());
         }
         else
             descpTextVIew.setText("توضیحات: \n   "+"ندارد");
@@ -177,13 +177,13 @@ public class OnClickedDialog extends Dialog implements
         System.out.println(v.toString());
         switch (v.getId()) {
             case R.id.edit_button:
-                if(SettingActivity.getAccountType(item.accountName,getContext()).equals("1"))
+                if(SettingActivity.getAccountType(item.getAccountName(),getContext()).equals("1"))
                 {Intent intent = new Intent(getContext(), AddPage1.class);
-                intent.putExtra(AddPage1.TRANSACTION_ID_KEY, item.transactionID);
+                intent.putExtra(AddPage1.TRANSACTION_ID_KEY, item.getTransactionID());
                 getContext().startActivity(intent);}
-                else if(SettingActivity.getAccountType(item.accountName,getContext()).equals("0")){
+                else if(SettingActivity.getAccountType(item.getAccountName(),getContext()).equals("0")){
                     {Intent intent = new Intent(getContext(), EditTransactionPage.class);
-                        intent.putExtra(AddPage1.TRANSACTION_ID_KEY, item.transactionID);
+                        intent.putExtra(AddPage1.TRANSACTION_ID_KEY, item.getTransactionID());
                         getContext().startActivity(intent);}
                 }
                 break;
@@ -202,7 +202,7 @@ public class OnClickedDialog extends Dialog implements
 //        TransactoinDatabaseHelper trHelper= new TransactoinDatabaseHelper(getContext());
 //        SQLiteDatabase db = trHelper.getWritableDatabase();
 //        String selection = TransactionsContract.TransactionEntry._ID + " LIKE ?";
-        String[] selectionArgs = { String.valueOf(item.transactionID) };
+        String[] selectionArgs = { String.valueOf(item.getTransactionID()) };
 //        db.delete(TransactionsContract.TransactionEntry.TABLE_NAME,selection,selectionArgs);
         LocalDBServices.deleteTransactionFromDB(getContext(),selectionArgs);
         try {

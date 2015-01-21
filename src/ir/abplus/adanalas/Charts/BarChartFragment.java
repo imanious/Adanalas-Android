@@ -352,7 +352,7 @@ public class BarChartFragment extends Fragment {
                 c.moveToFirst();
                 do {
                     int name = c.getInt(c.getColumnIndexOrThrow("A"));
-                    double amount = c.getDouble(c.getColumnIndexOrThrow("B"));
+                    long amount = c.getLong(c.getColumnIndexOrThrow("B"));
                     int boolExpense = c.getInt(c.getColumnIndexOrThrow("C"));
 
                     if(isExpense){
@@ -395,7 +395,7 @@ public class BarChartFragment extends Fragment {
                 c.moveToFirst();
                 do {
                     String name = c.getString(c.getColumnIndexOrThrow("A"));
-                    double amount = c.getDouble(c.getColumnIndexOrThrow("B"));
+                    long amount = c.getLong(c.getColumnIndexOrThrow("B"));
 
                     int boolExpense;
                     if(((ChartActivity)getActivity()).accountMenuAdapter.getRadioSelected()==ChartActivity.WEEKLY){

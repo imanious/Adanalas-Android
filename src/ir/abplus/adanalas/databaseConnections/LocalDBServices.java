@@ -41,7 +41,6 @@ public class LocalDBServices {
         values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_IS_SYNCED,false);
 
         db.insert(TransactionsContract.TransactionEntry.TABLE_NAME, null, values);
-        TimelineActivity.isDBChanged=true;
         if(selectedTags!=null){
             for(String tag: selectedTags)
             {
@@ -67,7 +66,6 @@ public class LocalDBServices {
         values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_IS_SYNCED, true);
 
         db.insertWithOnConflict(TransactionsContract.TransactionEntry.TABLE_NAME, null, values,SQLiteDatabase.CONFLICT_REPLACE);
-        TimelineActivity.isDBChanged=true;
         if(selectedTags!=null){
             for(String tag: selectedTags)
             {
@@ -96,7 +94,6 @@ public class LocalDBServices {
         values.put(TransactionsContract.Accounts.COLUMN_NAME_Account_Name,"کوتاه مدت آینده");
         values.put(TransactionsContract.Accounts.COLUMN_NAME_Account_Type,0);
         db.insert(TransactionsContract.Accounts.TABLE_NAME,null,values);
-        TimelineActivity.isDBChanged=true;
     }
     public static void addJsonAccounts(Context context,Account account){
         //todo account name & account id should be standard -> account name is like shown and id is what we have in json file
@@ -105,15 +102,13 @@ public class LocalDBServices {
         db.delete(TransactionsContract.Accounts.TABLE_NAME,"1=1",null);
         ContentValues values = new ContentValues();
         for(int i=0;i<account.getDeposits().size();i++){
-            values.put(TransactionsContract.Accounts.COLUMN_NAME_Account_Name,account.getDeposits().get(i).getCode());
-            System.out.println(account.getDeposits().get(i).getCode()+"checking account name");
+            values.put(TransactionsContract.Accounts.COLUMN_NAME_Account_Name, account.getDeposits().get(i).getCode());
             if(account.getDeposits().get(i).getType().equals("Handy"))
                 values.put(TransactionsContract.Accounts.COLUMN_NAME_Account_Type,1 );
             else
                 values.put(TransactionsContract.Accounts.COLUMN_NAME_Account_Type,0 );
 //            db.insertOrThrow(TransactionsContract.Accounts.TABLE_NAME, null, values);
             db.insertWithOnConflict(TransactionsContract.Accounts.TABLE_NAME, null, values,SQLiteDatabase.CONFLICT_IGNORE);
-            TimelineActivity.isDBChanged=true;
         }
 
     }
@@ -372,6 +367,14 @@ public class LocalDBServices {
 //        db.close();
         return cursor;
     }
+    public static Cursor getUnsyncedTransactions(Context context){
+        trHelper= TransactoinDatabaseHelper.getInstance(context);
+        db = trHelper.getReadableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
+        String query="SELECT * FROM "+ TransactionsContract.TransactionEntry.TABLE_NAME+" WHERE "+ TransactionsContract.TransactionEntry.COLUMN_NAME_IS_SYNCED+" = 0";
+        Cursor c=db.rawQuery(query,null);
+        return c;
+    }
+
     public static void editHandyTransaction(Context context, String dateTime, double amountValue, boolean isExpense, String defaultAccount, int category_index, String id, ArrayList<String> selectedTags,String description) {
         trHelper= TransactoinDatabaseHelper.getInstance(context);
         db = trHelper.getWritableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
@@ -495,10 +498,8 @@ public class LocalDBServices {
                         String isValid = c.getString(c.getColumnIndexOrThrow(TransactionsContract.Tokens.COLUMN_NAME_IS_Valid));
                         String pfmToken = c.getString(c.getColumnIndexOrThrow(TransactionsContract.Tokens.COLUMN_NAME_PFM_Token));
                         String pfmCookie = c.getString(c.getColumnIndexOrThrow(TransactionsContract.Tokens.COLUMN_NAME_PFM_Cookie));
-                        Log.e("debug","is valid is:"+isValid);
                         c.close();
                         if(isValid.equals("1")){
-                            Log.e("debug",pfmCookie +" "+pfmToken);
                             ConnectionManager.pfmCookie=pfmCookie;
                             ConnectionManager.pfmToken=pfmToken;
                             return true;
@@ -544,7 +545,6 @@ public class LocalDBServices {
         String dateString="";
         try{
             dateString=cursor.getString(cursor.getColumnIndexOrThrow(TransactionsContract.SyncLogData.COLUMN_NAME_LAST_SYNC));
-
         }
         catch (Exception e){
             Log.e("debug","never synced before");

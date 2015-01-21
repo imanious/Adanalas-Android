@@ -6,7 +6,7 @@ import ir.abplus.adanalas.Libraries.Category;
 public class ChartListModel {
 
 
-    private double amount;
+    private long amount;
 //    private Button itemCategoryText;
 //    private ImageView itemIcon;
     private String textOnButton;
@@ -17,7 +17,7 @@ public class ChartListModel {
     private String transCounter;
 
 
-    public ChartListModel(Activity a,boolean isExpense, int categoryID, double amount,String transCounter) {
+    public ChartListModel(Activity a,boolean isExpense, int categoryID, long amount,String transCounter) {
         setAmount(amount);
         setTransCounter(transCounter);
 //        itemIcon=new ImageView(a);
@@ -45,13 +45,13 @@ public class ChartListModel {
 
     /*********** Set Methods ******************/
 
-    public void setAmount(double amount) {
+    public void setAmount(long amount) {
         this.amount = amount;
     }
 
     /*********** Get Methods ****************/
 
-    public double getAmount() {
+    public long getAmount() {
         return amount;
     }
 

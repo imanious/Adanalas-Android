@@ -637,7 +637,7 @@ public class AddPage2 extends FragmentActivity implements View.OnTouchListener,V
 
         PersianDate date = new PersianDate((short)selectedDay, (short)selectedMonth, (short)selectedYear, PersianCalendar.weekdayFullNames[selectedWeekday]);
         Time time = new Time((short)selectedHour, (short)selectedMinute);
-        String dateTime = date.getSTDString()+time.getSTDString();
+        String dateTime = date.getSTDString()+time.getSTDString()+"00";
 
         ContentValues values = new ContentValues();
         values.put(TransactionEntry.COLUMN_NAME_DATE_TIME, dateTime);

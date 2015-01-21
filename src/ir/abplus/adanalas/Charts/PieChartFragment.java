@@ -176,7 +176,7 @@ public class PieChartFragment extends Fragment {
             c.moveToFirst();
             do {
                 int categoryID = c.getInt(c.getColumnIndexOrThrow("A"));
-                double amount = c.getDouble(c.getColumnIndexOrThrow("B"));
+                long amount = c.getLong(c.getColumnIndexOrThrow("B"));
                 int boolExpense = c.getInt(c.getColumnIndexOrThrow("C"));
                 int trans_count=c.getInt(c.getColumnIndexOrThrow("D"));
 
@@ -299,7 +299,7 @@ public class PieChartFragment extends Fragment {
 
 
             } while (c.moveToNext());
-            textView.setText(counter+" تراکنش"+"\n مجموع: "+Currency.getStdAmount(amountSum)+" "+ Currency.getCurrencyString());
+            textView.setText(counter+" تراکنش"+"\n مجموع: "+Currency.getStdAmount((long) amountSum)+" "+ Currency.getCurrencyString());
 
             textView.setTypeface(TimelineActivity.persianTypeface);
             if(counter==0)

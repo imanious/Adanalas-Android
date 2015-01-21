@@ -33,7 +33,7 @@ public class TimelinePinnedHeaderAdapter extends SectionedBaseAdapter{
     private static final float MAX_ICON_HEIGHT = 75/2;
     private static final float MAX_ICON_WIDTH = MAX_ICON_HEIGHT;
 
-    private TimelineItem[][] items;
+    private TimelineItem2[][] items;
     private LayoutInflater inflater;
     private Resources res;
     ViewHolder holder;
@@ -59,33 +59,33 @@ public class TimelinePinnedHeaderAdapter extends SectionedBaseAdapter{
         this.layoutWidth=layoutWidth;
     }
 
-    public void setItems(ArrayList<TimelineItem> items)	{
-        ArrayList<ArrayList<TimelineItem>> tmp = new ArrayList<ArrayList<TimelineItem>>();
+    public void setItems(ArrayList<TimelineItem2> items)	{
+        ArrayList<ArrayList<TimelineItem2>> tmp = new ArrayList<ArrayList<TimelineItem2>>();
         int size = items.size();
         String tmpDate = "";
         int l = 0;
-        List<TimelineItem> current = null;
+        List<TimelineItem2> current = null;
         for(int i = 0; i < size; i++)
         {
-            TimelineItem cur = items.get(i);
-            if(!tmpDate.equals(cur.date.toString()))
+            TimelineItem2 cur = items.get(i);
+            if(!tmpDate.equals(cur.getDateString()))
             {
-                tmpDate = cur.date.toString();
-                tmp.add(new ArrayList<TimelineItem>());
+                tmpDate = cur.getDateString();
+                tmp.add(new ArrayList<TimelineItem2>());
                 current = tmp.get(l);
                 l++;
             }
             current.add(cur);
         }
 
-        this.items = new TimelineItem[tmp.size()][];
+        this.items = new TimelineItem2[tmp.size()][];
         size = tmp.size();
         int rSize = 0;
         for(int i = 0; i < size; i++)
         {
             current = tmp.get(i);
             rSize = tmp.get(i).size();
-            this.items[i] = new TimelineItem[rSize];
+            this.items[i] = new TimelineItem2[rSize];
             for(int j = 0; j < rSize; j++)
                 this.items[i][j] = current.get(j);
         }
@@ -104,12 +104,8 @@ public class TimelinePinnedHeaderAdapter extends SectionedBaseAdapter{
         if(section >= items.length || position >= items[section].length)
             return -1;
 //		return items[section][position].isExpence ? EXPENSE : INCOME;
-        if(items[section][position].isSelected){
-            return items[section][position].isExpence ? EXPENSE_SELECTED : INCOME_SELECTED;
-        }
-        else {
-            return items[section][position].isExpence ? EXPENSE : INCOME;
-        }
+            return items[section][position].isExpence() ? EXPENSE : INCOME;
+
     }
 
     @Override
@@ -133,7 +129,7 @@ public class TimelinePinnedHeaderAdapter extends SectionedBaseAdapter{
             return convertView;
         if (section >= items.length || position >= items[section].length)
             return convertView;
-        int id = items[section][position].categoryID;
+        int id = items[section][position].getCategoryID();
         holder = new ViewHolder();
         roundshapebtn=(GradientDrawable)res.getDrawable(R.drawable.roundshapebtn);
 
@@ -167,9 +163,9 @@ public class TimelinePinnedHeaderAdapter extends SectionedBaseAdapter{
 
 
             holder.categoryAndTime.setTypeface(TimelineActivity.persianTypeface);
-            if (items[section][position].isExpence) {
+            if (items[section][position].isExpence()) {
                 holder.categoryAndTime.setMinTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, MIN_DATE_FONT_SIZE, context.getResources().getDisplayMetrics()));
-                holder.categoryAndTime.setText(items[section][position].time.toString());
+                holder.categoryAndTime.setText(items[section][position].getFormatedTime());
                 holder.icon.setImageResource(Category.getExpenseRawIconID(id));
                 ((GradientDrawable) shapeEXPl.getDrawable(0)).setStroke(2, res.getColor(Category.getExpenseColorID(id)));
                 ((GradientDrawable) shapeEXPc.getDrawable(0)).setStroke(2, res.getColor(Category.getExpenseColorID(id)));
@@ -182,7 +178,7 @@ public class TimelinePinnedHeaderAdapter extends SectionedBaseAdapter{
             }
             else {
                 holder.categoryAndTime.setMinTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, MIN_DATE_FONT_SIZE, context.getResources().getDisplayMetrics()));
-                holder.categoryAndTime.setText(items[section][position].time.toString());
+                holder.categoryAndTime.setText(items[section][position].getFormatedTime());
                 holder.icon.setImageResource(Category.getIncomeRawIconID(id));
                 ((GradientDrawable) shapeINCl.getDrawable(0)).setStroke(2, res.getColor(Category.getIncomeColorID(id)));
                 ((GradientDrawable) shapeINCc.getDrawable(0)).setStroke(2, res.getColor(Category.getIncomeColorID(id)));
@@ -208,14 +204,14 @@ public class TimelinePinnedHeaderAdapter extends SectionedBaseAdapter{
             holder.icon.setAdjustViewBounds(true);
             holder.amount.setTypeface(TimelineActivity.persianTypeface);
             holder.amount.setMinTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, MIN_AMOUNT_FONT_SIZE, context.getResources().getDisplayMetrics()));
-            holder.amount.setText(Currency.getStdAmount(items[section][position].amount));
-        if (items[section][position].isExpence) {
-                if (Currency.getStdAmount(items[section][position].amount).length() < 6)
+            holder.amount.setText(Currency.getStdAmount(items[section][position].getAmount()));
+        if (items[section][position].isExpence()) {
+                if (Currency.getStdAmount(items[section][position].getAmount()).length() < 6)
                     holder.amount.setPadding(20, 0, 40, 0);
                 else
                     holder.amount.setPadding(10, 0, 20, 0);
             } else {
-                if (Currency.getStdAmount(items[section][position].amount).length() < 6)
+                if (Currency.getStdAmount(items[section][position].getAmount()).length() < 6)
                     holder.amount.setPadding(40, 0, 20, 0);
                 else
                     holder.amount.setPadding(20, 0, 10, 0);
@@ -254,7 +250,7 @@ public class TimelinePinnedHeaderAdapter extends SectionedBaseAdapter{
         if(headerHolder.date!=null){
             headerHolder.date.setTypeface(TimelineActivity.persianBoldTypeface);
             headerHolder.date.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
-            headerHolder.date.setText(items[section][0].date.toString());
+            headerHolder.date.setText(items[section][0].getFormatedDate());
         }
         return convertView;
     }
@@ -285,11 +281,11 @@ public class TimelinePinnedHeaderAdapter extends SectionedBaseAdapter{
 
                 if (holder.tagsLayout != null) {
                     holder.tagsLayout.removeAllViews();
-                    if (items[section][position].tags.get(0) != null) {
-                        if (items[section][position].tags.size() > 0) {
+                    if (items[section][position].getTags().get(0) != null) {
+                        if (items[section][position].getTags().size() > 0) {
                             int tmpSize = layoutWidth;
                             holder.tagsLayout.setLayoutParams(params);
-                                for (String s : items[section][position].tags) {
+                                for (String s : items[section][position].getTags()) {
                                     Button tmpB=new Button(context);
                                     tmpB.setText(s);
                                     tmpB.setTypeface(TimelineActivity.persianTypeface);

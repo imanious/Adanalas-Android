@@ -236,7 +236,7 @@ public class EditTransactionPage extends Activity implements View.OnClickListene
                     c=LocalDBServices.getTransactionFromID(id);
                     c.moveToFirst();
 
-                    double amount = c.getDouble(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_AMOUNT));
+                    long amount = c.getLong(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_AMOUNT));
                     int category = c.getInt(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_CATEGORY));
                     isExpense = c.getInt(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_IS_EXPENSE))==0? false: true;
                     String description=c.getString(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_DESCRIPTION));

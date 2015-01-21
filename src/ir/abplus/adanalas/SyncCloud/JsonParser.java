@@ -50,7 +50,7 @@ public class JsonParser {
             transItems=new ArrayList<TimelineItem2>();
             String transactionID;
             boolean isExpense=false;
-            double amount;
+            long amount;
 //            PersianDate date;
 //            Time time;
             int categoryID;
@@ -86,11 +86,11 @@ public class JsonParser {
                     isExpense=true;
                 else
                     Log.e("bug","transaction type does not set!!!");
-                amount=transaction.getDouble("amount");
+                amount=transaction.getLong("amount");
                 dateString=transaction.getString("date");
                 year= Integer.parseInt(dateString.substring(0, 4));
                 month= Integer.parseInt(dateString.substring(4, 6));
-                rest= dateString.substring(6, 12);
+                rest= dateString.substring(6, 14);
 //                hour= Integer.parseInt(dateString.substring(8, 10));
 //                minute = Integer.parseInt(dateString.substring(10, 12));
                 month=month-1;
@@ -240,7 +240,6 @@ public class JsonParser {
 //            while ((numCharsRead = isr.read(charArray)) > 0) {
 //                sb.append(charArray, 0, numCharsRead);
 //            }
-            System.out.println("CLIENT RECEIVED: " + sb);
             accountResultString=sb;
 
         } catch (MalformedURLException e) {
@@ -281,7 +280,6 @@ public class JsonParser {
             System.out.println(output);
             e.printStackTrace();
         }
-        Log.e("debug",output);
         return output;
     }
 
@@ -290,14 +288,12 @@ public class JsonParser {
         String transUrl=getTransactionRequest(offset,"100",type,account.getDeposits(),"","");
         transUrl=transUrl.replaceAll(" ","%20");
 
-        Log.e("debug",transUrl);
         URL url = null;
         HttpURLConnection urlConnection = null;
         String accountResultString="";
         try {
             url = new URL(transUrl);
             urlConnection = (HttpURLConnection) url.openConnection();
-            System.out.println(ConnectionManager.pfmCookie);
             urlConnection.setRequestProperty("Cookie", "sid=" + ConnectionManager.pfmCookie);
             urlConnection.connect();
 
@@ -353,7 +349,6 @@ public class JsonParser {
         try {
             url = new URL(transUrl);
             urlConnection = (HttpURLConnection) url.openConnection();
-            System.out.println(ConnectionManager.pfmCookie);
             urlConnection.setRequestProperty("Cookie", "sid=" + ConnectionManager.pfmCookie);
 //            urlConnection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
             urlConnection.connect();
@@ -361,7 +356,6 @@ public class JsonParser {
             InputStream in = urlConnection.getInputStream();
             String sb=convertStreamToString(in);
             tranactionsResultString=sb;
-            Log.e("debug","result is:"+tranactionsResultString);
 
         } catch (MalformedURLException e) {
             e.printStackTrace();

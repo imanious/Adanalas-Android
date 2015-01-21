@@ -135,6 +135,42 @@ public class Category
             return -1;}
     }
 
+    public static String getExpenseCategoryString(int categoryIndex){
+        if(categoryIndex==SAKHTEMAN) return "household";
+        else if(categoryIndex==KHORAK) return "food";
+        else if(categoryIndex==RAFTO_AMAD) return "transportation";
+        else if(categoryIndex==AMOOZESH) return "education";
+        else if(categoryIndex==GHABZ) return "bill";
+        else if(categoryIndex==VARZESH) return "hobby";
+        else if(categoryIndex==DARMAN) return "healthcare";
+        else if(categoryIndex==ARAYESH) return "hygiene";
+        else if(categoryIndex==POOSHAK) return "clothing";
+        else if(categoryIndex==SHAKHSHI) return "personal";
+        else if(categoryIndex==HADIYE_KHEYRIE) return "present";
+        else if(categoryIndex==GHARZ) return "lend";
+        else if(categoryIndex==AGHSAAT) return "commitment";
+        else if(categoryIndex==SARMAYE) return "investment";
+        else if(categoryIndex==EXPENSE_UNCATEGORIZED) return "expense";
+        else
+            return "null";
+    }
+    public static String getIncomeCategoryString(int categoryIndex){
+        if(categoryIndex==PADASH) return "bonus";
+        else if(categoryIndex==DASTMOZD) return "salary";
+        else if(categoryIndex==YARANEH) return "subsidy";
+        else if(categoryIndex==HADIYE) return "gift";
+        else if(categoryIndex==EJAREH) return "rent";
+        else if(categoryIndex==SOOD) return "interest";
+        else if(categoryIndex==KHESARAT) return "compensation";
+        else if(categoryIndex==FOROOSH_DARAYI) return "sale";
+        else if(categoryIndex==VADIE_DARYAFTI) return "trust";
+        else if(categoryIndex==TALAB) return "borrow";
+        else if(categoryIndex==VAAM) return "loan";
+        else if(categoryIndex==INCOME_UNCATEGORIZED) return "income";
+        else
+            return "null";
+    }
+
 
 	public static int getExpenseIconID(int id)
 	{

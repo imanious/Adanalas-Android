@@ -69,6 +69,11 @@
     <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Do Declaration"
+            android:id="@+id/declare_button" android:layout_gravity="center_horizontal"/>
+    <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="Sync all Transactions"
             android:id="@+id/syncAllTrans"/>
 

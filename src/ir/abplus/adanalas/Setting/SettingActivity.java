@@ -18,8 +18,8 @@ import ir.abplus.adanalas.Charts.ChartActivity;
 import ir.abplus.adanalas.Libraries.*;
 import ir.abplus.adanalas.R;
 import ir.abplus.adanalas.SyncCloud.ConnectionManager;
+import ir.abplus.adanalas.SyncCloud.Declaration;
 import ir.abplus.adanalas.SyncCloud.JsonParser;
-import ir.abplus.adanalas.Timeline.TimelineItem;
 import ir.abplus.adanalas.Timeline.TimelineItem2;
 import ir.abplus.adanalas.Uncategoried.UncategoriedActivity;
 import ir.abplus.adanalas.databaseConnections.LocalDBServices;
@@ -41,11 +41,12 @@ public class SettingActivity extends Activity {
     Button getAllTransButton;
     Button clearDBButton;
     Button signOutButton;
+    Button doDeclareButton;
     Spinner accountSpinner;
     TransactoinDatabaseHelper trHelper;
     public static String defaultAccount;
     static ArrayList<String> accountsList;
-    ArrayList<TimelineItem> listItems=new ArrayList<TimelineItem>();
+    ArrayList<TimelineItem2> listItems=new ArrayList<TimelineItem2>();
     public static int LOGOUT_CODE=100;
 
     @Override
@@ -62,6 +63,7 @@ public class SettingActivity extends Activity {
         clearDBButton =(Button)findViewById(R.id.clearDB);
         getAllTransButton=(Button)findViewById(R.id.syncAllTrans);
         signOutButton=(Button)findViewById(R.id.signout_button);
+        doDeclareButton=(Button)findViewById(R.id.declare_button);
 
 
 
@@ -116,8 +118,9 @@ public class SettingActivity extends Activity {
 //                    double amount=Double.parseDouble(String.format("%." + 2 + "f", Math.random()*100));
                     double amount=(double)R;
                     Time time = new Time((short)(Math.random()*24), (short)(Math.random()*60));
-                    TimelineItem t = new TimelineItem("0", Math.random()<0.2? false: true, amount, date, time, (int)(Math.random()*11),null,false,"",(String)accountSpinner.getSelectedItem());
-                    listItems.add(t);
+                    //todo make random item
+//                    TimelineItem2 t = new TimelineItem2("0", Math.random()<0.2? false: true, amount, date, time, (int)(Math.random()*11),null,false,"",(String)accountSpinner.getSelectedItem());
+//                    listItems.add(t);
                 }
             }
         });
@@ -150,7 +153,12 @@ public class SettingActivity extends Activity {
             }
         });
 
-
+        doDeclareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Declaration(SettingActivity.this);
+            }
+        });
 
         clearDBButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -289,21 +297,21 @@ public class SettingActivity extends Activity {
 //            SQLiteDatabase db = trHelper.getWritableDatabase();
 
 //            trHelper.onUpgrade(db, 1, 2);
-            for(TimelineItem t: listItems)
+            for(TimelineItem2 t: listItems)
             {
-                PersianDate date = t.date;
-                Time time = t.time;
-                String dateTime = date.getSTDString()+time.getSTDString();
+//                PersianDate date = t.date;
+//                Time time = t.time;
+//                String dateTime = date.getSTDString()+time.getSTDString();
 
                 ContentValues values = new ContentValues();
-                values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_DATE_TIME, dateTime);
-                values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_AMOUNT, t.amount);
-                values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_IS_EXPENSE, t.isExpence);
-                values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_CATEGORY, t.categoryID);
-                values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_ACCOUNT_NAME,t.accountName);
+                values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_DATE_TIME, t.getDateString());
+                values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_AMOUNT, t.getAmount());
+                values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_IS_EXPENSE, t.isExpence());
+                values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_CATEGORY, t.getCategoryID());
+                values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_ACCOUNT_NAME,t.getAccountName());
 
 //                db.insert(TransactionsContract.TransactionEntry.TABLE_NAME, null, values);
-                LocalDBServices.addNewTransaction(getBaseContext(),dateTime,t.amount,t.isExpence,t.accountName,t.categoryID,null,null);
+                LocalDBServices.addNewTransaction(getBaseContext(),t.getDateString(),t.getAmount(),t.isExpence(),t.getAccountName(),t.getCategoryID(),t.getTags(),t.getDescription());
             }
 
     }

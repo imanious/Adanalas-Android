@@ -92,15 +92,14 @@ public class LoginActivity2 extends Activity {
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            Log.e("debug","try to call pishkhanLoginTask method");
             int  pishkhanResInt = pishkhanLoginTask(LoginActivity2.PISHKHAN_ADDRESS, username, password);
             result=pishkhanResInt;
-            Log.e("debug","after call pishkhanLoginTask method");
             if (pishkhanResInt==LOGIN_SUCSESS) {
                 result=LOGIN_SUCSESS;
 //                ConnectionManager.pfmCookie = pishkhanResObject.getPfmCookie();
 //                ConnectionManager.pfmToken = pishkhanResObject.getPfmToken();
                 LocalDBServices.addTokens(this,ConnectionManager.pfmToken ,ConnectionManager.pfmCookie);
+                dialog.cancel();
                 Intent intent = new Intent(LoginActivity2.this, TimelineActivity.class);
                 finish();
                 startActivity(intent);
@@ -138,7 +137,6 @@ public class LoginActivity2 extends Activity {
                 String responseString = out.toString();
                 //trying to get pishkhan's login form csrf token
                 String csrf_token = responseString.substring(responseString.indexOf("name=\"csrf_token\" value=\"") + 25, responseString.indexOf("name=\"csrf_token\" value=\"") + 57);
-                Log.e("login debug","pishkhan csrfToken:"+csrf_token);
 
                 //http login post
                 HttpPost httpPost = new HttpPost(myurl);
@@ -158,7 +156,6 @@ public class LoginActivity2 extends Activity {
 
                     String pfmVerifyUrl = responseString.substring(responseString.indexOf("https://pfm.abplus.ir"), responseString.indexOf("https://pfm.abplus.ir") + 87);
 //                    Log.e("debug", "here is pfm token:" +pfmToken);
-                    Log.e("debug", "here is pfm url:" + pfmVerifyUrl);
                     if (!pfmVerifyUrl.contains("verify?token")){
                         Log.e("debug", "user name or password is incorrect");
                         return ERROR_USERPASS;
@@ -185,8 +182,6 @@ public class LoginActivity2 extends Activity {
                                         }
                                     }
                                 }
-                                System.out.println("Key : " + header.getName()
-                                        + " ,Value : " + header.getValue());
                             }
 
 //                            result.setPfmToken(pfmCSRFToken);
@@ -218,10 +213,8 @@ public class LoginActivity2 extends Activity {
         int result;
         @Override
         protected Object doInBackground(Object[] objects) {
-                Log.e("debug", "DoLogin class called");
 //                doLogin(usernameEditText.getText().toString(), passwordEditText.getText().toString());
             result=tryLogin(usernameEditText.getText().toString(), passwordEditText.getText().toString());
-            System.out.println("result is:"+result);
             cancel(true);
             return null;
         }

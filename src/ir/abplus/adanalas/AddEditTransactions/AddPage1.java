@@ -302,7 +302,7 @@ public class AddPage1 extends Activity implements View.OnClickListener, View.OnL
                     c= LocalDBServices.getTransactionFromID(id);
                     c.moveToFirst();
 
-                    double amount = c.getDouble(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_AMOUNT));
+                    Long amount = c.getLong(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_AMOUNT));
                     int category = c.getInt(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_CATEGORY));
                     isExpense = c.getInt(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_IS_EXPENSE))==0? false: true;
                     c.close();
@@ -982,7 +982,7 @@ public class AddPage1 extends Activity implements View.OnClickListener, View.OnL
         int selectedMinute = cal.get(PersianCalendar.MINUTE);
         PersianDate date = new PersianDate((short)selectedDay, (short)selectedMonth, (short)selectedYear, PersianCalendar.weekdayFullNames[selectedWeekday]);
         Time time = new Time((short)selectedHour, (short)selectedMinute);
-        String dateTime = date.getSTDString()+time.getSTDString();
+        String dateTime = date.getSTDString()+time.getSTDString()+"00";
 
 
 
