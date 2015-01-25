@@ -370,7 +370,19 @@ public class LocalDBServices {
     public static Cursor getUnsyncedTransactions(Context context){
         trHelper= TransactoinDatabaseHelper.getInstance(context);
         db = trHelper.getReadableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
-        String query="SELECT * FROM "+ TransactionsContract.TransactionEntry.TABLE_NAME+" WHERE "+ TransactionsContract.TransactionEntry.COLUMN_NAME_IS_SYNCED+" = 0";
+
+        String query="SELECT * FROM "+ TransactionsContract.TransactionEntry.TABLE_NAME+" WHERE "+ TransactionsContract.TransactionEntry.COLUMN_NAME_IS_SYNCED+" = 0" ;
+        Cursor c=db.rawQuery(query,null);
+        return c;
+    }
+    public static Cursor getUnsyncedTransactionsAndTags(Context context){
+        trHelper= TransactoinDatabaseHelper.getInstance(context);
+        db = trHelper.getReadableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
+
+        String query="SELECT * FROM "+ TransactionsContract.TransactionEntry.TABLE_NAME+" WHERE "+ TransactionsContract.TransactionEntry.COLUMN_NAME_IS_SYNCED+" = 0" +" LEFT JOIN "+ TransactionsContract.TagsEntry.TABLE_NAME+
+                " ON "+TransactionsContract.TransactionEntry.TABLE_NAME+"."+ TransactionsContract.TransactionEntry.COLUMN_NAME_TRANSACTION_ID+
+                "="+ TransactionsContract.TagsEntry.TABLE_NAME+"."+
+                TransactionsContract.TagsEntry.COLUMN_NAME_TRANSACTION_ID;
         Cursor c=db.rawQuery(query,null);
         return c;
     }
@@ -520,6 +532,17 @@ public class LocalDBServices {
         trHelper= TransactoinDatabaseHelper.getInstance(context);
         SQLiteDatabase db = trHelper.getWritableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
         db.delete(tableName,null,null);
+    }
+    public static void setSyncTransactions(Context context){
+        trHelper= TransactoinDatabaseHelper.getInstance(context);
+        db = trHelper.getWritableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
+//        String query="SELECT * FROM "+ TransactionsContract.TransactionEntry.TABLE_NAME+" WHERE "+ TransactionsContract.TransactionEntry.COLUMN_NAME_IS_SYNCED+" = 0";
+//        Cursor c=db.rawQuery(query,null);
+        ContentValues values=new ContentValues();
+        String[] selectionArgs = { "0" };
+        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_IS_SYNCED,true);
+        db.update(TransactionsContract.TransactionEntry.TABLE_NAME,values, TransactionsContract.TransactionEntry.COLUMN_NAME_IS_SYNCED+" = ?",selectionArgs);
+//        return c;
     }
 
     public static void updateSyncTime(Context context,String lastSyncDate){

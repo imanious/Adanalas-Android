@@ -25,11 +25,19 @@ import java.util.Arrays;
  */
 public class Declaration {
     public static String PFM_DECLARATION_ADDRESS="https://pfm.abplus.ir/declarations";
+    Context context;
 
     public Declaration(Context context) {
-        String result= null;
+        String result="";
+        this.context=context;
         try {
-            result = postDeclaration(makeDeclaration(context));
+            JSONArray jsonArray=makeDeclaration(context);
+            if(!jsonArray.toString().equals("[]")) {
+                result = postDeclaration(makeDeclaration(context));
+            }
+            else {
+                Log.e("debug","There is no data to declare");
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -42,6 +50,71 @@ public class Declaration {
 
     public JSONArray makeDeclaration(Context context){
         Cursor cursor= LocalDBServices.getUnsyncedTransactions(context);
+        JSONArray transArray=new JSONArray();
+        ArrayList<TimelineItem2> items=new ArrayList<TimelineItem2>();
+        TimelineItem2 item;
+        String id;
+        String dateTime;
+        long amount;
+        boolean isExpense;
+        int category_index;
+        String descp;
+        String accountName;
+
+        String[] selectedTags=new String[0];
+        cursor.moveToFirst();
+        if (cursor.getCount()>0){
+            do{
+
+                id = cursor.getString(cursor.getColumnIndexOrThrow(TransactionsContract.TransactionEntry.COLUMN_NAME_TRANSACTION_ID));
+                dateTime = cursor.getString(cursor.getColumnIndexOrThrow(TransactionsContract.TransactionEntry.COLUMN_NAME_DATE_TIME));
+                amount = cursor.getLong(cursor.getColumnIndexOrThrow(TransactionsContract.TransactionEntry.COLUMN_NAME_AMOUNT));
+                isExpense = cursor.getInt(cursor.getColumnIndexOrThrow(TransactionsContract.TransactionEntry.COLUMN_NAME_IS_EXPENSE))==0? false: true;
+                category_index = cursor.getInt(cursor.getColumnIndexOrThrow(TransactionsContract.TransactionEntry.COLUMN_NAME_CATEGORY));
+                descp=cursor.getString(cursor.getColumnIndexOrThrow(TransactionsContract.TransactionEntry.COLUMN_NAME_DESCRIPTION));
+                accountName=cursor.getString(cursor.getColumnIndexOrThrow(TransactionsContract.TransactionEntry.COLUMN_NAME_ACCOUNT_NAME));
+
+                Cursor c2= LocalDBServices.getTagsFromID(id);
+                c2.moveToFirst();
+
+                if(c2.getCount() != 0)
+                {
+                    int tagLength=c2.getCount();
+                    selectedTags=new String[tagLength];
+                    for(int i=0;i<tagLength;i++){
+                        selectedTags[i]="\""+c2.getString(c2.getColumnIndexOrThrow(TransactionsContract.TagsEntry.COLUMN_NAME_TAG))+"\"";
+                        c2.moveToNext();
+                    }
+                }
+                c2.close();
+
+                System.out.println("@@@"+Arrays.toString(selectedTags));
+                JSONObject tmpObject=new JSONObject();
+                try {
+                    tmpObject.put("id",id);
+                    tmpObject.put("deposit",accountName);
+                    tmpObject.put("date",standardDate(dateTime));
+                    tmpObject.put("amount",amount);
+                    tmpObject.put("tags",Arrays.toString(selectedTags));
+                    if(isExpense){
+                        tmpObject.put("category", Category.getExpenseCategoryString(category_index));
+                        tmpObject.put("type","d");
+                    }
+                    else {
+                        tmpObject.put("category", Category.getIncomeCategoryString((category_index)));
+                        tmpObject.put("type","c");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            transArray.put(tmpObject);
+            }while(cursor.moveToNext());
+            cursor.close();
+        }
+        return transArray;
+    }
+    public JSONArray makeDeclaration2(Context context){
+        Cursor cursor= LocalDBServices.getUnsyncedTransactionsAndTags(context);
         JSONArray transArray=new JSONArray();
         ArrayList<TimelineItem2> items=new ArrayList<TimelineItem2>();
         TimelineItem2 item;
@@ -148,7 +221,16 @@ public class Declaration {
 
         //print result
         System.out.println(response.toString());
-
+//        LocalDBServices.setSyncTransactions(context);
+//        Cursor cursor= LocalDBServices.getUnsyncedTransactions(context);
+//        cursor.moveToFirst();
+//        if (cursor.getCount()>0) {
+//            do {
+//                System.out.println("این مبلغ سینک نشده : " + cursor.getLong(cursor.getColumnIndexOrThrow(TransactionsContract.TransactionEntry.COLUMN_NAME_AMOUNT)));
+//            } while (cursor.moveToNext());
+//
+//        }
+//        cursor.close();
 
         return "null";
     }

@@ -36,6 +36,7 @@ import ir.abplus.adanalas.Libraries.TransactionsContract.TransactionEntry;
 import ir.abplus.adanalas.R;
 import ir.abplus.adanalas.Setting.SettingActivity;
 import ir.abplus.adanalas.SyncCloud.ConnectionManager;
+import ir.abplus.adanalas.SyncCloud.Declaration;
 import ir.abplus.adanalas.SyncCloud.JsonParser;
 import ir.abplus.adanalas.SyncCloud.LoginActivity2;
 import ir.abplus.adanalas.Uncategoried.UncategoriedActivity;
@@ -242,8 +243,9 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 
 
 
-
-        getNewTransFromServer();
+//        new Declaration(TimelineActivity.this);
+//        getNewTransFromServer();
+        getALLTransFromServer();
 
 	}
 
@@ -520,7 +522,9 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 			try
 			{
                 Log.e("debug","syncTask called ,try to sync!");
-                getNewTransFromServer();
+                new Declaration(TimelineActivity.this);
+//                getNewTransFromServer();
+                getALLTransFromServer();
             }
 			catch (Exception e1)
 			{
@@ -1077,6 +1081,71 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
             if(t2.size()==100){
                 int j=1;
                 transExpenseIn=jsonParser.getnewTransactions(this,account, "c", j * 100 + "");
+                jsonParser.readAndParseTransactionJSON(transExpenseIn);
+                t2=jsonParser.getTransItems();
+                for(int i=0;i<t2.size();i++){
+                    LocalDBServices.addJsonTransactionForce(getBaseContext(), t2.get(i).getTransactionID(), t2.get(i).getDateString(), t2.get(i).getAmount(), t2.get(i).isExpence(), t2.get(i).getAccountName(), t2.get(i).getCategoryID(), t2.get(i).getTags(), t2.get(i).getDescription());
+                }
+            }
+
+            PersianCalendar calendar = new PersianCalendar();
+            int selectedDay = calendar.get(PersianCalendar.DAY_OF_MONTH);
+            int selectedMonth = calendar.get(PersianCalendar.MONTH);
+            int selectedYear = calendar.get(PersianCalendar.YEAR);
+            int selectedWeekday = calendar.get(PersianCalendar.DAY_OF_WEEK);
+
+            PersianDate date = new PersianDate((short)selectedDay, (short)selectedMonth, (short)selectedYear, PersianCalendar.weekdayFullNames[selectedWeekday]);
+            int monthInt=Integer.parseInt(date.getSTDString().substring(4,6))+1;
+            String dateString=date.getSTDString().substring(0,4)+monthInt+date.getSTDString().substring(6,8);
+            LocalDBServices.updateSyncTime(getBaseContext(),dateString);
+            Log.e("debug","sync time updated "+ LocalDBServices.getSyncTime(getBaseContext()));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            Log.e("debug","there is a problem on posting cookie, should try login again");
+            LocalDBServices.invalidTokens(getBaseContext());
+            ConnectionManager.pfmCookie="";
+            ConnectionManager.pfmToken="";
+            finish();
+        }
+    }
+    private void getALLTransFromServer(){
+
+        try {
+            Log.e("debug","getNewTransFromServer called");
+            JsonParser jsonParser=JsonParser.getInstance();
+//            Account account= jsonParser.getUserAccount();
+//            String transExpenseIn=jsonParser.getAllTransaction(account, "d", "0");
+            String accountIn=jsonParser.getAccountInfo();
+            jsonParser.readAndParseAccountJSON(accountIn);
+            Account account=jsonParser.getUserAccount();
+            LocalDBServices.addJsonAccounts(getBaseContext(),account);
+
+
+            String transExpenseIn=jsonParser.getAllTransaction(account, "d", "0");
+            jsonParser.readAndParseTransactionJSON(transExpenseIn);
+            ArrayList <TimelineItem2> t2=jsonParser.getTransItems();
+            for(int i=0;i<t2.size();i++){
+                LocalDBServices.addJsonTransactionForce(getBaseContext(), t2.get(i).getTransactionID(), t2.get(i).getDateString(), t2.get(i).getAmount(), t2.get(i).isExpence(), t2.get(i).getAccountName(), t2.get(i).getCategoryID(), t2.get(i).getTags(), t2.get(i).getDescription());
+            }
+            if(t2.size()==100){
+                int j=1;
+                transExpenseIn=jsonParser.getAllTransaction(account, "d", j * 100 + "");
+                jsonParser.readAndParseTransactionJSON(transExpenseIn);
+                t2=jsonParser.getTransItems();
+                for(int i=0;i<t2.size();i++){
+                    LocalDBServices.addJsonTransactionForce(getBaseContext(), t2.get(i).getTransactionID(), t2.get(i).getDateString(), t2.get(i).getAmount(), t2.get(i).isExpence(), t2.get(i).getAccountName(), t2.get(i).getCategoryID(), t2.get(i).getTags(), t2.get(i).getDescription());
+                }
+            }
+            String transIncomeIn=jsonParser.getAllTransaction(account, "c", "0");
+            jsonParser.readAndParseTransactionJSON(transIncomeIn);
+            t2=jsonParser.getTransItems();
+            for(int i=0;i<t2.size();i++){
+                LocalDBServices.addJsonTransactionForce(getBaseContext(), t2.get(i).getTransactionID(), t2.get(i).getDateString(), t2.get(i).getAmount(), t2.get(i).isExpence(), t2.get(i).getAccountName(), t2.get(i).getCategoryID(), t2.get(i).getTags(), t2.get(i).getDescription());
+            }
+            if(t2.size()==100){
+                int j=1;
+                transExpenseIn=jsonParser.getAllTransaction(account, "c", j * 100 + "");
                 jsonParser.readAndParseTransactionJSON(transExpenseIn);
                 t2=jsonParser.getTransItems();
                 for(int i=0;i<t2.size();i++){
