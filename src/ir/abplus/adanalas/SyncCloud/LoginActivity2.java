@@ -61,6 +61,7 @@ public class LoginActivity2 extends Activity {
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+        changeUserData();
 
         usernameEditText = (EditText) findViewById(R.id.editTextUsername);
         logoImageView = (ImageView) findViewById(R.id.imageView);
@@ -124,6 +125,12 @@ public class LoginActivity2 extends Activity {
         HttpConnectionParams.setConnectionTimeout(httpParams, 15000);
         DefaultHttpClient httpclient = new DefaultHttpClient(httpParams);
         HttpGet httpGet = new HttpGet(myurl);
+        if(username.length()<10){
+            int i=10-username.length();
+            while (i>-1){
+                username="0"+username;
+            }
+        }
 
         HttpResponse response = null;
         try {
@@ -243,4 +250,11 @@ public class LoginActivity2 extends Activity {
 //            Toast.makeText(LoginActivity2.this, "اتصال به اینترنت وجود ندارد", Toast.LENGTH_SHORT).show();
 //        }
     }
+    private void changeUserData(){
+        new Declaration(LoginActivity2.this);
+        LocalDBServices.clearDatabase(LoginActivity2.this);
+        ConnectionManager.pfmCookie="";
+        ConnectionManager.pfmToken="";
+    }
+
 }

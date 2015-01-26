@@ -22,6 +22,7 @@ public final class TransactionsContract
 		public static final String COLUMN_NAME_DESCRIPTION = "transaction_description";
 		public static final String COLUMN_NAME_ACCOUNT_NAME = "transaction_account_name";
 		public static final String COLUMN_NAME_IS_SYNCED= "transaction_is_synced";
+        public static final String COLUMN_NAME_IS_HANDY= "transaction_is_handy";
 	}
     public static abstract class DeletedTransactions implements BaseColumns
     {
@@ -34,6 +35,7 @@ public final class TransactionsContract
         public static final String COLUMN_NAME_DESCRIPTION = "transaction_description";
         public static final String COLUMN_NAME_ACCOUNT_NAME = "transaction_account_name";
         public static final String COLUMN_NAME_IS_SYNCED= "transaction_is_synced";
+        public static final String COLUMN_NAME_IS_HANDY= "transaction_is_handy";
     }
 
     public static abstract class SyncLogData implements BaseColumns
@@ -48,6 +50,25 @@ public final class TransactionsContract
 		public static final String COLUMN_NAME_TRANSACTION_ID = "transaction_id";
 		public static final String COLUMN_NAME_TAG = "tag_name";
 	}
+
+    public static abstract class PopularTags implements BaseColumns
+    {
+        public static final String TABLE_NAME = "popularTags";
+//        public static final String COLUMN_NAME_TRANSACTION_ID = "transaction_id";
+        public static final String COLUMN_NAME_TAG = "tag_name";
+    }
+
+    public static abstract class UserBasicInfo implements BaseColumns
+    {
+        public static final String TABLE_NAME = "userBasicInfo";
+        public static final String COLUMN_NAME_BIRTH_DATE = "birth_date";
+        public static final String COLUMN_NAME_EMAIL = "email";
+        public static final String COLUMN_NAME_GENDER = "gender";
+        public static final String COLUMN_NAME_FIRST_NAME = "first_name";
+        public static final String COLUMN_NAME_LAST_NAME = "last_name";
+        public static final String COLUMN_NAME_USER_ID = "user_id";
+    }
+
 
     public static abstract class Accounts implements BaseColumns
     {
@@ -84,21 +105,42 @@ public final class TransactionsContract
 					TransactionEntry.COLUMN_NAME_ACCOUNT_NAME+ TEXT_TYPE + ",\n" +
 					TransactionEntry.COLUMN_NAME_CATEGORY + INTEGER_TYPE + ",\n" +
 					TransactionEntry.COLUMN_NAME_IS_SYNCED+ BOOLEAN_TYPE + ",\n" +
+					TransactionEntry.COLUMN_NAME_IS_HANDY+ BOOLEAN_TYPE + ",\n" +
                     " UNIQUE( "+TransactionEntry.COLUMN_NAME_TRANSACTION_ID +" ) "+
 					" )";
 
     public static final String SQL_CREATE_DELETED_TRANSACTIONS =
             "CREATE TABLE IF NOT EXISTS " + DeletedTransactions.TABLE_NAME+ " (\n" +
-                    TransactionEntry._ID + " INTEGER PRIMARY KEY,\n" +
-                    TransactionEntry.COLUMN_NAME_TRANSACTION_ID + INTEGER_TYPE + ",\n" +
-                    TransactionEntry.COLUMN_NAME_DATE_TIME + DATE_TIME_TYPE + ",\n" +
-                    TransactionEntry.COLUMN_NAME_AMOUNT + FLOAT_TYPE + ",\n" +
-                    TransactionEntry.COLUMN_NAME_IS_EXPENSE + BOOLEAN_TYPE + ",\n" +
-                    TransactionEntry.COLUMN_NAME_DESCRIPTION + TEXT_TYPE + ",\n" +
-                    TransactionEntry.COLUMN_NAME_ACCOUNT_NAME+ TEXT_TYPE + ",\n" +
-                    TransactionEntry.COLUMN_NAME_CATEGORY + INTEGER_TYPE + ",\n" +
-                    TransactionEntry.COLUMN_NAME_IS_SYNCED+ BOOLEAN_TYPE + ",\n" +
+                    DeletedTransactions._ID + " INTEGER PRIMARY KEY,\n" +
+                    DeletedTransactions.COLUMN_NAME_TRANSACTION_ID + INTEGER_TYPE + ",\n" +
+                    DeletedTransactions.COLUMN_NAME_DATE_TIME + DATE_TIME_TYPE + ",\n" +
+                    DeletedTransactions.COLUMN_NAME_AMOUNT + FLOAT_TYPE + ",\n" +
+                    DeletedTransactions.COLUMN_NAME_IS_EXPENSE + BOOLEAN_TYPE + ",\n" +
+                    DeletedTransactions.COLUMN_NAME_DESCRIPTION + TEXT_TYPE + ",\n" +
+                    DeletedTransactions.COLUMN_NAME_ACCOUNT_NAME+ TEXT_TYPE + ",\n" +
+                    DeletedTransactions.COLUMN_NAME_CATEGORY + INTEGER_TYPE + ",\n" +
+                    DeletedTransactions.COLUMN_NAME_IS_SYNCED+ BOOLEAN_TYPE + ",\n" +
                     " UNIQUE( "+TransactionEntry.COLUMN_NAME_TRANSACTION_ID +" ) "+
+                    " )";
+
+    //todo make two new tables.
+    public static final String SQL_CREATE_POPULAR_TAGS=
+            "CREATE TABLE IF NOT EXISTS " + PopularTags.TABLE_NAME+ " (\n" +
+                    PopularTags._ID + " INTEGER PRIMARY KEY,\n" +
+                    PopularTags.COLUMN_NAME_TAG+ TEXT_TYPE+ ",\n" +
+                    " UNIQUE( "+PopularTags.COLUMN_NAME_TAG +" ) "+
+                    " )";
+
+    public static final String SQL_CREATE_BASIC_INFO=
+            "CREATE TABLE IF NOT EXISTS " + UserBasicInfo.TABLE_NAME+ " (\n" +
+                    UserBasicInfo._ID + " INTEGER PRIMARY KEY,\n" +
+                    UserBasicInfo.COLUMN_NAME_BIRTH_DATE+ TEXT_TYPE+ ",\n" +
+                    UserBasicInfo.COLUMN_NAME_EMAIL+ TEXT_TYPE+ ",\n" +
+                    UserBasicInfo.COLUMN_NAME_FIRST_NAME+ TEXT_TYPE+ ",\n" +
+                    UserBasicInfo.COLUMN_NAME_LAST_NAME+ TEXT_TYPE+ ",\n" +
+                    UserBasicInfo.COLUMN_NAME_USER_ID+ TEXT_TYPE+ ",\n" +
+                    UserBasicInfo.COLUMN_NAME_GENDER+ TEXT_TYPE+ ",\n" +
+                    " UNIQUE( "+UserBasicInfo.COLUMN_NAME_USER_ID+" ) "+
                     " )";
 
 
@@ -149,4 +191,8 @@ public final class TransactionsContract
             "DROP TABLE IF EXISTS " + DeletedTransactions.TABLE_NAME;
     public static final String SQL_DELETE_SYNC_LOG_DATA =
             "DROP TABLE IF EXISTS " + SyncLogData.TABLE_NAME;
+    public static final String SQL_DELETE_POPULAR_TAGS=
+            "DROP TABLE IF EXISTS " + PopularTags.TABLE_NAME;
+    public static final String SQL_DELETE_BASIC_INFO =
+            "DROP TABLE IF EXISTS " + UserBasicInfo.TABLE_NAME;
 }

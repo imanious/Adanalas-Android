@@ -25,7 +25,7 @@ public class LocalDBServices {
     public static Cursor cursor;
 
 
-    public static void addNewTransaction(Context context,String dateTime, double amountValue, boolean isExpense, String defaultAccount, int category_index,ArrayList<String> selectedTags,String description) {
+    public static void addNewTransaction(Context context, String dateTime, double amountValue, boolean isExpense, String defaultAccount, int category_index, ArrayList<String> selectedTags, String description, boolean isHandy) {
 //        trHelper= new TransactoinDatabaseHelper(context);
         trHelper= TransactoinDatabaseHelper.getInstance(context);
         db = trHelper.getWritableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
@@ -39,6 +39,7 @@ public class LocalDBServices {
         values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_DESCRIPTION, description);
         values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_TRANSACTION_ID,transactionId);
         values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_IS_SYNCED,false);
+        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_IS_HANDY,isHandy);
 
         db.insert(TransactionsContract.TransactionEntry.TABLE_NAME, null, values);
         if(selectedTags!=null){
@@ -51,7 +52,7 @@ public class LocalDBServices {
             }
         }
     }
-    public static void addJsonTransactionForce(Context context, String transactionId, String dateTime, double amountValue, boolean isExpense, String defaultAccount, int category_index, ArrayList<String> selectedTags, String description) {
+    public static void addJsonTransactionForce(Context context, String transactionId, String dateTime, double amountValue, boolean isExpense, String defaultAccount, int category_index, ArrayList<String> selectedTags, String description,boolean isHandy) {
         // This method get all transactions from adanalas db and add it to mobile
         trHelper= TransactoinDatabaseHelper.getInstance(context);
         db = trHelper.getWritableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
@@ -64,6 +65,7 @@ public class LocalDBServices {
         values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_DESCRIPTION, description);
         values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_TRANSACTION_ID, transactionId);
         values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_IS_SYNCED, true);
+        values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_IS_HANDY, isHandy);
 
         db.insertWithOnConflict(TransactionsContract.TransactionEntry.TABLE_NAME, null, values,SQLiteDatabase.CONFLICT_REPLACE);
         if(selectedTags!=null){
@@ -97,20 +99,53 @@ public class LocalDBServices {
     }
     public static void addJsonAccounts(Context context,Account account){
         //todo account name & account id should be standard -> account name is like shown and id is what we have in json file
+       LocalDBServices.clearTable(context,TransactionsContract.Accounts.TABLE_NAME);
+       LocalDBServices.clearTable(context,TransactionsContract.UserBasicInfo.TABLE_NAME);
+       LocalDBServices.clearTable(context,TransactionsContract.PopularTags.TABLE_NAME);
         trHelper= TransactoinDatabaseHelper.getInstance(context);
         SQLiteDatabase db = trHelper.getWritableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
-        db.delete(TransactionsContract.Accounts.TABLE_NAME,"1=1",null);
+//        db.delete(TransactionsContract.Accounts.TABLE_NAME,"1=1",null);
+
         ContentValues values = new ContentValues();
+        values.put(TransactionsContract.UserBasicInfo.COLUMN_NAME_BIRTH_DATE,account.getBirthDate());
+        values.put(TransactionsContract.UserBasicInfo.COLUMN_NAME_EMAIL,account.getEmail());
+        values.put(TransactionsContract.UserBasicInfo.COLUMN_NAME_FIRST_NAME,account.getFirstName());
+        values.put(TransactionsContract.UserBasicInfo.COLUMN_NAME_LAST_NAME,account.getLastName());
+        values.put(TransactionsContract.UserBasicInfo.COLUMN_NAME_USER_ID,account.getId());
+        values.put(TransactionsContract.UserBasicInfo.COLUMN_NAME_GENDER,account.getBirthDate());
+        db.insertWithOnConflict(TransactionsContract.UserBasicInfo.TABLE_NAME,null,values,SQLiteDatabase.CONFLICT_REPLACE);
+
+        for (int i=0;i<account.getTags().size();i++){
+            values=new ContentValues();
+            values.put(TransactionsContract.PopularTags.COLUMN_NAME_TAG,account.getTags().get(i));
+            db.insertWithOnConflict(TransactionsContract.PopularTags.TABLE_NAME,null,values,SQLiteDatabase.CONFLICT_IGNORE);
+        }
+
+        values=new ContentValues();
         for(int i=0;i<account.getDeposits().size();i++){
             values.put(TransactionsContract.Accounts.COLUMN_NAME_Account_Name, account.getDeposits().get(i).getCode());
             if(account.getDeposits().get(i).getType().equals("Handy"))
                 values.put(TransactionsContract.Accounts.COLUMN_NAME_Account_Type,1 );
             else
                 values.put(TransactionsContract.Accounts.COLUMN_NAME_Account_Type,0 );
-//            db.insertOrThrow(TransactionsContract.Accounts.TABLE_NAME, null, values);
             db.insertWithOnConflict(TransactionsContract.Accounts.TABLE_NAME, null, values,SQLiteDatabase.CONFLICT_IGNORE);
         }
 
+    }
+    public static ArrayList<String> getPopularTags(Context context){
+        ArrayList<String> tags=new ArrayList<String>();
+        trHelper= TransactoinDatabaseHelper.getInstance(context);
+        SQLiteDatabase db = trHelper.getReadableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
+        String query="SELECT * From "+ TransactionsContract.PopularTags.TABLE_NAME;
+        Cursor cursor= db.rawQuery(query,null);
+        String tmpTag;
+        cursor.moveToFirst();
+        while (cursor.moveToNext()){
+            tmpTag=cursor.getString(cursor.getColumnIndexOrThrow(TransactionsContract.PopularTags.COLUMN_NAME_TAG));
+            tags.add(tmpTag);
+        }
+        cursor.close();
+        return tags;
     }
     public static Cursor getAccountList(Context context){
         trHelper= TransactoinDatabaseHelper.getInstance(context);
@@ -532,6 +567,16 @@ public class LocalDBServices {
         trHelper= TransactoinDatabaseHelper.getInstance(context);
         SQLiteDatabase db = trHelper.getWritableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
         db.delete(tableName,null,null);
+    }
+    public static void clearDatabase(Context context){
+        LocalDBServices.clearTable(context,TransactionsContract.TransactionEntry.TABLE_NAME);
+        LocalDBServices.clearTable(context,TransactionsContract.Accounts.TABLE_NAME);
+        LocalDBServices.clearTable(context,TransactionsContract.Tokens.TABLE_NAME);
+        LocalDBServices.clearTable(context,TransactionsContract.DeletedTransactions.TABLE_NAME);
+        LocalDBServices.clearTable(context,TransactionsContract.SyncLogData.TABLE_NAME);
+        LocalDBServices.clearTable(context,TransactionsContract.TagsEntry.TABLE_NAME);
+        LocalDBServices.clearTable(context,TransactionsContract.UserBasicInfo.TABLE_NAME);
+        LocalDBServices.clearTable(context,TransactionsContract.PopularTags.TABLE_NAME);
     }
     public static void setSyncTransactions(Context context){
         trHelper= TransactoinDatabaseHelper.getInstance(context);

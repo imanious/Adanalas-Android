@@ -27,11 +27,11 @@ public class JsonParser {
     private static JsonParser  mInstance = null;
 
     private ArrayList<TimelineItem2> transItems;
-    private static Account userAccount;
+//    private  Account userAccount;
 
-    public static Account getUserAccount() {
-        return userAccount;
-    }
+//    public Account getUserAccount() {
+//        return userAccount;
+//    }
 
     public ArrayList<TimelineItem2> getTransItems() {
         return transItems;
@@ -62,7 +62,7 @@ public class JsonParser {
 
             String detail="";
             String operation="";
-            Boolean handy=false;
+            Boolean handy;
             Boolean hidden=false;
 
             String type;
@@ -119,8 +119,9 @@ public class JsonParser {
                 detail=transaction.getString("detail");
                 if(transaction.has("operation"))
                 operation=transaction.getString("operation");
-                if(transaction.has("handy"))
-                handy=transaction.getBoolean("handy");
+                if(transaction.has("handy")){
+                handy=transaction.getBoolean("handy");}
+                else {handy=false;}
                 hidden=transaction.getBoolean("hidden");
 
                 TimelineItem2 item=new TimelineItem2(transactionID,isExpense,amount,dateString,categoryID,tags,description,accountName,detail,operation,handy,hidden,null);
@@ -135,7 +136,8 @@ public class JsonParser {
         }
 
     }
-    public void readAndParseAccountJSON(String in) {
+    public Account readAndParseAccountJSON(String in) {
+        Account userAccount;
          String created;
          String email;
          String modified;
@@ -144,6 +146,8 @@ public class JsonParser {
          String firstName;
          String lastName;
          String id;
+         String gender;
+         String birthDate;
          ArrayList<String> tags;
          ArrayList<Deposit> deposits;
 
@@ -156,12 +160,15 @@ public class JsonParser {
             budget=me.getString("budget");
             firstName=me.getString("firstName");
             lastName=me.getString("lastName");
+            gender=me.getString("gender");
+            birthDate=me.getString("birthDay");
             id=me.getString("id");
 
             JSONArray tagsArray=me.getJSONArray("tags");
 
             tags=new ArrayList<String>();
             for(int j = 0; j < tagsArray.length(); j++){
+                if(j>19){break;}
                 tags.add(tagsArray.optString(j));
             }
             JSONArray depositsArray=me.getJSONArray("deposits");
@@ -180,13 +187,14 @@ public class JsonParser {
                 Deposit tmpDeposit=new Deposit(code,shared,type);
                 deposits.add(tmpDeposit);
             }
-            userAccount=new Account(created,email,modified,filterConfig,budget,firstName,lastName,id,tags,deposits);
-
-        } catch (Exception e) {
+            userAccount=new Account(created,gender,birthDate,email,modified,filterConfig,budget,firstName,lastName,id,tags,deposits);
+        }catch (Exception e) {
             // TODO Auto-generated catch block
+            Log.e("debug","there is a problem on getting /me");
             e.printStackTrace();
+            return null;
         }
-
+        return userAccount;
     }
 
     public void fetchJSON(){

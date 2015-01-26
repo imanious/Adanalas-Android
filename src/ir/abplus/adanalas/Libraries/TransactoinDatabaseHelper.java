@@ -47,6 +47,8 @@ public class TransactoinDatabaseHelper extends SQLiteOpenHelper
         db.execSQL(TransactionsContract.SQL_CREATE_TOKENS);
         db.execSQL(TransactionsContract.SQL_CREATE_DELETED_TRANSACTIONS);
         db.execSQL(TransactionsContract.SQL_CREATE_SYNC_LOG_DATA);
+        db.execSQL(TransactionsContract.SQL_CREATE_POPULAR_TAGS);
+        db.execSQL(TransactionsContract.SQL_CREATE_BASIC_INFO);
 	}
 
 	@Override
@@ -58,6 +60,8 @@ public class TransactoinDatabaseHelper extends SQLiteOpenHelper
         db.execSQL(TransactionsContract.SQL_DELETE_TOKENS);
         db.execSQL(TransactionsContract.SQL_DELETE_DELETED_TRANSACTIONS);
         db.execSQL(TransactionsContract.SQL_DELETE_SYNC_LOG_DATA);
+        db.execSQL(TransactionsContract.SQL_DELETE_POPULAR_TAGS);
+        db.execSQL(TransactionsContract.SQL_DELETE_BASIC_INFO);
 		onCreate(db);
 	}
 }

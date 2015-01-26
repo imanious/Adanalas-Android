@@ -13,6 +13,8 @@ public class Account {
     private String budget;
     private String firstName;
     private String lastName;
+    private String gender;
+    private String birthDate;
     private String id;
     private ArrayList<String> tags;
     private ArrayList<Deposit> deposits;
@@ -23,6 +25,10 @@ public class Account {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getBirthDate() {
+        return birthDate;
     }
 
     public String getModified() {
@@ -44,6 +50,9 @@ public class Account {
     public String getLastName() {
         return lastName;
     }
+    public String getGender() {
+        return gender;
+    }
 
     public String getId() {
         return id;
@@ -57,7 +66,7 @@ public class Account {
         return deposits;
     }
 
-    public Account(String created, String email, String modified, String filterConfig, String budget, String firstName, String lastName, String id, ArrayList<String> tags, ArrayList<Deposit> deposits) {
+    public Account(String created,String gender,String birthDate, String email, String modified, String filterConfig, String budget, String firstName, String lastName, String id, ArrayList<String> tags, ArrayList<Deposit> deposits) {
         this.created = created;
         this.email = email;
         this.modified = modified;
@@ -68,5 +77,7 @@ public class Account {
         this.id = id;
         this.tags = tags;
         this.deposits = deposits;
+        this.birthDate= birthDate;
+        this.gender=gender;
     }
 }

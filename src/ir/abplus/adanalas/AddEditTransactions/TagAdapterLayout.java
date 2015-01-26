@@ -8,9 +8,9 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.*;
 import com.viewpagerindicator.CirclePageIndicator;
 import ir.abplus.adanalas.Timeline.TimelineActivity;
+import ir.abplus.adanalas.databaseConnections.LocalDBServices;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by Keyvan Sasani on 11/19/2014.
@@ -126,7 +126,8 @@ public class TagAdapterLayout extends LinearLayout implements View.OnClickListen
         });
 
 
-        userTags=new ArrayList<String>(Arrays.asList("تاکسی","بی آر تی","صابون","تئاتر","سینما","قلهک","بنزین","پول تو جیبی","کتاب","قبض برق","صدقات"));
+//        userTags=new ArrayList<String>(Arrays.asList("تاکسی","بی آر تی","صابون","تئاتر","سینما","قلهک","بنزین","پول تو جیبی","کتاب","قبض برق","صدقات"));
+        userTags= LocalDBServices.getPopularTags(getContext());
         userTagsToShow.addAll(userTags);
         addMostUsedTags();
         addSelectedTagsToPageAdaptor();
@@ -268,8 +269,8 @@ public class TagAdapterLayout extends LinearLayout implements View.OnClickListen
     private void addMostUsedTags(){
         ArrayList<String> mostUsedTags=new ArrayList<String>();
         // !!!!!   an algorithm to find most used tags and add to mostUsedTags
-        mostUsedTags=new ArrayList<String>(Arrays.asList("تاکسی", "بی آر تی", "صابون", "تئاتر", "سینما", "قلهک", "بنزین"));
-
+//        mostUsedTags=new ArrayList<String>(Arrays.asList("تاکسی", "بی آر تی", "صابون", "تئاتر", "سینما", "قلهک", "بنزین"));
+            mostUsedTags=LocalDBServices.getPopularTags(getContext());
         for(String s:mostUsedTags){
             //            if(userTagsToShow.contains(s))
             //        userTagsToShow.remove(s);

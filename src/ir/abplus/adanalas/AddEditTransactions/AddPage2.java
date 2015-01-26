@@ -27,7 +27,6 @@ import ir.abplus.adanalas.Timeline.TimelineActivity;
 import ir.abplus.adanalas.databaseConnections.LocalDBServices;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -350,8 +349,8 @@ public class AddPage2 extends FragmentActivity implements View.OnTouchListener,V
         amPmTextview.setTypeface(TimelineActivity.persianTypeface);
 
 
-        userTags=new ArrayList<String>(Arrays.asList("تاکسی","بی آر تی","صابون","تئاتر","سینما","قلهک","بنزین","پول تو جیبی","کتاب","قبض برق","صدقات"));
-
+//        userTags=new ArrayList<String>(Arrays.asList("تاکسی","بی آر تی","صابون","تئاتر","سینما","قلهک","بنزین","پول تو جیبی","کتاب","قبض برق","صدقات"));
+        userTags=LocalDBServices.getPopularTags(getBaseContext());
         userTagsToShow.addAll(userTags);
         addMostUsedTags();
         addSelectedTagsToPageAdaptor();
@@ -537,7 +536,8 @@ public class AddPage2 extends FragmentActivity implements View.OnTouchListener,V
     private void addMostUsedTags(){
         ArrayList<String> mostUsedTags=new ArrayList<String>();
         // !!!!!   an algorithm to find most used tags and add to mostUsedTags
-        mostUsedTags=new ArrayList<String>(Arrays.asList("تاکسی","بی آر تی","صابون","تئاتر","سینما","قلهک","بنزین"));
+//        mostUsedTags=new ArrayList<String>(Arrays.asList("تاکسی","بی آر تی","صابون","تئاتر","سینما","قلهک","بنزین"));
+        mostUsedTags=LocalDBServices.getPopularTags(getBaseContext());
 
         for(String s:mostUsedTags){
             //            if(userTagsToShow.contains(s))
@@ -655,7 +655,7 @@ public class AddPage2 extends FragmentActivity implements View.OnTouchListener,V
 //            transactionID = db.insert(TransactionEntry.TABLE_NAME, null, values);
 
             Log.e("debug","newTransactionCalled : "+id);
-            LocalDBServices.addNewTransaction(this,dateTime,amount,isExpense,accountSpinner.getSelectedItem().toString(),category_index,selectedTags,description);
+            LocalDBServices.addNewTransaction(this,dateTime,amount,isExpense,accountSpinner.getSelectedItem().toString(),category_index,selectedTags,description, true);
 //
 //            for(String tag: selectedTags)
 //            {

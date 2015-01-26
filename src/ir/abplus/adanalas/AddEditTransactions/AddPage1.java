@@ -999,7 +999,7 @@ public class AddPage1 extends Activity implements View.OnClickListener, View.OnL
         if(id.equals("null"))
         {
 //            db.insert(TransactionEntry.TABLE_NAME, null, values);
-            LocalDBServices.addNewTransaction(this,dateTime,amountValue,isExpense, SettingActivity.defaultAccount,category_index,null,null);
+            LocalDBServices.addNewTransaction(this,dateTime,amountValue,isExpense, SettingActivity.defaultAccount,category_index,null,null,true);
         }
         else
         {

@@ -17,7 +17,6 @@ import com.fourmob.datetimepicker.date.PersianCalendar;
 import ir.abplus.adanalas.Charts.ChartActivity;
 import ir.abplus.adanalas.Libraries.*;
 import ir.abplus.adanalas.R;
-import ir.abplus.adanalas.SyncCloud.ConnectionManager;
 import ir.abplus.adanalas.SyncCloud.Declaration;
 import ir.abplus.adanalas.SyncCloud.JsonParser;
 import ir.abplus.adanalas.Timeline.TimelineItem2;
@@ -164,12 +163,8 @@ public class SettingActivity extends Activity {
             @Override
             public void onClick(View view) {
 
-            LocalDBServices.clearTable(SettingActivity.this,TransactionsContract.TransactionEntry.TABLE_NAME);
-            LocalDBServices.clearTable(SettingActivity.this,TransactionsContract.Accounts.TABLE_NAME);
-            LocalDBServices.clearTable(SettingActivity.this,TransactionsContract.Tokens.TABLE_NAME);
-            LocalDBServices.clearTable(SettingActivity.this,TransactionsContract.DeletedTransactions.TABLE_NAME);
-            LocalDBServices.clearTable(SettingActivity.this,TransactionsContract.SyncLogData.TABLE_NAME);
-            LocalDBServices.clearTable(SettingActivity.this,TransactionsContract.TagsEntry.TABLE_NAME);
+            LocalDBServices.clearDatabase(SettingActivity.this);
+
             }
         });
 
@@ -184,8 +179,7 @@ public class SettingActivity extends Activity {
 //                    Account account=jsonParser.getUserAccount();
 
                     String accountIn=jsonParser.getAccountInfo();
-                    jsonParser.readAndParseAccountJSON(accountIn);
-                    Account account=jsonParser.getUserAccount();
+                    Account account=jsonParser.readAndParseAccountJSON(accountIn);
                     LocalDBServices.addJsonAccounts(getBaseContext(),account);
 
 
@@ -207,7 +201,7 @@ public class SettingActivity extends Activity {
                     jsonParser.readAndParseTransactionJSON(transExpenseIn);
                     ArrayList <TimelineItem2> t2=jsonParser.getTransItems();
                     for(int i=0;i<t2.size();i++){
-                        LocalDBServices.addJsonTransactionForce(getBaseContext(), t2.get(i).getTransactionID(), t2.get(i).getDateString(), t2.get(i).getAmount(), t2.get(i).isExpence(), t2.get(i).getAccountName(), t2.get(i).getCategoryID(), t2.get(i).getTags(), t2.get(i).getDescription());
+                        LocalDBServices.addJsonTransactionForce(getBaseContext(), t2.get(i).getTransactionID(), t2.get(i).getDateString(), t2.get(i).getAmount(), t2.get(i).isExpence(), t2.get(i).getAccountName(), t2.get(i).getCategoryID(), t2.get(i).getTags(), t2.get(i).getDescription(),t2.get(i).getHandy());
                     }
                     if(t2.size()==100){
                         int j=1;
@@ -215,7 +209,7 @@ public class SettingActivity extends Activity {
                         jsonParser.readAndParseTransactionJSON(transExpenseIn);
                         t2=jsonParser.getTransItems();
                         for(int i=0;i<t2.size();i++){
-                            LocalDBServices.addJsonTransactionForce(getBaseContext(), t2.get(i).getTransactionID(), t2.get(i).getDateString(), t2.get(i).getAmount(), t2.get(i).isExpence(), t2.get(i).getAccountName(), t2.get(i).getCategoryID(), t2.get(i).getTags(), t2.get(i).getDescription());
+                            LocalDBServices.addJsonTransactionForce(getBaseContext(), t2.get(i).getTransactionID(), t2.get(i).getDateString(), t2.get(i).getAmount(), t2.get(i).isExpence(), t2.get(i).getAccountName(), t2.get(i).getCategoryID(), t2.get(i).getTags(), t2.get(i).getDescription(),t2.get(i).getHandy());
                         }
                     }
 
@@ -223,7 +217,7 @@ public class SettingActivity extends Activity {
                     jsonParser.readAndParseTransactionJSON(transIncomeIn);
                     t2=jsonParser.getTransItems();
                     for(int i=0;i<t2.size();i++){
-                        LocalDBServices.addJsonTransactionForce(getBaseContext(), t2.get(i).getTransactionID(), t2.get(i).getDateString(), t2.get(i).getAmount(), t2.get(i).isExpence(), t2.get(i).getAccountName(), t2.get(i).getCategoryID(), t2.get(i).getTags(), t2.get(i).getDescription());
+                        LocalDBServices.addJsonTransactionForce(getBaseContext(), t2.get(i).getTransactionID(), t2.get(i).getDateString(), t2.get(i).getAmount(), t2.get(i).isExpence(), t2.get(i).getAccountName(), t2.get(i).getCategoryID(), t2.get(i).getTags(), t2.get(i).getDescription(),t2.get(i).getHandy());
                     }
                     if(t2.size()==100){
                         int j=1;
@@ -231,15 +225,15 @@ public class SettingActivity extends Activity {
                         jsonParser.readAndParseTransactionJSON(transExpenseIn);
                         t2=jsonParser.getTransItems();
                         for(int i=0;i<t2.size();i++){
-                            LocalDBServices.addJsonTransactionForce(getBaseContext(), t2.get(i).getTransactionID(), t2.get(i).getDateString(), t2.get(i).getAmount(), t2.get(i).isExpence(), t2.get(i).getAccountName(), t2.get(i).getCategoryID(), t2.get(i).getTags(), t2.get(i).getDescription());
+                            LocalDBServices.addJsonTransactionForce(getBaseContext(), t2.get(i).getTransactionID(), t2.get(i).getDateString(), t2.get(i).getAmount(), t2.get(i).isExpence(), t2.get(i).getAccountName(), t2.get(i).getCategoryID(), t2.get(i).getTags(), t2.get(i).getDescription(),t2.get(i).getHandy());
                         }
                     }
                 }
                 catch (Exception e){
                     Log.e("debug","there is a problem on posting cookie, should try login again");
                     LocalDBServices.invalidTokens(getBaseContext());
-                    ConnectionManager.pfmCookie="";
-                    ConnectionManager.pfmToken="";
+//                    ConnectionManager.pfmCookie="";
+//                    ConnectionManager.pfmToken="";
                     setResult(LOGOUT_CODE);
                     finish();
                 }
@@ -250,8 +244,8 @@ public class SettingActivity extends Activity {
         signOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ConnectionManager.pfmCookie="";
-                ConnectionManager.pfmToken="";
+//                ConnectionManager.pfmCookie="";
+//                ConnectionManager.pfmToken="";
                 setResult(LOGOUT_CODE);
                 finish();
             }
@@ -311,7 +305,7 @@ public class SettingActivity extends Activity {
                 values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_ACCOUNT_NAME,t.getAccountName());
 
 //                db.insert(TransactionsContract.TransactionEntry.TABLE_NAME, null, values);
-                LocalDBServices.addNewTransaction(getBaseContext(),t.getDateString(),t.getAmount(),t.isExpence(),t.getAccountName(),t.getCategoryID(),t.getTags(),t.getDescription());
+                LocalDBServices.addNewTransaction(getBaseContext(),t.getDateString(),t.getAmount(),t.isExpence(),t.getAccountName(),t.getCategoryID(),t.getTags(),t.getDescription(), true);
             }
 
     }

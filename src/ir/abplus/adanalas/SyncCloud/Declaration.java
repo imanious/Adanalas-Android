@@ -33,7 +33,7 @@ public class Declaration {
         try {
             JSONArray jsonArray=makeDeclaration(context);
             if(!jsonArray.toString().equals("[]")) {
-                result = postDeclaration(makeDeclaration(context));
+                result = postDeclaration(jsonArray);
             }
             else {
                 Log.e("debug","There is no data to declare");
@@ -57,6 +57,7 @@ public class Declaration {
         String dateTime;
         long amount;
         boolean isExpense;
+        boolean isHandy;
         int category_index;
         String descp;
         String accountName;
@@ -70,6 +71,7 @@ public class Declaration {
                 dateTime = cursor.getString(cursor.getColumnIndexOrThrow(TransactionsContract.TransactionEntry.COLUMN_NAME_DATE_TIME));
                 amount = cursor.getLong(cursor.getColumnIndexOrThrow(TransactionsContract.TransactionEntry.COLUMN_NAME_AMOUNT));
                 isExpense = cursor.getInt(cursor.getColumnIndexOrThrow(TransactionsContract.TransactionEntry.COLUMN_NAME_IS_EXPENSE))==0? false: true;
+                isHandy = cursor.getInt(cursor.getColumnIndexOrThrow(TransactionsContract.TransactionEntry.COLUMN_NAME_IS_HANDY))==0? false: true;
                 category_index = cursor.getInt(cursor.getColumnIndexOrThrow(TransactionsContract.TransactionEntry.COLUMN_NAME_CATEGORY));
                 descp=cursor.getString(cursor.getColumnIndexOrThrow(TransactionsContract.TransactionEntry.COLUMN_NAME_DESCRIPTION));
                 accountName=cursor.getString(cursor.getColumnIndexOrThrow(TransactionsContract.TransactionEntry.COLUMN_NAME_ACCOUNT_NAME));
@@ -88,7 +90,6 @@ public class Declaration {
                 }
                 c2.close();
 
-                System.out.println("@@@"+Arrays.toString(selectedTags));
                 JSONObject tmpObject=new JSONObject();
                 try {
                     tmpObject.put("id",id);
@@ -103,6 +104,9 @@ public class Declaration {
                     else {
                         tmpObject.put("category", Category.getIncomeCategoryString((category_index)));
                         tmpObject.put("type","c");
+                    }
+                    if(isHandy){
+                        tmpObject.put("handy",true);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -114,6 +118,7 @@ public class Declaration {
         return transArray;
     }
     public JSONArray makeDeclaration2(Context context){
+        //todo make it correct
         Cursor cursor= LocalDBServices.getUnsyncedTransactionsAndTags(context);
         JSONArray transArray=new JSONArray();
         ArrayList<TimelineItem2> items=new ArrayList<TimelineItem2>();
@@ -122,6 +127,7 @@ public class Declaration {
         String dateTime;
         long amount;
         boolean isExpense;
+        boolean isHandy;
         int category_index;
         String descp;
         String accountName;
@@ -135,6 +141,7 @@ public class Declaration {
                 dateTime = cursor.getString(cursor.getColumnIndexOrThrow(TransactionsContract.TransactionEntry.COLUMN_NAME_DATE_TIME));
                 amount = cursor.getLong(cursor.getColumnIndexOrThrow(TransactionsContract.TransactionEntry.COLUMN_NAME_AMOUNT));
                 isExpense = cursor.getInt(cursor.getColumnIndexOrThrow(TransactionsContract.TransactionEntry.COLUMN_NAME_IS_EXPENSE))==0? false: true;
+                isHandy = cursor.getInt(cursor.getColumnIndexOrThrow(TransactionsContract.TransactionEntry.COLUMN_NAME_IS_HANDY))==0? false: true;
                 category_index = cursor.getInt(cursor.getColumnIndexOrThrow(TransactionsContract.TransactionEntry.COLUMN_NAME_CATEGORY));
                 descp=cursor.getString(cursor.getColumnIndexOrThrow(TransactionsContract.TransactionEntry.COLUMN_NAME_DESCRIPTION));
                 accountName=cursor.getString(cursor.getColumnIndexOrThrow(TransactionsContract.TransactionEntry.COLUMN_NAME_ACCOUNT_NAME));
@@ -153,7 +160,6 @@ public class Declaration {
                 }
                 c2.close();
 
-                System.out.println("@@@"+Arrays.toString(selectedTags));
                 JSONObject tmpObject=new JSONObject();
                 try {
                     tmpObject.put("id",id);
@@ -168,6 +174,9 @@ public class Declaration {
                     else {
                         tmpObject.put("category", Category.getIncomeCategoryString((category_index)));
                         tmpObject.put("type","c");
+                    }
+                    if(isHandy){
+                        tmpObject.put("handy",true);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -204,10 +213,10 @@ public class Declaration {
         wr.close();
 
         int responseCode = con.getResponseCode();
-        System.out.println("\nSending 'POST' request to URL : " + PFM_DECLARATION_ADDRESS);
-        System.out.println("Post parameters : " + jsonArray.toString());
-        System.out.println("Post parameters : " + standardJsonObject(jsonArray.toString()));
-        System.out.println("Response Code : " + responseCode);
+//        System.out.println("\nSending 'POST' request to URL : " + PFM_DECLARATION_ADDRESS);
+//        System.out.println("Post parameters : " + jsonArray.toString());
+//        System.out.println("Post parameters : " + standardJsonObject(jsonArray.toString()));
+//        System.out.println("Response Code : " + responseCode);
 
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));
