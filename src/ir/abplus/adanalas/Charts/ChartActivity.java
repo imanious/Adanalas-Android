@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
@@ -93,44 +94,21 @@ public class ChartActivity extends FragmentActivity implements OnDateSetListener
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+        Log.e("debug performance","chart activity called");
+        super.onCreate(savedInstanceState);
 		setContentView(R.layout.chart_activity);
-//
-//        CustomListView = this;
-//
-//        /******** Take some data in Arraylist ( CustomListViewValuesArr ) ***********/
-//        setListData();
-//
-//        Resources res =getResources();
-//        list= ( ListView )findViewById( R.id.list );  // List defined in XML ( See Below )
-//
-//        /**************** Create Custom Adapter *********/
-//
-//
-//        View head = getLayoutInflater().inflate(R.layout.chart_activity, null);
-//        list.addHeaderView(head);
-//        adapter=new CustomAdapter( CustomListView, CustomListViewValuesArr,res );
-//        list.setAdapter( adapter );
-
-
 
 		displayMetrics = getResources().getDisplayMetrics();
 		screenDpWidth = displayMetrics.widthPixels / displayMetrics.density;
 
         expenseSelection=TimelineActivity.expenseSelection;
         incomeSelection=TimelineActivity.incomeSelection;
-//        System.out.println(TimelineActivity.accountSelection.toString());
 
         boolean[] tmpBool=new boolean[4];
         for(int i=0;i<tmpBool.length;i++)
             tmpBool[i]=false;
         int j=TimelineActivity.accountMenuAdapter.getRadioSelected();
         tmpBool[j]=true;
-//		for(int i = 0; i < Category.EXPENSE_SIZE; i++)
-//			expenseSelection[i] = true;
-//
-//		for(int i = 0; i < Category.INCOME_SIZE; i++)
-//			incomeSelection[i] = true;
 
         addAccountsToList();
 
@@ -371,10 +349,12 @@ public class ChartActivity extends FragmentActivity implements OnDateSetListener
 		pieChartButton.setBackground(getResources().getDrawable(R.drawable.pie_chart));
 
 		pieChartFragment = new PieChartFragment();
+
 		transaction = getSupportFragmentManager().beginTransaction();
 		transaction.replace(R.id.fragment_content, pieChartFragment);
 //		transaction.addToBackStack(null);
 		transaction.commit();
+
 		pieChartButton.setBackground(getResources().getDrawable(R.drawable.pie_chart_selected));
 		//        BarFragment newFragment = new BarFragment();
 		//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -468,7 +448,7 @@ public class ChartActivity extends FragmentActivity implements OnDateSetListener
 			}
 		});
 
-
+        Log.e("debug performance","chart activity end");
     }
 
 	@Override
@@ -849,7 +829,6 @@ public class ChartActivity extends FragmentActivity implements OnDateSetListener
             do
             {
                 String accountName=c2.getString(c2.getColumnIndexOrThrow(TransactionsContract.Accounts.COLUMN_NAME_Account_Name));
-                System.out.println("account name is : "+accountName);
                 if(c2!=null){
                     if(c2.isFirst())
                         accountsAndTimeFilter.add(new FilterMenuItem("حساب‌ها", TimelineActivity.accountSelection[i],accountName, false, R.drawable.vaam_raw));

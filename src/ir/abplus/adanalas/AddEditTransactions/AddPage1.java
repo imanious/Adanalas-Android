@@ -980,6 +980,7 @@ public class AddPage1 extends Activity implements View.OnClickListener, View.OnL
         Calendar cal = Calendar.getInstance();
         int selectedHour = cal.get(PersianCalendar.HOUR_OF_DAY);
         int selectedMinute = cal.get(PersianCalendar.MINUTE);
+        int selectedSecond=cal.get(PersianCalendar.SECOND);
         PersianDate date = new PersianDate((short)selectedDay, (short)selectedMonth, (short)selectedYear, PersianCalendar.weekdayFullNames[selectedWeekday]);
         Time time = new Time((short)selectedHour, (short)selectedMinute);
         String dateTime = date.getSTDString()+time.getSTDString()+"00";

@@ -114,12 +114,9 @@ public class SettingActivity extends Activity {
                     int R = r.nextInt(High-Low) + Low;
 
                     R*=100;
-//                    double amount=Double.parseDouble(String.format("%." + 2 + "f", Math.random()*100));
                     double amount=(double)R;
                     Time time = new Time((short)(Math.random()*24), (short)(Math.random()*60));
                     //todo make random item
-//                    TimelineItem2 t = new TimelineItem2("0", Math.random()<0.2? false: true, amount, date, time, (int)(Math.random()*11),null,false,"",(String)accountSpinner.getSelectedItem());
-//                    listItems.add(t);
                 }
             }
         });
@@ -288,14 +285,8 @@ public class SettingActivity extends Activity {
     private void commitData() throws ParseException
     {
 
-//            SQLiteDatabase db = trHelper.getWritableDatabase();
-
-//            trHelper.onUpgrade(db, 1, 2);
             for(TimelineItem2 t: listItems)
             {
-//                PersianDate date = t.date;
-//                Time time = t.time;
-//                String dateTime = date.getSTDString()+time.getSTDString();
 
                 ContentValues values = new ContentValues();
                 values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_DATE_TIME, t.getDateString());
@@ -310,35 +301,12 @@ public class SettingActivity extends Activity {
 
     }
     private void addTestAccountToDb(){
-//        TransactoinDatabaseHelper trHelper=new TransactoinDatabaseHelper(this);
-//        SQLiteDatabase db = trHelper.getWritableDatabase();
-//        ContentValues values = new ContentValues();
-//        values.put(TransactionsContract.Accounts.COLUMN_NAME_Account_Name,"نقدی 1");
-//        values.put(TransactionsContract.Accounts.COLUMN_NAME_Account_Type,1);
-//        db.insertOrThrow(TransactionsContract.Accounts.TABLE_NAME, null, values);
-//
-//
-//        values = new ContentValues();
-//        values.put(TransactionsContract.Accounts.COLUMN_NAME_Account_Name,"نقدی 2");
-//        values.put(TransactionsContract.Accounts.COLUMN_NAME_Account_Type,1);
-//        db.insert(TransactionsContract.Accounts.TABLE_NAME,null,values);
-//
-//        values = new ContentValues();
-//        values.put(TransactionsContract.Accounts.COLUMN_NAME_Account_Name,"کوتاه مدت آینده");
-//        values.put(TransactionsContract.Accounts.COLUMN_NAME_Account_Type,0);
-//        db.insert(TransactionsContract.Accounts.TABLE_NAME,null,values);
         LocalDBServices.addTestAccounts(getBaseContext());
     }
 
     private void addAccountsToList() {
-//        SQLiteDatabase db = trHelper.getReadableDatabase();
-//        Cursor c2;
         accountsList=new ArrayList<String>();
-//        String query="select "+ TransactionsContract.Accounts.COLUMN_NAME_Account_Name+
-//                " from "+ TransactionsContract.Accounts.TABLE_NAME;
-//
-//        c2=db.rawQuery(query,null);
-        Cursor c2=LocalDBServices.getAccountList(this);
+        Cursor c2=LocalDBServices.getHandyAccountList(this);
         c2.moveToFirst();
 
 
@@ -348,11 +316,7 @@ public class SettingActivity extends Activity {
             {
                 String accountName=c2.getString(c2.getColumnIndexOrThrow(TransactionsContract.Accounts.COLUMN_NAME_Account_Name));
                 if(c2!=null){
-//                    if(c2.isFirst())
-
                         accountsList.add(accountName);
-//                    else
-//                        accountsAndTimeFilter.add(new FilterMenuItem("", true,accountName, false, R.drawable.vaam_raw));
                 }
             }while(c2.moveToNext());
         }
@@ -360,17 +324,11 @@ public class SettingActivity extends Activity {
     }
 
     public static String getAccountType(String accountName,Context context){
-//        TransactoinDatabaseHelper trHelper=new TransactoinDatabaseHelper(context);
-//        SQLiteDatabase db =trHelper.getReadableDatabase();
         Cursor c2;
         String accountType="-1";
         accountsList=new ArrayList<String>();
-//        String query="select "+ TransactionsContract.Accounts.COLUMN_NAME_Account_Name+
-//                " , "+TransactionsContract.Accounts.COLUMN_NAME_Account_Type+
-//                " from "+ TransactionsContract.Accounts.TABLE_NAME;
 
         c2=LocalDBServices.getAccountList(context);
-//        c2=db.rawQuery(query,null);
         c2.moveToFirst();
 
         if(c2.getCount() != 0)

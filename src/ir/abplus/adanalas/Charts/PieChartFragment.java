@@ -1,6 +1,7 @@
 package ir.abplus.adanalas.Charts;
 
 import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.content.res.Resources;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.*;
 import com.echo.holographlibrary.PieGraph;
 import com.echo.holographlibrary.PieGraph.OnSliceClickedListener;
@@ -38,7 +40,7 @@ public class PieChartFragment extends Fragment {
     public  ChartActivity CustomListView = null;
     public ArrayList<ChartListModel> CustomListViewValuesArr = new ArrayList<ChartListModel>();
     private boolean isExpense;
-    private ScrollView scrollView;
+    public ScrollView scrollView;
 
 
     @Override
@@ -60,7 +62,9 @@ public class PieChartFragment extends Fragment {
         adapter=new ChartListCustomAdapter( CustomListView, CustomListViewValuesArr,getActivity().getResources() );
 
         UpdateDatabaseCursor();
-        updatePieChart();
+//        Log.e("debug","scroll"+scrollView.getScrollY());
+
+//        updatePieChart();
 
         if(pg.getSlices().size()>1)
             pg.setPadding(1);
@@ -98,7 +102,6 @@ public class PieChartFragment extends Fragment {
 //                    }
 //                    adapter=new ChartListCustomAdapter( CustomListView, CustomListViewValuesArr,getActivity().getResources() );
 //                    list.setAdapter( adapter );
-
                     ArrayList<ChartListModel> tmpCustomListViewValuesArr = new ArrayList<ChartListModel>();
                     int i=0;
                     boolean shouldChange=false;
@@ -126,12 +129,30 @@ public class PieChartFragment extends Fragment {
                         }
                     });
                     va.start();
+                    setListViewHeightBasedOnChildren(list);
+                }
+                else {
+                    adapter=new ChartListCustomAdapter( CustomListView, CustomListViewValuesArr,getActivity().getResources() );
+                    list.setAdapter( adapter );
+                    setListViewHeightBasedOnChildren(list);
                 }
             }
         });
 
 
-        scrollView.scrollTo(0, 0);
+        scrollView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                scrollView.post(new Runnable() {
+                    public void run() {
+                        ObjectAnimator animator= ObjectAnimator.ofInt(scrollView, "scrollY", 0);
+                        animator.start();
+//                        scrollView.fullScroll(View.FOCUS_UP);
+                    }
+                });
+            }
+        });
+
         return v;
     }
 
@@ -243,7 +264,6 @@ public class PieChartFragment extends Fragment {
 //                    +"A, C ORDER BY "
 //                    +TransactionsContract.TransactionEntry.COLUMN_NAME_AMOUNT+" DESC";
 //        c = db.rawQuery(query, null);
-
         c= LocalDBServices.getTransactionsFromDBGroupedBYCategory(((ChartActivity)getActivity()).getWhereClause());
 //        System.out.println("%%%"+query);
         if(c.getCount() == 0)
@@ -251,9 +271,10 @@ public class PieChartFragment extends Fragment {
         isExpense=((ChartActivity)getActivity()).isExpense;
         updatePieChart();
         setListData();
+        c.close();
 //        setDefultSelectedSlice();
         setListViewHeightBasedOnChildren(list);
-        scrollView.scrollTo(0, 0);
+//        scrollView.scrollTo(0, 0);
     }
 
     private void updatePieChart(){
@@ -310,7 +331,9 @@ public class PieChartFragment extends Fragment {
 
     }
 
-    public static void setListViewHeightBasedOnChildren(ListView listView) {
+
+
+    public void setListViewHeightBasedOnChildren(ListView listView) {
         ListAdapter listAdapter = listView.getAdapter();
         if (listAdapter == null)
             return;
@@ -330,5 +353,7 @@ public class PieChartFragment extends Fragment {
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
         listView.requestLayout();
+
+        Log.e("debug","height changed");
     }
 }

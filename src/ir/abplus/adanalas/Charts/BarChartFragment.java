@@ -239,7 +239,8 @@ public class BarChartFragment extends Fragment {
             query+=" WHERE "+((ChartActivity)getActivity()).getWhereClause();
             query=query.substring(0,query.indexOf(">="));
             query+=">="+barGraph.getBars().get(clickedBarIndex).getDateString();
-            query=query+" GROUP BY A, C" + " ORDER BY " + TransactionsContract.TransactionEntry.COLUMN_NAME_AMOUNT + " DESC";
+            query=query+" GROUP BY A, C" + " ORDER BY B DESC";
+
 
         }
         else {
@@ -276,7 +277,7 @@ public class BarChartFragment extends Fragment {
             }
         }
 
-        System.out.println(query);
+        Log.e("debug query",query);
 //        c = db.rawQuery(query, null);
          c= LocalDBServices.getTransactionsForBarChart(query);
         if(c.getCount() == 0)
@@ -285,12 +286,8 @@ public class BarChartFragment extends Fragment {
         updateBarChart();
     }
 
-
-
-
     private void addBarChart(Bar bar){
 
-        Log.e("tara",bar.getValue()+" "+Currency.getCurrencyString());
         barGraph.cancelAnimating();
         Bar bar2=new Bar();
         bar2.setColor(bar.getColor());
@@ -350,6 +347,8 @@ public class BarChartFragment extends Fragment {
 
             if(c.getCount() != 0) {
                 c.moveToFirst();
+                int index=1;
+                Bar bar=new Bar();
                 do {
                     int name = c.getInt(c.getColumnIndexOrThrow("A"));
                     long amount = c.getLong(c.getColumnIndexOrThrow("B"));
@@ -357,28 +356,48 @@ public class BarChartFragment extends Fragment {
 
                     if(isExpense){
                         if(boolExpense==1){
-                            Bar bar = new Bar();
+                            if(index<7){
+                            bar = new Bar();
                             bar.setValue( Float.parseFloat(Currency.getStdAmountWithoutSeparation(amount)));
                             bar.setValueString(Currency.getStdAmount(amount));
                             bar.setSelectedColor(resources.getColor(R.color.red));
                             bar.setColor(resources.getColor(Category.getExpenseColorID(name)));
                             bar.setName(Category.expenseCategories[name]);
                             aBars.add(bar);
+                            }else {
+                                aBars.get(aBars.size()-1).setValue( aBars.get(aBars.size()-1).getValue()+Float.parseFloat(Currency.getStdAmountWithoutSeparation(amount)));
+                                aBars.get(aBars.size()-1).setValueString(aBars.get(aBars.size()-1).getValue()+Currency.getStdAmount(amount));
+                                aBars.get(aBars.size()-1).setSelectedColor(resources.getColor(R.color.red));
+                                aBars.get(aBars.size()-1).setColor(resources.getColor(R.color.red));
+                                aBars.get(aBars.size()-1).setName("سایر");
+                            }
+                            index++;
                         }
 
                     }
                     else {
                         if(boolExpense==0){
-                            Log.i("W", "here is a bug amount: " + amount);
-                            Bar bar = new Bar();
+                            if(index<7){
+                            bar = new Bar();
                             bar.setValue(Float.parseFloat(Currency.getStdAmountWithoutSeparation(amount)));
                             bar.setValueString(Currency.getStdAmount(amount));
                             bar.setSelectedColor(resources.getColor(R.color.red));
                             bar.setColor(resources.getColor(Category.getIncomeColorID((name))));
                             bar.setName(Category.incomeCategories[name]);
                             aBars.add(bar);
+                            }
+                            else {
+                                aBars.get(aBars.size()-1).setValue( aBars.get(aBars.size()-1).getValue()+Float.parseFloat(Currency.getStdAmountWithoutSeparation(amount)));
+                                aBars.get(aBars.size()-1).setValueString(aBars.get(aBars.size()-1).getValue()+Currency.getStdAmount(amount));
+                                aBars.get(aBars.size()-1).setSelectedColor(resources.getColor(R.color.red));
+                                aBars.get(aBars.size()-1).setColor(resources.getColor(R.color.red));
+                                aBars.get(aBars.size()-1).setName("سایر");
+                            }
+                            index++;
                         }
                     }
+
+
 
 
                 } while (c.moveToNext());
@@ -568,7 +587,6 @@ public class BarChartFragment extends Fragment {
                                     tmp+="0";
                                     tmp2+="9";}
                                 bar.setDateString(tmp+" and "+ TransactionsContract.TransactionEntry.COLUMN_NAME_DATE_TIME+"<="+tmp2);
-//                            Log.i("masih",bar.getDateString());
                                 aBars.add(bar);
                             }
                         }
@@ -583,23 +601,6 @@ public class BarChartFragment extends Fragment {
         for(Bar b :aBars){
             addBarChart(b);
         }
-//        barGraph.cancelAnimating(); //must clear existing to call onAnimationEndListener cleanup BEFORE adding new bars
-////        int newPosition = barGraph.getBars().size() == 0 ? 0 : new Random().nextInt(barGraph.getBars().size());
-//        Bar bar = new Bar();
-//        bar.setColor(Color.parseColor("#AA0000FF"));
-//        bar.setName("Insert bar " + String.valueOf(barGraph.getBars().size()));
-//        bar.setValue(0);
-//        bar.mAnimateSpecial = HoloGraphAnimate.ANIMATE_INSERT;
-//        barGraph.getBars().add(1,bar);
-////        for (Bar b : barGraph.getBars()) {
-////            b.setGoalValue((float) Math.random() * 1000);
-////            b.setValuePrefix("$");//display the prefix throughout the animation
-////            Log.d("goal val", String.valueOf(b.getGoalValue()));
-////        }
-//        barGraph.setDuration(1200);//default if unspecified is 300 ms
-//        barGraph.setInterpolator(new AccelerateDecelerateInterpolator());//Don't use over/undershoot interpolator for insert/delete
-//        barGraph.setAnimationListener(getAnimationListener());
-//        barGraph.animateToGoalValues();
 
 
 

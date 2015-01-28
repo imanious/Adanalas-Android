@@ -296,9 +296,8 @@ public class JsonParser {
         String transUrl=getTransactionRequest(offset,"100",type,account.getDeposits(),"","");
         transUrl=transUrl.replaceAll(" ","%20");
 
-        URL url = null;
+        URL url;
         HttpURLConnection urlConnection = null;
-        String accountResultString="";
         try {
             url = new URL(transUrl);
             urlConnection = (HttpURLConnection) url.openConnection();
@@ -306,23 +305,6 @@ public class JsonParser {
             urlConnection.connect();
 
             InputStream in = urlConnection.getInputStream();
-//            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-//            StringBuilder result = new StringBuilder();
-//            String line;
-//            while((line = reader.readLine()) != null) {
-//                result.append(line);
-//            }
-//            System.out.println("!!CLIENT RECEIVED: " +result.toString());
-//
-////            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-//            StringBuffer sb = new StringBuffer();
-//            InputStreamReader isr = new InputStreamReader(in);
-//            int numCharsRead;
-//            char[] charArray = new char[100000];
-//            while ((numCharsRead = isr.read(charArray)) > 0) {
-//                sb.append(charArray, 0, numCharsRead);
-//            }
-//            System.out.println("CLIENT RECEIVED: " + sb.toString());
             String sb=convertStreamToString(in);
             tranactionsResultString=sb;
 
@@ -331,12 +313,9 @@ public class JsonParser {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        finally {
-            urlConnection.disconnect();
-        }
-
-
-
+//        finally {
+//            urlConnection.disconnect();
+//        }
         return tranactionsResultString;
     }
 
@@ -370,9 +349,9 @@ public class JsonParser {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        finally {
-            urlConnection.disconnect();
-        }
+//        finally {
+//            urlConnection.disconnect();
+//        }
 
 
 

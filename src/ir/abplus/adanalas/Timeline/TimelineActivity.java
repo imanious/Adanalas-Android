@@ -3,6 +3,7 @@ package ir.abplus.adanalas.Timeline;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -89,6 +90,7 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 	String titleText;
 	TextView title;
 	PersianCalendar filterDate = new PersianCalendar();
+    LodingDialog dialog;
 
 	DisplayMetrics displayMetrics;
 	float screenDpWidth;
@@ -100,9 +102,14 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
     @Override
 	protected void onCreate(Bundle savedInstanceState){
 
-        getTokensFromDB();
 
 		super.onCreate(savedInstanceState);
+        if(getTokensFromDB()){
+        }
+        else {
+            return;
+        }
+
 		setContentView(R.layout.timeline_layout);
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -242,11 +249,13 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
         });
 
 
+//
+//        dialog=new LodingDialog(this,getResources(),"در حال دریافت اطلاعات از سرور");
+//        dialog.show();
 
-//        new Declaration(TimelineActivity.this);
-//        getNewTransFromServer();
+
+
         getALLTransFromServer();
-
         updateAccountTimeFilterMenuItem();
             addSlidingMenu();
 
@@ -529,10 +538,18 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 			// Simulates a background job.
 			try
 			{
-                Log.e("debug","syncTask called ,try to sync!");
+//                Log.e("debug","try to declare!");
+//                new Declaration(TimelineActivity.this);
+//                Log.e("debug","try to get data!");
+//                getALLTransFromServer();
+
+                Log.e("debug","try to declare!");
                 new Declaration(TimelineActivity.this);
-//                getNewTransFromServer();
-                getALLTransFromServer();
+                Log.e("debug","try to get data!");
+//                new ConnectionManager().doSync(getBaseContext());
+//                doSync(getBaseContext());
+                  getALLTransFromServer();
+
             }
 			catch (Exception e1)
 			{
@@ -587,7 +604,52 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 			super.onPostExecute(result);
 		}
 	}
-	
+
+    private class FirstSynchTask extends AsyncTask<Void, Void, Void>{
+        //every time we pull or push that should change the items
+        // it only calls refreshTimeline()
+        @Override
+        protected Void doInBackground(Void... params)
+        {
+            // Simulates a background job.
+            try
+            {
+
+        dialog=new LodingDialog(TimelineActivity.this,getResources(),"در حال دریافت اطلاعات از سرور");
+        dialog.show();
+        getALLTransFromServer();
+
+
+
+        updateAccountTimeFilterMenuItem();
+            addSlidingMenu();
+
+            setTitleText();
+            setPullToRefreshLabels();
+            getSharedPreferences();
+
+            }
+            catch (Exception e1)
+            {
+                e1.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result)
+        {
+//			totalIncome.setText(totalIncomeString);
+//			totalExpense.setText(totalExpenseString);
+            pHAdapter.setItems(listItems);
+            pHAdapter.notifyDataSetChanged();
+            phList.onRefreshComplete();
+            setTitleText();
+            //TODO scroll up
+            super.onPostExecute(result);
+        }
+    }
+
 	@Override
 	public void onPullDownToRefresh(PullToRefreshBase<PinnedHeaderListView> refreshView){
 		if(shouldSync())
@@ -815,6 +877,7 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
        String dateTime="";
        long amount=-1;
        boolean isExpense=false;
+       boolean isHandy=false;
        String descp="";
        String accountName="";
        int category_index = -1;
@@ -838,17 +901,18 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
                dateTime = c.getString(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_DATE_TIME));
                amount = c.getLong(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_AMOUNT));
                isExpense = c.getInt(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_IS_EXPENSE))==0? false: true;
+               isHandy= c.getInt(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_IS_HANDY))==0? false: true;
                category_index = c.getInt(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_CATEGORY));
                descp=c.getString(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_DESCRIPTION));
                accountName=c.getString(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_ACCOUNT_NAME));
 
 
-               listItems.add(new TimelineItem2(id,isExpense,amount,dateTime,category_index,tags,descp,accountName,null,null,false,false,null));
+               listItems.add(new TimelineItem2(id,isExpense,amount,dateTime,category_index,tags,descp,accountName,null,null,isHandy,false,null));
            }
            else {
                if(!lastTransID.equals(transID)){
                    if(!lastTransID.equals("null")){
-                       listItems.add(new TimelineItem2(id,isExpense,amount,dateTime,category_index,tags,descp,accountName,null,null,false,false,null));
+                       listItems.add(new TimelineItem2(id,isExpense,amount,dateTime,category_index,tags,descp,accountName,null,null,isHandy,false,null));
                    }
                    tags=new ArrayList<String>();
                    String tagName=c.getString(c.getColumnIndexOrThrow(TransactionsContract.TagsEntry.COLUMN_NAME_TAG));
@@ -857,6 +921,7 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
                    dateTime = c.getString(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_DATE_TIME));
                    amount = c.getLong(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_AMOUNT));
                    isExpense = c.getInt(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_IS_EXPENSE))==0? false: true;
+                   isHandy = c.getInt(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_IS_HANDY))==0? false: true;
                    category_index = c.getInt(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_CATEGORY));
                    descp=c.getString(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_DESCRIPTION));
                    accountName=c.getString(c.getColumnIndexOrThrow(TransactionEntry.COLUMN_NAME_ACCOUNT_NAME));
@@ -1030,16 +1095,18 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 
 }
 
-    private void getTokensFromDB(){
+    private boolean getTokensFromDB(){
         Boolean res=LocalDBServices.getTokens(this);
         if(res){
+            return true;
         }
         else {
+
             LocalDBServices.invalidTokens(this);
             Intent intent= new Intent(TimelineActivity.this,LoginActivity2.class);
             finish();
             startActivity(intent);
-            return;
+            return false;
         }
 
     }
@@ -1108,10 +1175,11 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
             finish();
         }
     }
+
     private void getALLTransFromServer(){
 
         try {
-            Log.e("debug","getNewTransFromServer called");
+            Log.e("debug performance","getNewTransFromServer called");
             JsonParser jsonParser=JsonParser.getInstance();
 //            Account account= jsonParser.getUserAccount();
 //            String transExpenseIn=jsonParser.getAllTransaction(account, "d", "0");
@@ -1119,13 +1187,14 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
             Account account=jsonParser.readAndParseAccountJSON(accountIn);
             LocalDBServices.addJsonAccounts(getBaseContext(),account);
 
-
+            Log.e("debug performance","1");
             String transExpenseIn=jsonParser.getAllTransaction(account, "d", "0");
             jsonParser.readAndParseTransactionJSON(transExpenseIn);
             ArrayList <TimelineItem2> t2=jsonParser.getTransItems();
             for(int i=0;i<t2.size();i++){
                 LocalDBServices.addJsonTransactionForce(getBaseContext(), t2.get(i).getTransactionID(), t2.get(i).getDateString(), t2.get(i).getAmount(), t2.get(i).isExpence(), t2.get(i).getAccountName(), t2.get(i).getCategoryID(), t2.get(i).getTags(), t2.get(i).getDescription(),t2.get(i).getHandy());
             }
+            Log.e("debug performance","2");
             if(t2.size()==100){
                 int j=1;
                 transExpenseIn=jsonParser.getAllTransaction(account, "d", j * 100 + "");
@@ -1135,12 +1204,14 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
                     LocalDBServices.addJsonTransactionForce(getBaseContext(), t2.get(i).getTransactionID(), t2.get(i).getDateString(), t2.get(i).getAmount(), t2.get(i).isExpence(), t2.get(i).getAccountName(), t2.get(i).getCategoryID(), t2.get(i).getTags(), t2.get(i).getDescription(),t2.get(i).getHandy());
                 }
             }
+            Log.e("debug performance","3");
             String transIncomeIn=jsonParser.getAllTransaction(account, "c", "0");
             jsonParser.readAndParseTransactionJSON(transIncomeIn);
             t2=jsonParser.getTransItems();
             for(int i=0;i<t2.size();i++){
                 LocalDBServices.addJsonTransactionForce(getBaseContext(), t2.get(i).getTransactionID(), t2.get(i).getDateString(), t2.get(i).getAmount(), t2.get(i).isExpence(), t2.get(i).getAccountName(), t2.get(i).getCategoryID(), t2.get(i).getTags(), t2.get(i).getDescription(),t2.get(i).getHandy());
             }
+            Log.e("debug performance","4");
             if(t2.size()==100){
                 int j=1;
                 transExpenseIn=jsonParser.getAllTransaction(account, "c", j * 100 + "");
@@ -1151,6 +1222,7 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
                 }
             }
 
+            Log.e("debug performance","5");
             PersianCalendar calendar = new PersianCalendar();
             int selectedDay = calendar.get(PersianCalendar.DAY_OF_MONTH);
             int selectedMonth = calendar.get(PersianCalendar.MONTH);
@@ -1172,5 +1244,95 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
             finish();
         }
     }
+
+    public boolean doSync(Context context){
+
+        try {
+            Log.e("debug", "getNewTransFromServer called");
+            JsonParser jsonParser=JsonParser.getInstance();
+            String accountIn=jsonParser.getAccountInfo();
+            Account account=jsonParser.readAndParseAccountJSON(accountIn);
+            LocalDBServices.addJsonAccounts(context, account);
+
+            Log.e("debug", "expense called");
+            new GetAllTrans(account,context,"d").execute();
+            Log.e("debug", "income called");
+            new GetAllTrans(account,context,"c").execute();
+
+            Log.e("debug", "update time called");
+            PersianCalendar calendar = new PersianCalendar();
+            int selectedDay = calendar.get(PersianCalendar.DAY_OF_MONTH);
+            int selectedMonth = calendar.get(PersianCalendar.MONTH);
+            int selectedYear = calendar.get(PersianCalendar.YEAR);
+            int selectedWeekday = calendar.get(PersianCalendar.DAY_OF_WEEK);
+
+            PersianDate date = new PersianDate((short)selectedDay, (short)selectedMonth, (short)selectedYear, PersianCalendar.weekdayFullNames[selectedWeekday]);
+            int monthInt=Integer.parseInt(date.getSTDString().substring(4,6))+1;
+            String dateString=date.getSTDString().substring(0,4)+monthInt+date.getSTDString().substring(6,8);
+            LocalDBServices.updateSyncTime(context,dateString);
+            Log.e("debug","sync time updated "+ LocalDBServices.getSyncTime(context));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            Log.e("debug","there is a problem on posting cookie, should try login again");
+            LocalDBServices.invalidTokens(context);
+//            ConnectionManager.pfmCookie="";
+//            ConnectionManager.pfmToken="";
+            return false;
+        }
+        return true;
+    }
+
+    private class GetAllTrans extends AsyncTask<Void, Void, Void> {
+        Account account;
+        Context context;
+        String type;
+        public GetAllTrans(Account account,Context context,String type){
+            this.account=account;
+            this.context=context;
+            this.type=type;
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            JsonParser jsonParser=JsonParser.getInstance();
+            String transExpenseIn=jsonParser.getAllTransaction(account,type, "0");
+            jsonParser.readAndParseTransactionJSON(transExpenseIn);
+            ArrayList<TimelineItem2> t2=jsonParser.getTransItems();
+            for(int i=0;i<t2.size();i++){
+                LocalDBServices.addJsonTransactionForce(context,t2.get(i).getTransactionID(), t2.get(i).getDateString(), t2.get(i).getAmount(), t2.get(i).isExpence(), t2.get(i).getAccountName(), t2.get(i).getCategoryID(), t2.get(i).getTags(), t2.get(i).getDescription(),t2.get(i).getHandy());
+            }
+            Log.e("debug", "try to get more on type: "+type);
+            if(t2.size()==100){
+                int j=1;
+                transExpenseIn=jsonParser.getAllTransaction(account, type, j * 100 + "");
+                jsonParser.readAndParseTransactionJSON(transExpenseIn);
+                t2=jsonParser.getTransItems();
+                for(int i=0;i<t2.size();i++){
+                    LocalDBServices.addJsonTransactionForce(context,t2.get(i).getTransactionID(), t2.get(i).getDateString(), t2.get(i).getAmount(), t2.get(i).isExpence(), t2.get(i).getAccountName(), t2.get(i).getCategoryID(), t2.get(i).getTags(), t2.get(i).getDescription(),t2.get(i).getHandy());
+                }
+            }
+            Log.e("debug", "thread finished on type: "+type);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            try {
+                Log.e("debug performance", "try to immmediate refresh timeline");
+//                immediateRefreshTimeline();
+                updateAccountTimeFilterMenuItem();
+                addSlidingMenu();
+            immediateRefreshTimeline();
+            } catch (ParseException e){
+                    e.printStackTrace();
+            }
+        }
+    }
+
+
 }
 

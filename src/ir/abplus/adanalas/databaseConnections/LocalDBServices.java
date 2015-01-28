@@ -68,6 +68,7 @@ public class LocalDBServices {
         values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_IS_HANDY, isHandy);
 
         db.insertWithOnConflict(TransactionsContract.TransactionEntry.TABLE_NAME, null, values,SQLiteDatabase.CONFLICT_REPLACE);
+        db.delete(TransactionsContract.TagsEntry.TABLE_NAME, TransactionsContract.TagsEntry.COLUMN_NAME_TRANSACTION_ID+" Like ?",new String[]{transactionId});
         if(selectedTags!=null){
             for(String tag: selectedTags)
             {
@@ -132,6 +133,7 @@ public class LocalDBServices {
         }
 
     }
+
     public static ArrayList<String> getPopularTags(Context context){
         ArrayList<String> tags=new ArrayList<String>();
         trHelper= TransactoinDatabaseHelper.getInstance(context);
@@ -184,8 +186,7 @@ public class LocalDBServices {
                 +" as C , COUNT (*) AS D "
                 +"FROM "+ TransactionsContract.TransactionEntry.TABLE_NAME+ " WHERE "
                 +where+" GROUP BY "
-                +"A, C ORDER BY "
-                +TransactionsContract.TransactionEntry.COLUMN_NAME_AMOUNT+" DESC";
+                +"A, C ORDER BY B DESC";
         cursor = db.rawQuery(query, null);
         return cursor;
 
@@ -352,6 +353,7 @@ public class LocalDBServices {
                 " , "+ TransactionsContract.TransactionEntry.COLUMN_NAME_DESCRIPTION+
                 " , "+ TransactionsContract.TransactionEntry.COLUMN_NAME_CATEGORY+
                 " , "+ TransactionsContract.TransactionEntry.COLUMN_NAME_ACCOUNT_NAME+
+                " , "+ TransactionsContract.TransactionEntry.COLUMN_NAME_IS_HANDY+
                 " , "+ TransactionsContract.TagsEntry.COLUMN_NAME_TAG+
                 " FROM "+ TransactionsContract.TransactionEntry.TABLE_NAME+
                 " LEFT JOIN "+ TransactionsContract.TagsEntry.TABLE_NAME+
@@ -410,17 +412,7 @@ public class LocalDBServices {
         Cursor c=db.rawQuery(query,null);
         return c;
     }
-    public static Cursor getUnsyncedTransactionsAndTags(Context context){
-        trHelper= TransactoinDatabaseHelper.getInstance(context);
-        db = trHelper.getReadableDatabase(TransactoinDatabaseHelper.DATABASE_ENCRYPT_KEY);
 
-        String query="SELECT * FROM "+ TransactionsContract.TransactionEntry.TABLE_NAME+" WHERE "+ TransactionsContract.TransactionEntry.COLUMN_NAME_IS_SYNCED+" = 0" +" LEFT JOIN "+ TransactionsContract.TagsEntry.TABLE_NAME+
-                " ON "+TransactionsContract.TransactionEntry.TABLE_NAME+"."+ TransactionsContract.TransactionEntry.COLUMN_NAME_TRANSACTION_ID+
-                "="+ TransactionsContract.TagsEntry.TABLE_NAME+"."+
-                TransactionsContract.TagsEntry.COLUMN_NAME_TRANSACTION_ID;
-        Cursor c=db.rawQuery(query,null);
-        return c;
-    }
 
     public static void editHandyTransaction(Context context, String dateTime, double amountValue, boolean isExpense, String defaultAccount, int category_index, String id, ArrayList<String> selectedTags,String description) {
         trHelper= TransactoinDatabaseHelper.getInstance(context);
@@ -586,7 +578,8 @@ public class LocalDBServices {
         ContentValues values=new ContentValues();
         String[] selectionArgs = { "0" };
         values.put(TransactionsContract.TransactionEntry.COLUMN_NAME_IS_SYNCED,true);
-        db.update(TransactionsContract.TransactionEntry.TABLE_NAME,values, TransactionsContract.TransactionEntry.COLUMN_NAME_IS_SYNCED+" = ?",selectionArgs);
+//        db.update(TransactionsContract.TransactionEntry.TABLE_NAME,values, TransactionsContract.TransactionEntry.COLUMN_NAME_IS_SYNCED+" = ?",selectionArgs);
+        db.delete(TransactionsContract.TransactionEntry.TABLE_NAME,TransactionsContract.TransactionEntry.COLUMN_NAME_IS_SYNCED+" = ?",selectionArgs);
 //        return c;
     }
 

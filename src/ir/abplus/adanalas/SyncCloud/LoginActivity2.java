@@ -56,6 +56,7 @@ public class LoginActivity2 extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.e("debug performance","login activity on created started");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
 
@@ -85,6 +86,7 @@ public class LoginActivity2 extends Activity {
 
         });
 
+        Log.e("debug performance","login activity on created ended");
     }
 
 
@@ -122,13 +124,14 @@ public class LoginActivity2 extends Activity {
     private int pishkhanLoginTask(String myurl, String username, String password) {
 
         final HttpParams httpParams = new BasicHttpParams();
-        HttpConnectionParams.setConnectionTimeout(httpParams, 15000);
+        HttpConnectionParams.setConnectionTimeout(httpParams, 5000);
         DefaultHttpClient httpclient = new DefaultHttpClient(httpParams);
         HttpGet httpGet = new HttpGet(myurl);
         if(username.length()<10){
             int i=10-username.length();
-            while (i>-1){
+            while (i>0){
                 username="0"+username;
+                i--;
             }
         }
 

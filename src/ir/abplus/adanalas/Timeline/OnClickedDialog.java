@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -68,6 +70,8 @@ public class OnClickedDialog extends Dialog implements
         deleteButton=(Button)findViewById(R.id.delete_button);
         currencyLayout=(LinearLayout)findViewById(R.id.currency_layout);
         roundButton.setColor(res.getColor(R.color.light_grey));
+
+        Log.e("debug transaction is handy",""+item.getHandy());
 
         if(item.isExpence())
         {
@@ -160,10 +164,18 @@ public class OnClickedDialog extends Dialog implements
         backButton.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
         backButton.setBackground(roundButton);
         backButton.setOnClickListener(this);
+
         deleteButton.setTypeface(TimelineActivity.persianTypeface);
         deleteButton.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
         deleteButton.setBackground(roundButton);
         deleteButton.setOnClickListener(this);
+        if(!item.getHandy()){
+            deleteButton.setClickable(false);
+            float alpha = 0.45f;
+            AlphaAnimation alphaUp = new AlphaAnimation(alpha, alpha);
+            alphaUp.setFillAfter(true);
+            deleteButton.startAnimation(alphaUp);
+        }
         editButton.setTypeface(TimelineActivity.persianTypeface);
         editButton.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
         editButton.setBackground(roundButton);

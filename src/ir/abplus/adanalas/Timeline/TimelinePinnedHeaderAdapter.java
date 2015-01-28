@@ -68,9 +68,9 @@ public class TimelinePinnedHeaderAdapter extends SectionedBaseAdapter{
         for(int i = 0; i < size; i++)
         {
             TimelineItem2 cur = items.get(i);
-            if(!tmpDate.equals(cur.getDateString()))
+            if(!tmpDate.equals(cur.getDateString().substring(0,8)))
             {
-                tmpDate = cur.getDateString();
+                tmpDate = cur.getDateString().substring(0,8);
                 tmp.add(new ArrayList<TimelineItem2>());
                 current = tmp.get(l);
                 l++;

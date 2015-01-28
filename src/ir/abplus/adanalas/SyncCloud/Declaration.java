@@ -31,9 +31,11 @@ public class Declaration {
         String result="";
         this.context=context;
         try {
-            JSONArray jsonArray=makeDeclaration(context);
+            JSONArray jsonArray=makeDeclaration2(context);
             if(!jsonArray.toString().equals("[]")) {
+                Log.e("debug","json completed,try to post");
                 result = postDeclaration(jsonArray);
+                Log.e("debug","json posted");
             }
             else {
                 Log.e("debug","There is no data to declare");
@@ -118,12 +120,11 @@ public class Declaration {
         return transArray;
     }
     public JSONArray makeDeclaration2(Context context){
-        //todo make it correct
-        Cursor cursor= LocalDBServices.getUnsyncedTransactionsAndTags(context);
+        Cursor cursor= LocalDBServices.getUnsyncedTransactions(context);
         JSONArray transArray=new JSONArray();
-        ArrayList<TimelineItem2> items=new ArrayList<TimelineItem2>();
-        TimelineItem2 item;
-        String id;
+        ArrayList<String> itemsID=new ArrayList<String>();
+//        TimelineItem2 item;
+        String id="";
         String dateTime;
         long amount;
         boolean isExpense;
@@ -136,7 +137,6 @@ public class Declaration {
         cursor.moveToFirst();
         if (cursor.getCount()>0){
             do{
-
                 id = cursor.getString(cursor.getColumnIndexOrThrow(TransactionsContract.TransactionEntry.COLUMN_NAME_TRANSACTION_ID));
                 dateTime = cursor.getString(cursor.getColumnIndexOrThrow(TransactionsContract.TransactionEntry.COLUMN_NAME_DATE_TIME));
                 amount = cursor.getLong(cursor.getColumnIndexOrThrow(TransactionsContract.TransactionEntry.COLUMN_NAME_AMOUNT));
@@ -146,22 +146,12 @@ public class Declaration {
                 descp=cursor.getString(cursor.getColumnIndexOrThrow(TransactionsContract.TransactionEntry.COLUMN_NAME_DESCRIPTION));
                 accountName=cursor.getString(cursor.getColumnIndexOrThrow(TransactionsContract.TransactionEntry.COLUMN_NAME_ACCOUNT_NAME));
 
-                Cursor c2= LocalDBServices.getTagsFromID(id);
-                c2.moveToFirst();
 
-                if(c2.getCount() != 0)
-                {
-                    int tagLength=c2.getCount();
-                    selectedTags=new String[tagLength];
-                    for(int i=0;i<tagLength;i++){
-                        selectedTags[i]="\""+c2.getString(c2.getColumnIndexOrThrow(TransactionsContract.TagsEntry.COLUMN_NAME_TAG))+"\"";
-                        c2.moveToNext();
-                    }
-                }
-                c2.close();
+
 
                 JSONObject tmpObject=new JSONObject();
                 try {
+                    itemsID.add(id);
                     tmpObject.put("id",id);
                     tmpObject.put("deposit",accountName);
                     tmpObject.put("date",standardDate(dateTime));
@@ -181,10 +171,35 @@ public class Declaration {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            transArray.put(tmpObject);
+                transArray.put(tmpObject);
             }while(cursor.moveToNext());
             cursor.close();
+
+            for(int k=0;k<itemsID.size();k++){
+                Cursor c2= LocalDBServices.getTagsFromID(itemsID.get(k));
+                c2.moveToFirst();
+                selectedTags=new String[0];
+                if(c2.getCount() != 0)
+                {
+                    int tagLength=c2.getCount();
+                    selectedTags=new String[tagLength];
+                    for(int i=0;i<tagLength;i++){
+                        selectedTags[i]="\""+c2.getString(c2.getColumnIndexOrThrow(TransactionsContract.TagsEntry.COLUMN_NAME_TAG))+"\"";
+                        c2.moveToNext();
+                    }
+                }
+                c2.close();
+                try {
+                    transArray.getJSONObject(k).put("tags",Arrays.toString(selectedTags));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+
         }
+        cursor.close();
         return transArray;
     }
     public String postDeclaration(JSONArray jsonArray) throws IOException {
@@ -215,7 +230,7 @@ public class Declaration {
         int responseCode = con.getResponseCode();
 //        System.out.println("\nSending 'POST' request to URL : " + PFM_DECLARATION_ADDRESS);
 //        System.out.println("Post parameters : " + jsonArray.toString());
-//        System.out.println("Post parameters : " + standardJsonObject(jsonArray.toString()));
+        System.out.println("Post parameters : " + standardJsonObject(jsonArray.toString()));
 //        System.out.println("Response Code : " + responseCode);
 
         BufferedReader in = new BufferedReader(
@@ -230,7 +245,11 @@ public class Declaration {
 
         //print result
         System.out.println(response.toString());
-//        LocalDBServices.setSyncTransactions(context);
+        if(response.toString().equals("success")) {
+            LocalDBServices.setSyncTransactions(context);
+           Log.e("debug","sync data removed");
+        }
+
 //        Cursor cursor= LocalDBServices.getUnsyncedTransactions(context);
 //        cursor.moveToFirst();
 //        if (cursor.getCount()>0) {

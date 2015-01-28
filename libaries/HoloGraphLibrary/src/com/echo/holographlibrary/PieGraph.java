@@ -28,14 +28,7 @@ import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.Point;
-import android.graphics.RectF;
-import android.graphics.Region;
+import android.graphics.*;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -69,6 +62,7 @@ public class PieGraph extends View implements  HoloGraphAnimate {
     private Animator.AnimatorListener mAnimationListener;
     private ValueAnimator mValueAnimator;
 
+
     public PieGraph(Context context) {
         this(context, null);
     }
@@ -82,8 +76,11 @@ public class PieGraph extends View implements  HoloGraphAnimate {
 
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.PieGraph, 0, 0);
         mInnerCircleRatio = a.getInt(R.styleable.PieGraph_pieInnerCircleRatio, 0);
+
         mPadding = a.getDimensionPixelSize(R.styleable.PieGraph_pieSlicePadding, 0);
     }
+
+
 
     public void onDraw(Canvas canvas) {
         float midX, midY, radius, innerRadius;
@@ -302,7 +299,6 @@ public class PieGraph extends View implements  HoloGraphAnimate {
         return false;
     }
 
-
     /**
      * Stops running animation and starts a new one, animating each slice from their current to goal value.
      * If removing a slice, consider animating to 0 then removing in onAnimationEnd listener.
@@ -340,8 +336,6 @@ public class PieGraph extends View implements  HoloGraphAnimate {
             va.start();
 
         }
-
-
 
     @Override
     public void setAnimationListener(Animator.AnimatorListener animationListener) { mAnimationListener = animationListener;}
