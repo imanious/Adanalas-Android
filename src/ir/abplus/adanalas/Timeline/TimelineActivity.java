@@ -255,7 +255,8 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 
 
 
-        getALLTransFromServer();
+//        getALLTransFromServer();
+        doSync(getBaseContext());
         updateAccountTimeFilterMenuItem();
             addSlidingMenu();
 
@@ -548,7 +549,7 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
                 Log.e("debug","try to get data!");
 //                new ConnectionManager().doSync(getBaseContext());
 //                doSync(getBaseContext());
-                  getALLTransFromServer();
+                doSync(getBaseContext());
 
             }
 			catch (Exception e1)
@@ -617,7 +618,7 @@ public class TimelineActivity extends Activity implements OnClickListener, OnPul
 
         dialog=new LodingDialog(TimelineActivity.this,getResources(),"در حال دریافت اطلاعات از سرور");
         dialog.show();
-        getALLTransFromServer();
+                doSync(getBaseContext());
 
 
 

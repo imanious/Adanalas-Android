@@ -119,16 +119,9 @@
       <file leaf-file-name="Declaration.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/SyncCloud/Declaration.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.36" vertical-offset="2382" max-vertical-offset="4573">
+            <state vertical-scroll-proportion="0.0" vertical-offset="2601" max-vertical-offset="4930">
               <caret line="153" column="31" selection-start-line="153" selection-start-column="28" selection-end-line="153" selection-end-column="31" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="docComment;class#Declaration#0" expanded="false" />
-                <element signature="method#DoDeclaration#0;class#Declaration#0" expanded="false" />
-                <element signature="e#1516#1582#0" expanded="false" />
-                <element signature="method#standardDate#0;class#Declaration#0" expanded="false" />
-                <element signature="method#standardJsonObject#0;class#Declaration#0" expanded="false" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -136,76 +129,64 @@
       <file leaf-file-name="TimelineActivity.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/Timeline/TimelineActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.29137528" vertical-offset="5655" max-vertical-offset="9758">
-              <caret line="617" column="50" selection-start-line="617" selection-start-column="50" selection-end-line="617" selection-end-column="50" />
+            <state vertical-scroll-proportion="0.57793766" vertical-offset="1918" max-vertical-offset="4080">
+              <caret line="242" column="38" selection-start-line="242" selection-start-column="38" selection-end-line="242" selection-end-column="38" />
               <folding>
-                <element signature="imports" expanded="true" />
                 <element signature="e#4706#4784#0" expanded="false" />
-                <element signature="e#9642#9644#0" expanded="false" />
+                <element signature="e#9260#9637#0" expanded="true" />
+                <element signature="e#9626#9627#0" expanded="true" />
                 <element signature="method#onResume#0;class#TimelineActivity#0" expanded="false" />
-                <element signature="e#10041#10089#0" expanded="false" />
+                <element signature="e#10077#10125#0" expanded="false" />
                 <element signature="method#onStop#0;class#TimelineActivity#0" expanded="false" />
                 <element signature="method#onCreateOptionsMenu#0;class#TimelineActivity#0" expanded="false" />
                 <element signature="method#onOptionsItemSelected#0;class#TimelineActivity#0" expanded="false" />
-                <element signature="e#12750#12805#0" expanded="true" />
-                <element signature="e#12940#12990#0" expanded="true" />
-                <element signature="e#13120#13168#0" expanded="true" />
-                <element signature="e#13296#13346#0" expanded="true" />
                 <element signature="method#onActivityResult#0;class#TimelineActivity#0" expanded="false" />
                 <element signature="method#onClick#0;class#TimelineActivity#0" expanded="false" />
                 <element signature="method#onDestroy#0;class#TimelineActivity#0" expanded="false" />
+                <element signature="method#refreshTimeline#0;class#TimelineActivity#0" expanded="false" />
+                <element signature="method#immediateRefreshTimeline#0;class#TimelineActivity#0" expanded="false" />
                 <element signature="method#getSlidingMenuRightPaddding#0;class#TimelineActivity#0" expanded="false" />
-                <element signature="e#18501#18563#0" expanded="true" />
                 <element signature="method#getSlidingMenuNumberOfColumns#0;class#TimelineActivity#0" expanded="false" />
-                <element signature="e#19457#19519#0" expanded="true" />
-                <element signature="e#20170#20221#0" expanded="false" />
-                <element signature="e#20845#20889#0" expanded="false" />
+                <element signature="class#SyncTask#0;class#TimelineActivity#0" expanded="false" />
+                <element signature="method#doInBackground#0;class#SyncTask#0;class#TimelineActivity#0" expanded="false" />
+                <element signature="e#20206#20257#0" expanded="false" />
+                <element signature="e#20570#20637#0" expanded="false" />
+                <element signature="method#onPostExecute#0;class#SyncTask#0;class#TimelineActivity#0" expanded="false" />
+                <element signature="e#20880#20924#0" expanded="false" />
                 <element signature="class#RefreshTask#0;class#TimelineActivity#0" expanded="false" />
                 <element signature="method#doInBackground#0;class#RefreshTask#0;class#TimelineActivity#0" expanded="false" />
                 <element signature="method#onPostExecute#0;class#RefreshTask#0;class#TimelineActivity#0" expanded="false" />
-                <element signature="e#21634#21678#0" expanded="false" />
+                <element signature="e#21669#21713#0" expanded="false" />
+                <element signature="class#FirstSynchTask#0;class#TimelineActivity#0" expanded="false" />
+                <element signature="method#doInBackground#0;class#FirstSynchTask#0;class#TimelineActivity#0" expanded="false" />
                 <element signature="method#onPostExecute#0;class#FirstSynchTask#0;class#TimelineActivity#0" expanded="false" />
-                <element signature="e#22808#22852#0" expanded="false" />
+                <element signature="e#22852#22896#0" expanded="false" />
+                <element signature="method#onPullDownToRefresh#0;class#TimelineActivity#0" expanded="false" />
                 <element signature="method#onPullUpToRefresh#0;class#TimelineActivity#0" expanded="false" />
                 <element signature="method#onPullEvent#0;class#TimelineActivity#0" expanded="false" />
-                <element signature="e#25566#25614#0" expanded="false" />
-                <element signature="e#25959#26005#0" expanded="true" />
-                <element signature="e#26074#26120#0" expanded="true" />
+                <element signature="e#25610#25658#0" expanded="false" />
                 <element signature="method#updateAccountTimeFilterMenuItem#0;class#TimelineActivity#0" expanded="false" />
-                <element signature="e#27261#27309#0" expanded="true" />
-                <element signature="e#27334#27374#0" expanded="true" />
-                <element signature="e#27471#27512#0" expanded="true" />
-                <element signature="e#27609#27651#0" expanded="true" />
-                <element signature="e#27747#27788#0" expanded="true" />
                 <element signature="method#setTitleText#0;class#TimelineActivity#0" expanded="false" />
                 <element signature="method#shouldSync#0;class#TimelineActivity#0" expanded="false" />
                 <element signature="method#setPullToRefreshLabels#0;class#TimelineActivity#0" expanded="false" />
                 <element signature="method#makeItemFromCursor#0;class#TimelineActivity#0" expanded="false" />
-                <element signature="e#34185#34256#0" expanded="false" />
-                <element signature="e#35518#35538#0" expanded="true" />
-                <element signature="e#35637#35670#0" expanded="true" />
-                <element signature="e#37088#37131#0" expanded="true" />
-                <element signature="e#37380#37422#0" expanded="true" />
-                <element signature="e#37534#37583#0" expanded="true" />
-                <element signature="e#37655#37704#0" expanded="true" />
-                <element signature="e#39301#39350#0" expanded="true" />
-                <element signature="e#39422#39471#0" expanded="true" />
+                <element signature="e#34229#34300#0" expanded="false" />
+                <element signature="method#addSlidingMenu#0;class#TimelineActivity#0" expanded="false" />
                 <element signature="method#getSelectedRadioTimeString#0;class#TimelineActivity#0" expanded="false" />
-                <element signature="e#41136#41177#0" expanded="true" />
-                <element signature="e#41254#41296#0" expanded="true" />
-                <element signature="e#41372#41413#0" expanded="true" />
-                <element signature="e#41439#41479#0" expanded="true" />
                 <element signature="method#getSharedPreferences#0;class#TimelineActivity#0" expanded="false" />
                 <element signature="method#getTokensFromDB#0;class#TimelineActivity#0" expanded="false" />
                 <element signature="method#getNewTransFromServer#0;class#TimelineActivity#0" expanded="false" />
-                <element signature="e#42679#42738#0" expanded="false" />
-                <element signature="e#46581#46626#0" expanded="false" />
+                <element signature="e#42723#42782#0" expanded="false" />
+                <element signature="e#46625#46670#0" expanded="false" />
                 <element signature="method#getALLTransFromServer#0;class#TimelineActivity#0" expanded="false" />
-                <element signature="e#46899#46958#0" expanded="false" />
-                <element signature="e#50996#51041#0" expanded="false" />
+                <element signature="e#46943#47002#0" expanded="false" />
+                <element signature="e#51040#51085#0" expanded="false" />
                 <element signature="method#doSync#0;class#TimelineActivity#0" expanded="false" />
+                <element signature="e#52877#52922#0" expanded="false" />
+                <element signature="class#GetAllTrans#0;class#TimelineActivity#0" expanded="false" />
                 <element signature="method#GetAllTrans#0;class#GetAllTrans#0;class#TimelineActivity#0" expanded="false" />
                 <element signature="method#doInBackground#0;class#GetAllTrans#0;class#TimelineActivity#0" expanded="false" />
+                <element signature="method#onPostExecute#0;class#GetAllTrans#0;class#TimelineActivity#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -214,7 +195,7 @@
       <file leaf-file-name="JsonParser.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/SyncCloud/JsonParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="4539" max-vertical-offset="6103">
+            <state vertical-scroll-proportion="0.0" vertical-offset="4981" max-vertical-offset="6460">
               <caret line="293" column="28" selection-start-line="293" selection-start-column="28" selection-end-line="293" selection-end-column="28" />
               <folding />
             </state>
@@ -224,15 +205,9 @@
       <file leaf-file-name="ConnectionManager.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/SyncCloud/ConnectionManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="527">
+            <state vertical-scroll-proportion="0.0" vertical-offset="340" max-vertical-offset="1802">
               <caret line="20" column="20" selection-start-line="20" selection-start-column="20" selection-end-line="20" selection-end-column="20" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#doSync#0;class#ConnectionManager#0" expanded="false" />
-                <element signature="class#GetAllTrans#0;class#ConnectionManager#0" expanded="false" />
-                <element signature="e#4208#4209#0" expanded="true" />
-                <element signature="e#4258#4259#0" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -447,8 +422,8 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="AndroidView" />
     </panes>
   </component>
@@ -649,25 +624,6 @@
       <option name="trusted" value="true" />
       <method />
     </configuration>
-    <configuration default="true" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="myFilePath" />
-      <option name="GLUE" />
-      <option name="myNameFilter" />
-      <option name="myGeneratedName" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="" />
-      <envs />
-      <method />
-    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -694,6 +650,25 @@
       <envs />
       <properties />
       <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="myFilePath" />
+      <option name="GLUE" />
+      <option name="myNameFilter" />
+      <option name="myGeneratedName" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -732,6 +707,32 @@
       <patterns />
       <method />
     </configuration>
+    <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
+      <module name="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="DEPLOY" value="true" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console">
+      <option name="VM_PARAMETERS" value="" />
+      <option name="USER_CFG_CLASS" />
+      <option name="CONTEXT_PROVIDER" />
+      <method />
+    </configuration>
     <configuration default="true" type="FlashRunConfigurationType" factoryName="Flash App">
       <option name="BCName" value="" />
       <option name="IOSSimulatorSdkPath" value="" />
@@ -765,32 +766,6 @@
       <option name="screenWidth" value="0" />
       <option name="url" value="http://" />
       <option name="usbDebugPort" value="7936" />
-      <method />
-    </configuration>
-    <configuration default="true" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console">
-      <option name="VM_PARAMETERS" value="" />
-      <option name="USER_CFG_CLASS" />
-      <option name="CONTEXT_PROVIDER" />
-      <method />
-    </configuration>
-    <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
-      <module name="" />
-      <option name="ACTIVITY_CLASS" value="" />
-      <option name="MODE" value="default_activity" />
-      <option name="DEPLOY" value="true" />
-      <option name="ARTIFACT_NAME" value="" />
-      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
-      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
-      <option name="PREFERRED_AVD" value="" />
-      <option name="USE_COMMAND_LINE" value="true" />
-      <option name="COMMAND_LINE" value="" />
-      <option name="WIPE_USER_DATA" value="false" />
-      <option name="DISABLE_BOOT_ANIMATION" value="false" />
-      <option name="NETWORK_SPEED" value="full" />
-      <option name="NETWORK_LATENCY" value="none" />
-      <option name="CLEAR_LOGCAT" value="false" />
-      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
-      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
       <method />
     </configuration>
     <configuration default="false" name="adanalas1" type="AndroidRunConfigurationType" factoryName="Android Application">
@@ -1010,6 +985,7 @@
       <workItem from="1422444014051" duration="2824000" />
       <workItem from="1422446896802" duration="214000" />
       <workItem from="1422447690571" duration="14053000" />
+      <workItem from="1422461969739" duration="279000" />
     </task>
     <task id="LOCAL-00001" summary="test2">
       <created>1408262192108</created>
@@ -1215,7 +1191,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1122250000" />
+    <option name="totallyTimeSpent" value="1122529000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1239,7 +1215,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32258064" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1619,7 +1595,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="14004" max-vertical-offset="14433">
           <caret line="835" column="30" selection-start-line="835" selection-start-column="30" selection-end-line="835" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1662,7 +1637,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="523" max-vertical-offset="952">
           <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1670,7 +1644,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2159" max-vertical-offset="2601">
           <caret line="148" column="0" selection-start-line="148" selection-start-column="0" selection-end-line="148" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1678,7 +1651,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-13.08" vertical-offset="1220" max-vertical-offset="1649">
           <caret line="92" column="0" selection-start-line="92" selection-start-column="0" selection-end-line="92" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1686,7 +1658,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-13.6" vertical-offset="85" max-vertical-offset="527">
           <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1702,7 +1673,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="149" max-vertical-offset="646">
           <caret line="15" column="26" selection-start-line="15" selection-start-column="26" selection-end-line="15" selection-end-column="26" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1777,103 +1747,78 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="527">
           <caret line="20" column="20" selection-start-line="20" selection-start-column="20" selection-end-line="20" selection-end-column="20" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#doSync#0;class#ConnectionManager#0" expanded="false" />
-            <element signature="class#GetAllTrans#0;class#ConnectionManager#0" expanded="false" />
-            <element signature="e#4208#4209#0" expanded="true" />
-            <element signature="e#4258#4259#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/SyncCloud/Declaration.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.36" vertical-offset="2382" max-vertical-offset="4573">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2601" max-vertical-offset="4930">
           <caret line="153" column="31" selection-start-line="153" selection-start-column="28" selection-end-line="153" selection-end-column="31" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="docComment;class#Declaration#0" expanded="false" />
-            <element signature="method#DoDeclaration#0;class#Declaration#0" expanded="false" />
-            <element signature="e#1516#1582#0" expanded="false" />
-            <element signature="method#standardDate#0;class#Declaration#0" expanded="false" />
-            <element signature="method#standardJsonObject#0;class#Declaration#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ir/abplus/adanalas/Timeline/TimelineActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.29137528" vertical-offset="5655" max-vertical-offset="9758">
-          <caret line="617" column="50" selection-start-line="617" selection-start-column="50" selection-end-line="617" selection-end-column="50" />
+        <state vertical-scroll-proportion="0.57793766" vertical-offset="1918" max-vertical-offset="4080">
+          <caret line="242" column="38" selection-start-line="242" selection-start-column="38" selection-end-line="242" selection-end-column="38" />
           <folding>
-            <element signature="imports" expanded="true" />
             <element signature="e#4706#4784#0" expanded="false" />
-            <element signature="e#9642#9644#0" expanded="false" />
+            <element signature="e#9260#9637#0" expanded="true" />
+            <element signature="e#9626#9627#0" expanded="true" />
             <element signature="method#onResume#0;class#TimelineActivity#0" expanded="false" />
-            <element signature="e#10041#10089#0" expanded="false" />
+            <element signature="e#10077#10125#0" expanded="false" />
             <element signature="method#onStop#0;class#TimelineActivity#0" expanded="false" />
             <element signature="method#onCreateOptionsMenu#0;class#TimelineActivity#0" expanded="false" />
             <element signature="method#onOptionsItemSelected#0;class#TimelineActivity#0" expanded="false" />
-            <element signature="e#12750#12805#0" expanded="true" />
-            <element signature="e#12940#12990#0" expanded="true" />
-            <element signature="e#13120#13168#0" expanded="true" />
-            <element signature="e#13296#13346#0" expanded="true" />
             <element signature="method#onActivityResult#0;class#TimelineActivity#0" expanded="false" />
             <element signature="method#onClick#0;class#TimelineActivity#0" expanded="false" />
             <element signature="method#onDestroy#0;class#TimelineActivity#0" expanded="false" />
+            <element signature="method#refreshTimeline#0;class#TimelineActivity#0" expanded="false" />
+            <element signature="method#immediateRefreshTimeline#0;class#TimelineActivity#0" expanded="false" />
             <element signature="method#getSlidingMenuRightPaddding#0;class#TimelineActivity#0" expanded="false" />
-            <element signature="e#18501#18563#0" expanded="true" />
             <element signature="method#getSlidingMenuNumberOfColumns#0;class#TimelineActivity#0" expanded="false" />
-            <element signature="e#19457#19519#0" expanded="true" />
-            <element signature="e#20170#20221#0" expanded="false" />
-            <element signature="e#20845#20889#0" expanded="false" />
+            <element signature="class#SyncTask#0;class#TimelineActivity#0" expanded="false" />
+            <element signature="method#doInBackground#0;class#SyncTask#0;class#TimelineActivity#0" expanded="false" />
+            <element signature="e#20206#20257#0" expanded="false" />
+            <element signature="e#20570#20637#0" expanded="false" />
+            <element signature="method#onPostExecute#0;class#SyncTask#0;class#TimelineActivity#0" expanded="false" />
+            <element signature="e#20880#20924#0" expanded="false" />
             <element signature="class#RefreshTask#0;class#TimelineActivity#0" expanded="false" />
             <element signature="method#doInBackground#0;class#RefreshTask#0;class#TimelineActivity#0" expanded="false" />
             <element signature="method#onPostExecute#0;class#RefreshTask#0;class#TimelineActivity#0" expanded="false" />
-            <element signature="e#21634#21678#0" expanded="false" />
+            <element signature="e#21669#21713#0" expanded="false" />
+            <element signature="class#FirstSynchTask#0;class#TimelineActivity#0" expanded="false" />
+            <element signature="method#doInBackground#0;class#FirstSynchTask#0;class#TimelineActivity#0" expanded="false" />
             <element signature="method#onPostExecute#0;class#FirstSynchTask#0;class#TimelineActivity#0" expanded="false" />
-            <element signature="e#22808#22852#0" expanded="false" />
+            <element signature="e#22852#22896#0" expanded="false" />
+            <element signature="method#onPullDownToRefresh#0;class#TimelineActivity#0" expanded="false" />
             <element signature="method#onPullUpToRefresh#0;class#TimelineActivity#0" expanded="false" />
             <element signature="method#onPullEvent#0;class#TimelineActivity#0" expanded="false" />
-            <element signature="e#25566#25614#0" expanded="false" />
-            <element signature="e#25959#26005#0" expanded="true" />
-            <element signature="e#26074#26120#0" expanded="true" />
+            <element signature="e#25610#25658#0" expanded="false" />
             <element signature="method#updateAccountTimeFilterMenuItem#0;class#TimelineActivity#0" expanded="false" />
-            <element signature="e#27261#27309#0" expanded="true" />
-            <element signature="e#27334#27374#0" expanded="true" />
-            <element signature="e#27471#27512#0" expanded="true" />
-            <element signature="e#27609#27651#0" expanded="true" />
-            <element signature="e#27747#27788#0" expanded="true" />
             <element signature="method#setTitleText#0;class#TimelineActivity#0" expanded="false" />
             <element signature="method#shouldSync#0;class#TimelineActivity#0" expanded="false" />
             <element signature="method#setPullToRefreshLabels#0;class#TimelineActivity#0" expanded="false" />
             <element signature="method#makeItemFromCursor#0;class#TimelineActivity#0" expanded="false" />
-            <element signature="e#34185#34256#0" expanded="false" />
-            <element signature="e#35518#35538#0" expanded="true" />
-            <element signature="e#35637#35670#0" expanded="true" />
-            <element signature="e#37088#37131#0" expanded="true" />
-            <element signature="e#37380#37422#0" expanded="true" />
-            <element signature="e#37534#37583#0" expanded="true" />
-            <element signature="e#37655#37704#0" expanded="true" />
-            <element signature="e#39301#39350#0" expanded="true" />
-            <element signature="e#39422#39471#0" expanded="true" />
+            <element signature="e#34229#34300#0" expanded="false" />
+            <element signature="method#addSlidingMenu#0;class#TimelineActivity#0" expanded="false" />
             <element signature="method#getSelectedRadioTimeString#0;class#TimelineActivity#0" expanded="false" />
-            <element signature="e#41136#41177#0" expanded="true" />
-            <element signature="e#41254#41296#0" expanded="true" />
-            <element signature="e#41372#41413#0" expanded="true" />
-            <element signature="e#41439#41479#0" expanded="true" />
             <element signature="method#getSharedPreferences#0;class#TimelineActivity#0" expanded="false" />
             <element signature="method#getTokensFromDB#0;class#TimelineActivity#0" expanded="false" />
             <element signature="method#getNewTransFromServer#0;class#TimelineActivity#0" expanded="false" />
-            <element signature="e#42679#42738#0" expanded="false" />
-            <element signature="e#46581#46626#0" expanded="false" />
+            <element signature="e#42723#42782#0" expanded="false" />
+            <element signature="e#46625#46670#0" expanded="false" />
             <element signature="method#getALLTransFromServer#0;class#TimelineActivity#0" expanded="false" />
-            <element signature="e#46899#46958#0" expanded="false" />
-            <element signature="e#50996#51041#0" expanded="false" />
+            <element signature="e#46943#47002#0" expanded="false" />
+            <element signature="e#51040#51085#0" expanded="false" />
             <element signature="method#doSync#0;class#TimelineActivity#0" expanded="false" />
+            <element signature="e#52877#52922#0" expanded="false" />
+            <element signature="class#GetAllTrans#0;class#TimelineActivity#0" expanded="false" />
             <element signature="method#GetAllTrans#0;class#GetAllTrans#0;class#TimelineActivity#0" expanded="false" />
             <element signature="method#doInBackground#0;class#GetAllTrans#0;class#TimelineActivity#0" expanded="false" />
+            <element signature="method#onPostExecute#0;class#GetAllTrans#0;class#TimelineActivity#0" expanded="false" />
           </folding>
         </state>
       </provider>
